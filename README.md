@@ -49,7 +49,7 @@ Claude 会自动完成：主题拆解 → 选模板 → 选配色 → 选布局 
 
 > 适用：封面页、能力介绍、系统总览
 
-![P01 能力总览](01-skill-intro.PNG)
+![P01 能力总览](demo/01-skill-intro.PNG)
 
 **特征：** 噪点纹理背景 · Syne 显示字体 · 毛玻璃卡片 · 蓝色霓虹辉光
 
@@ -59,7 +59,7 @@ Claude 会自动完成：主题拆解 → 选模板 → 选配色 → 选布局 
 
 > 适用：数据报告、趋势分析、多维度对比
 
-![P02 图表库](02-charts-line-bar.PNG)
+![P02 图表库](demo/02-charts-line-bar.PNG)
 
 **图表类型：**
 - 横向条形图（能力对比）
@@ -75,7 +75,7 @@ Claude 会自动完成：主题拆解 → 选模板 → 选配色 → 选布局 
 
 > 适用：项目管理、能力评估、进度追踪
 
-![P03 图表库](03-charts-radar-gantt.PNG)
+![P03 图表库](demo/03-charts-radar-gantt.PNG)
 
 **图表类型：**
 - 雷达图（双数据集对比）
@@ -91,7 +91,7 @@ Claude 会自动完成：主题拆解 → 选模板 → 选配色 → 选布局 
 
 > 适用：系统设计、方案展示、流程梳理
 
-![P04 架构图](04-architecture.PNG)
+![P04 架构图](demo/04-architecture.PNG)
 
 **图形类型：**
 - 分层架构图（5 层系统结构，marker 箭头）
@@ -105,7 +105,7 @@ Claude 会自动完成：主题拆解 → 选模板 → 选配色 → 选布局 
 
 > 适用：竞争分析、案例对比、风险评估
 
-![P05 编辑分割](05-t2-editorial.PNG)
+![P05 编辑分割](demo/05-t2-editorial.PNG)
 
 **特征：**
 - 左暗右亮三层背景（clip-path 斜切分割）
@@ -119,7 +119,7 @@ Claude 会自动完成：主题拆解 → 选模板 → 选配色 → 选布局 
 
 > 适用：技术审计、代码展示、系统日志、安全报告
 
-![P06 终端代码](06-t3-terminal.PNG)
+![P06 终端代码](demo/06-t3-terminal.PNG)
 
 **特征：**
 - GitHub Dark `#0d1117` 背景
@@ -268,6 +268,17 @@ Footer   20px  ←  页脚
 ```
 html-report/
 ├── SKILL.md              ← Skill 主入口（Claude 读取）
+├── demo/                 ← 示例页面 & 截图预览
+│   ├── 01-skill-intro.html / .PNG     ← T1 暗色精品 · 能力总览
+│   ├── 02-charts-line-bar.html / .PNG ← 图表库①（条形/折线/柱状/散点/环形）
+│   ├── 03-charts-radar-gantt.html / .PNG ← 图表库②（雷达/甘特/热力/瀑布）
+│   ├── 04-architecture.html / .PNG    ← 架构图 · 流程图 · 决策树
+│   ├── 05-t2-editorial.html / .PNG    ← T2 编辑分割 · 竞争分析
+│   ├── 06-t3-terminal.html / .PNG     ← T3 终端代码 · 语法高亮
+│   ├── 07-t4-dashboard.html / .PNG    ← T4 数据仪表盘 · KPI 卡片
+│   ├── 08-t5-minimal.html / .PNG      ← T5 极简文字 · 留白节奏
+│   ├── 09-t6-cyberpunk.html / .PNG    ← T6 霓虹赛博 · 威胁情报
+│   └── 10-design-patterns.html / .PNG ← 设计模式大全 · 组件速查
 └── references/
     ├── 01-canvas.md      ← 画布尺寸、四区结构、溢出规则
     ├── 02-design-system.md ← 6种视觉模板（T1–T6）CSS片段
