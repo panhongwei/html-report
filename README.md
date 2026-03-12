@@ -1,3 +1,5 @@
+[![中文](https://img.shields.io/badge/语言-中文-red)](README.md) [![English](https://img.shields.io/badge/Language-English-blue)](README_EN.md)
+
 # 🎨 html-report Skill · PPT 视觉报告生成器
 
 > **不知道怎么设计 PPT？一句话触发，自动生成精美的 PPT 风格 HTML 页面。**
