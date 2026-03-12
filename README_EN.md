@@ -9,9 +9,9 @@
 
 ## ✨ What Is It
 
-`html-report` is a Claude Code Skill that transforms any text content into **screenshot-ready PPT-style HTML pages**.
+`html-report` is an AI agent Skill that transforms any text content into **screenshot-ready PPT-style HTML pages**.
 
-Every page is strictly locked to **1017×720px** (aligned to PPT canvas 10.59"×7.499" @96dpi). After screenshotting with Chrome or Puppeteer, the result can be pasted directly as a slide — no PowerPoint software needed.
+Compatible with Claude Code, Doubao (豆包), Cursor, Windsurf, and other major AI coding assistants. Every page is strictly locked to **1017×720px** (aligned to PPT canvas 10.59"×7.499" @96dpi). After screenshotting with Chrome or Puppeteer, the result can be pasted directly as a slide — no PowerPoint software needed.
 
 When you:
 - 🤔 **Have no idea how to lay out a PPT** → Describe the topic, get a generated page
@@ -23,7 +23,7 @@ When you:
 
 ## 🚀 Quick Start
 
-In Claude Code, just say:
+In any AI agent (Claude Code / Doubao / Cursor etc.), just say:
 
 ```
 Generate a report: analyze our company's 2025 AI strategy
@@ -37,7 +37,43 @@ Turn this competitive analysis into an HTML report page
 Visualize content: quantum computing technology trends
 ```
 
-Claude will automatically handle: topic breakdown → template selection → color scheme → layout → content → HTML output
+The AI will automatically handle: topic breakdown → template selection → color scheme → layout → content → HTML output
+
+---
+
+## 🐟 HTML → PPT One-to-One Conversion
+
+> **After generating the HTML, send it to Doubao, Claude, or any AI — one prompt converts it to a real PPT!**
+
+Copy the generated HTML content and send it to any AI assistant that supports file or long-text input, with this prompt:
+
+```
+Please convert this HTML page into a PowerPoint slide (PPTX format),
+reproducing the layout, colors, charts, and content exactly 1:1.
+Canvas size is 1017×720px. Keep all visual elements at their exact
+position, size, and color.
+```
+
+**Recommended AI Tools:**
+
+| Tool | Strengths | Best For |
+|------|-----------|----------|
+| 🦞 **Doubao** (ByteDance) | File upload, one-click PPTX output | Quick conversion, daily use |
+| 🤖 **Claude** (Anthropic) | Understands complex layouts, high fidelity | Precise reproduction, complex charts |
+| ✨ **Qwen** (Alibaba) | Optimized for Chinese content, smooth PPT generation | Chinese-language reports |
+| 💡 **Kimi** (Moonshot) | Long context window, handles full HTML input | Multi-page batch processing |
+
+**Workflow:**
+
+```
+① AI agent generates HTML files
+        ↓
+② Send the HTML content/file to Doubao or Claude
+        ↓
+③ Paste the prompt: "Convert to PPT 1:1 based on page layout"
+        ↓
+④ Download PPTX, ready to present ✓
+```
 
 ---
 
@@ -277,7 +313,7 @@ Total   720px  ✓
 
 ```
 html-report/
-├── SKILL.md              ← Skill entry point (read by Claude)
+├── SKILL.md              ← Skill entry point (read by AI agent)
 ├── demo/                 ← Example pages & screenshot previews
 │   ├── 01-skill-intro.html / .PNG     ← T1 Dark Luxury · Overview
 │   ├── 02-charts-line-bar.html / .PNG ← Chart Library ① (bar/line/column/scatter/donut)
@@ -316,7 +352,7 @@ Include any of the following in your conversation to activate the skill:
 ```
 User inputs topic
       ↓
-Claude reads Skill spec (6 reference files)
+AI reads Skill spec (6 reference files)
       ↓
 Topic breakdown → plan 10 sub-dimensions
       ↓
@@ -324,9 +360,8 @@ Per page: select template (T1–T6) → color scheme → layout → write conten
       ↓
 Output 01.html ... 10.html
       ↓
-Puppeteer screenshot → 1017×720px PNG
-      ↓
-Paste into PPT slides ✓
+Option ①: Chrome/Puppeteer screenshot → 1017×720px PNG → paste into PPT slides
+Option ②: Send HTML to Doubao/Claude → "Convert to PPT 1:1" → download PPTX ✓
 ```
 
 ---
