@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1017px;height:720px;min-width:1017px;max-width:1017px;min-height:720px;max-height:720px;overflow:hidden;font-size:12px;line-height:1.45;background:#08041a;font-family:'DM Sans','PingFang SC',sans-serif;color:#f5f3ff;display:flex;flex-direction:column}
+:root{--p:#8b5cf6;--pm:rgba(139,92,246,.13);--bd:rgba(139,92,246,.22);--t:#f5f3ff;--mt:#c4b5fd;--dt:#7c3aed}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:100;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E")}
+.g1{position:fixed;width:600px;height:500px;top:-100px;left:-80px;border-radius:50%;pointer-events:none;background:radial-gradient(ellipse,rgba(139,92,246,.09) 0%,transparent 65%)}
+.g2{position:fixed;width:400px;height:350px;bottom:-60px;right:-60px;border-radius:50%;pointer-events:none;background:radial-gradient(ellipse,rgba(244,114,182,.06) 0%,transparent 65%)}
+.hd{height:72px;padding:0 25px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:1px solid rgba(139,92,246,.1)}
+.ct{height:580px;padding:0 25px;overflow:hidden;flex-shrink:0}
+.sm{height:48px;padding:0 25px;display:flex;align-items:center;gap:8px;flex-shrink:0;border-top:1px solid rgba(139,92,246,.1)}
+.ft{height:20px;padding:0 25px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.card{background:rgba(17,8,40,.9);border:1px solid var(--bd);border-radius:7px;padding:9px 12px;display:flex;flex-direction:column;gap:4px;position:relative;overflow:hidden}
+.card::before{content:'';display:block;height:1px;flex-shrink:0;background:linear-gradient(90deg,transparent,rgba(139,92,246,.4),transparent);margin:-9px -12px 7px}
+.ch{font-size:12px;font-weight:700;color:var(--t);flex-shrink:0}
+.cb{font-size:10.5px;line-height:1.42;color:var(--mt);overflow:hidden}
+</style>
+</head>
+<body>
+<div class="g1"></div><div class="g2"></div>
+<!-- HEADER 72px -->
+<div class="hd">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div style="width:5px;height:5px;border-radius:50%;background:#8b5cf6;box-shadow:0 0 8px rgba(139,92,246,.9)"></div>
+    <span style="font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:#4c1d95;font-family:monospace">CHART GALLERY · PART 2</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:14px">
+    <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,#e2e8f0 30%,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">图表库 · 雷达 甘特 热力 时间轴</div>
+    <span style="font-family:monospace;font-size:11px;color:#4c1d95">03 / 10</span>
+  </div>
+</div>
+<!-- CONTENT 580px — Layout C 3×2 -->
+<div class="ct">
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:8px;height:100%;padding-top:8px">
+
+    <!-- ① 雷达图 双数据集 -->
+    <div class="card">
+      <div class="ch">雷达图 · 双维度对比</div>
+      <div class="cb">模板 T1 vs T4 六维度对比，T1 在<b style="color:var(--t)">美观度</b>和<b style="color:var(--t)">科技感</b>领先，T4 在<b style="color:var(--t)">数据展示</b>和<b style="color:var(--t)">易读性</b>占优。</div>
+      <svg viewBox="0 0 200 150" style="width:100%;height:120px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+        <!-- 背景六边形三层 -->
+        <polygon points="100,18 162,54 162,126 100,162 38,126 38,54" fill="none" stroke="rgba(139,92,246,.15)" stroke-width="1.5"/>
+        <polygon points="100,36 137,57 137,99 100,120 63,99 63,57" fill="none" stroke="rgba(139,92,246,.1)" stroke-width="1"/>
+        <polygon points="100,54 119,65 119,87 100,98 81,87 81,65" fill="none" stroke="rgba(139,92,246,.07)" stroke-width=".8"/>
+        <!-- 轴线 -->
+        <line x1="100" y1="18" x2="100" y2="162" stroke="rgba(139,92,246,.12)" stroke-width=".8"/>
+        <line x1="38" y1="54" x2="162" y2="126" stroke="rgba(139,92,246,.12)" stroke-width=".8"/>
+        <line x1="162" y1="54" x2="38" y2="126" stroke="rgba(139,92,246,.12)" stroke-width=".8"/>
+        <!-- T1数据：美观97 科技95 速度72 数据68 易读78 创意90 -->
+        <polygon points="100,20 160,57 148,124 100,158 44,122 46,57" fill="rgba(139,92,246,.18)" stroke="#8b5cf6" stroke-width="1.5"/>
+        <!-- T4数据：美观75 科技70 速度88 数据96 易读94 创意65 -->
+        <polygon points="100,32 143,60 138,115 100,145 54,110 58,62" fill="rgba(16,185,129,.12)" stroke="#10b981" stroke-width="1.2" stroke-dasharray="4,2"/>
+        <!-- 标签 -->
+        <text x="100" y="13" text-anchor="middle" font-size="8" fill="#c4b5fd">美观度</text>
+        <text x="168" y="52" font-size="8" fill="#c4b5fd">科技感</text>
+        <text x="168" y="132" font-size="8" fill="#c4b5fd">速度感</text>
+        <text x="100" y="148" text-anchor="middle" font-size="8" fill="#c4b5fd">数据力</text>
+        <text x="22" y="132" font-size="8" fill="#c4b5fd" text-anchor="end">易读性</text>
+        <text x="22" y="52" font-size="8" fill="#c4b5fd" text-anchor="end">创意感</text>
+        <!-- 图例 -->
+        <line x1="36" y1="142" x2="48" y2="142" stroke="#8b5cf6" stroke-width="1.5"/>
+        <text x="51" y="145" font-size="7.5" fill="#c4b5fd">T1</text>
+        <line x1="68" y1="142" x2="80" y2="142" stroke="#10b981" stroke-width="1.2" stroke-dasharray="4,2"/>
+        <text x="83" y="145" font-size="7.5" fill="#6ee7b7">T4</text>
+      </svg>
+    </div>
+
+    <!-- ② 甘特图 -->
+    <div class="card">
+      <div class="ch">甘特图 · 项目进度规划</div>
+      <div class="cb">报告生成 <b style="color:var(--t)">6</b> 阶段项目计划，读规范和内容规划并行执行，总工期 <b style="color:var(--t)">W1–W4</b>，预计节省 <b style="color:var(--t)">60%</b> PPT 制作时间。</div>
+      <svg viewBox="0 0 270 118" style="width:100%;height:118px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+        <!-- 标题行 -->
+        <text x="0" y="10" font-size="8" fill="#7c3aed" font-weight="600">任务</text>
+        <text x="70" y="10" font-size="8" fill="#7c3aed">W1</text>
+        <text x="110" y="10" font-size="8" fill="#7c3aed">W2</text>
+        <text x="150" y="10" font-size="8" fill="#7c3aed">W3</text>
+        <text x="190" y="10" font-size="8" fill="#7c3aed">W4</text>
+        <line x1="60" y1="12" x2="270" y2="12" stroke="rgba(139,92,246,.2)" stroke-width=".8"/>
+        <!-- 分隔线 -->
+        <line x1="66" y1="13" x2="66" y2="118" stroke="rgba(139,92,246,.1)" stroke-width=".6"/>
+        <line x1="106" y1="13" x2="106" y2="118" stroke="rgba(139,92,246,.1)" stroke-width=".6"/>
+        <line x1="146" y1="13" x2="146" y2="118" stroke="rgba(139,92,246,.1)" stroke-width=".6"/>
+        <line x1="186" y1="13" x2="186" y2="118" stroke="rgba(139,92,246,.1)" stroke-width=".6"/>
+        <!-- 任务1 -->
+        <text x="0" y="26" font-size="8.5" fill="#c4b5fd">读取规范</text>
+        <rect x="68" y="17" width="76" height="11" rx="2" fill="#8b5cf6" opacity=".85"/>
+        <text x="106" y="25" text-anchor="middle" font-size="7.5" fill="white">W1–W2</text>
+        <!-- 任务2 -->
+        <text x="0" y="43" font-size="8.5" fill="#c4b5fd">主题规划</text>
+        <rect x="108" y="34" width="76" height="11" rx="2" fill="#8b5cf6" opacity=".85"/>
+        <text x="146" y="42" text-anchor="middle" font-size="7.5" fill="white">W2–W3</text>
+        <!-- 任务3 -->
+        <text x="0" y="60" font-size="8.5" fill="#c4b5fd">逐页生成</text>
+        <rect x="108" y="51" width="118" height="11" rx="2" fill="#3b82f6" opacity=".85"/>
+        <text x="167" y="59" text-anchor="middle" font-size="7.5" fill="white">W2–W4</text>
+        <!-- 任务4 -->
+        <text x="0" y="77" font-size="8.5" fill="#c4b5fd">质量核查</text>
+        <rect x="188" y="68" width="38" height="11" rx="2" fill="#f59e0b" opacity=".85"/>
+        <text x="207" y="76" text-anchor="middle" font-size="7.5" fill="white">W4</text>
+        <!-- 任务5 -->
+        <text x="0" y="94" font-size="8.5" fill="#c4b5fd">截图渲染</text>
+        <rect x="188" y="85" width="38" height="11" rx="2" fill="#10b981" opacity=".85"/>
+        <text x="207" y="93" text-anchor="middle" font-size="7.5" fill="white">W4</text>
+        <!-- 任务6 -->
+        <text x="0" y="111" font-size="8.5" fill="#c4b5fd">输出交付</text>
+        <rect x="226" y="102" width="38" height="11" rx="2" fill="#f472b6" opacity=".85"/>
+        <text x="245" y="110" text-anchor="middle" font-size="7.5" fill="white">W4末</text>
+      </svg>
+    </div>
+
+    <!-- ③ 热力矩阵图 -->
+    <div class="card">
+      <div class="ch">热力矩阵 · 配色模板适配度</div>
+      <div class="cb">7套配色 × 6种模板适配热力图，颜色越深表示适配度越高。T1 + 任意配色均可 = <b style="color:var(--t)">100%</b>。</div>
+      <svg viewBox="0 0 270 108" style="width:100%;height:108px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+        <!-- 行标签 (模板) -->
+        <text x="20" y="28" font-size="8" fill="#7c3aed" text-anchor="end">T1</text>
+        <text x="20" y="44" font-size="8" fill="#7c3aed" text-anchor="end">T2</text>
+        <text x="20" y="60" font-size="8" fill="#7c3aed" text-anchor="end">T3</text>
+        <text x="20" y="76" font-size="8" fill="#7c3aed" text-anchor="end">T4</text>
+        <text x="20" y="92" font-size="8" fill="#7c3aed" text-anchor="end">T5</text>
+        <text x="20" y="108" font-size="8" fill="#7c3aed" text-anchor="end">T6</text>
+        <!-- 列标签 (配色) -->
+        <text x="37" y="14" font-size="7.5" fill="#7c3aed" text-anchor="middle">蓝</text>
+        <text x="72" y="14" font-size="7.5" fill="#7c3aed" text-anchor="middle">红</text>
+        <text x="107" y="14" font-size="7.5" fill="#7c3aed" text-anchor="middle">橙</text>
+        <text x="142" y="14" font-size="7.5" fill="#7c3aed" text-anchor="middle">绿</text>
+        <text x="177" y="14" font-size="7.5" fill="#7c3aed" text-anchor="middle">紫</text>
+        <text x="212" y="14" font-size="7.5" fill="#7c3aed" text-anchor="middle">青</text>
+        <text x="247" y="14" font-size="7.5" fill="#7c3aed" text-anchor="middle">粉</text>
+        <!-- T1行: 全部高适配 -->
+        <rect x="23" y="18" width="27" height="13" rx="1" fill="#8b5cf6" opacity=".9"/><text x="37" y="28" font-size="7" fill="white" text-anchor="middle">95</text>
+        <rect x="58" y="18" width="27" height="13" rx="1" fill="#8b5cf6" opacity=".9"/><text x="72" y="28" font-size="7" fill="white" text-anchor="middle">95</text>
+        <rect x="93" y="18" width="27" height="13" rx="1" fill="#8b5cf6" opacity=".9"/><text x="107" y="28" font-size="7" fill="white" text-anchor="middle">95</text>
+        <rect x="128" y="18" width="27" height="13" rx="1" fill="#8b5cf6" opacity=".9"/><text x="142" y="28" font-size="7" fill="white" text-anchor="middle">95</text>
+        <rect x="163" y="18" width="27" height="13" rx="1" fill="#7c3aed" opacity=".95"/><text x="177" y="28" font-size="7" fill="white" text-anchor="middle">98</text>
+        <rect x="198" y="18" width="27" height="13" rx="1" fill="#8b5cf6" opacity=".9"/><text x="212" y="28" font-size="7" fill="white" text-anchor="middle">95</text>
+        <rect x="233" y="18" width="27" height="13" rx="1" fill="#8b5cf6" opacity=".85"/><text x="247" y="28" font-size="7" fill="white" text-anchor="middle">90</text>
+        <!-- T2行 -->
+        <rect x="23" y="34" width="27" height="13" rx="1" fill="#3b82f6" opacity=".7"/><text x="37" y="44" font-size="7" fill="white" text-anchor="middle">75</text>
+        <rect x="58" y="34" width="27" height="13" rx="1" fill="#ef4444" opacity=".8"/><text x="72" y="44" font-size="7" fill="white" text-anchor="middle">88</text>
+        <rect x="93" y="34" width="27" height="13" rx="1" fill="#f59e0b" opacity=".8"/><text x="107" y="44" font-size="7" fill="white" text-anchor="middle">85</text>
+        <rect x="128" y="34" width="27" height="13" rx="1" fill="#10b981" opacity=".8"/><text x="142" y="44" font-size="7" fill="white" text-anchor="middle">90</text>
+        <rect x="163" y="34" width="27" height="13" rx="1" fill="#8b5cf6" opacity=".75"/><text x="177" y="44" font-size="7" fill="white" text-anchor="middle">82</text>
+        <rect x="198" y="34" width="27" height="13" rx="1" fill="#06b6d4" opacity=".75"/><text x="212" y="44" font-size="7" fill="white" text-anchor="middle">83</text>
+        <rect x="233" y="34" width="27" height="13" rx="1" fill="#f472b6" opacity=".8"/><text x="247" y="44" font-size="7" fill="white" text-anchor="middle">87</text>
+        <!-- T3行 -->
+        <rect x="23" y="50" width="27" height="13" rx="1" fill="#3b82f6" opacity=".5"/><text x="37" y="60" font-size="7" fill="#c4b5fd" text-anchor="middle">55</text>
+        <rect x="58" y="50" width="27" height="13" rx="1" fill="#ef4444" opacity=".45"/><text x="72" y="60" font-size="7" fill="#c4b5fd" text-anchor="middle">50</text>
+        <rect x="93" y="50" width="27" height="13" rx="1" fill="#f59e0b" opacity=".45"/><text x="107" y="60" font-size="7" fill="#c4b5fd" text-anchor="middle">50</text>
+        <rect x="128" y="50" width="27" height="13" rx="1" fill="#10b981" opacity=".7"/><text x="142" y="60" font-size="7" fill="white" text-anchor="middle">78</text>
+        <rect x="163" y="50" width="27" height="13" rx="1" fill="#8b5cf6" opacity=".5"/><text x="177" y="60" font-size="7" fill="#c4b5fd" text-anchor="middle">55</text>
+        <rect x="198" y="50" width="27" height="13" rx="1" fill="#06b6d4" opacity=".75"/><text x="212" y="60" font-size="7" fill="white" text-anchor="middle">82</text>
+        <rect x="233" y="50" width="27" height="13" rx="1" fill="#3b82f6" opacity=".35"/><text x="247" y="60" font-size="7" fill="#c4b5fd" text-anchor="middle">38</text>
+        <!-- T4行 -->
+        <rect x="23" y="66" width="27" height="13" rx="1" fill="#3b82f6" opacity=".85"/><text x="37" y="76" font-size="7" fill="white" text-anchor="middle">92</text>
+        <rect x="58" y="66" width="27" height="13" rx="1" fill="#ef4444" opacity=".4"/><text x="72" y="76" font-size="7" fill="#c4b5fd" text-anchor="middle">44</text>
+        <rect x="93" y="66" width="27" height="13" rx="1" fill="#f59e0b" opacity=".55"/><text x="107" y="76" font-size="7" fill="white" text-anchor="middle">62</text>
+        <rect x="128" y="66" width="27" height="13" rx="1" fill="#10b981" opacity=".85"/><text x="142" y="76" font-size="7" fill="white" text-anchor="middle">91</text>
+        <rect x="163" y="66" width="27" height="13" rx="1" fill="#8b5cf6" opacity=".7"/><text x="177" y="76" font-size="7" fill="white" text-anchor="middle">76</text>
+        <rect x="198" y="66" width="27" height="13" rx="1" fill="#06b6d4" opacity=".9"/><text x="212" y="76" font-size="7" fill="white" text-anchor="middle">97</text>
+        <rect x="233" y="66" width="27" height="13" rx="1" fill="#f472b6" opacity=".45"/><text x="247" y="76" font-size="7" fill="#c4b5fd" text-anchor="middle">50</text>
+        <!-- T5行 -->
+        <rect x="23" y="82" width="27" height="13" rx="1" fill="#3b82f6" opacity=".7"/><text x="37" y="92" font-size="7" fill="white" text-anchor="middle">75</text>
+        <rect x="58" y="82" width="27" height="13" rx="1" fill="#ef4444" opacity=".5"/><text x="72" y="92" font-size="7" fill="#c4b5fd" text-anchor="middle">55</text>
+        <rect x="93" y="82" width="27" height="13" rx="1" fill="#f59e0b" opacity=".82"/><text x="107" y="92" font-size="7" fill="white" text-anchor="middle">88</text>
+        <rect x="128" y="82" width="27" height="13" rx="1" fill="#10b981" opacity=".6"/><text x="142" y="92" font-size="7" fill="white" text-anchor="middle">65</text>
+        <rect x="163" y="82" width="27" height="13" rx="1" fill="#8b5cf6" opacity=".6"/><text x="177" y="92" font-size="7" fill="white" text-anchor="middle">65</text>
+        <rect x="198" y="82" width="27" height="13" rx="1" fill="#06b6d4" opacity=".45"/><text x="212" y="92" font-size="7" fill="#c4b5fd" text-anchor="middle">50</text>
+        <rect x="233" y="82" width="27" height="13" rx="1" fill="#f472b6" opacity=".75"/><text x="247" y="92" font-size="7" fill="white" text-anchor="middle">80</text>
+        <!-- T6行 -->
+        <rect x="23" y="98" width="27" height="13" rx="1" fill="#3b82f6" opacity=".35"/><text x="37" y="108" font-size="7" fill="#c4b5fd" text-anchor="middle">38</text>
+        <rect x="58" y="98" width="27" height="13" rx="1" fill="#ff2d78" opacity=".8"/><text x="72" y="108" font-size="7" fill="white" text-anchor="middle">88</text>
+        <rect x="93" y="98" width="27" height="13" rx="1" fill="#f59e0b" opacity=".4"/><text x="107" y="108" font-size="7" fill="#c4b5fd" text-anchor="middle">44</text>
+        <rect x="128" y="98" width="27" height="13" rx="1" fill="#3b82f6" opacity=".3"/><text x="142" y="108" font-size="7" fill="#c4b5fd" text-anchor="middle">33</text>
+        <rect x="163" y="98" width="27" height="13" rx="1" fill="#8b5cf6" opacity=".75"/><text x="177" y="108" font-size="7" fill="white" text-anchor="middle">82</text>
+        <rect x="198" y="98" width="27" height="13" rx="1" fill="#00ffe7" opacity=".5"/><text x="212" y="108" font-size="7" fill="white" text-anchor="middle">55</text>
+        <rect x="233" y="98" width="27" height="13" rx="1" fill="#f472b6" opacity=".55"/><text x="247" y="108" font-size="7" fill="white" text-anchor="middle">60</text>
+      </svg>
+    </div>
+
+    <!-- ④ 时间轴 横向 -->
+    <div class="card">
+      <div class="ch">时间轴 · 技术演进史</div>
+      <div class="cb">PPT 可视化技术 <b style="color:var(--t)">2018–2025</b> 演进路线，HTML+CSS 方案 <b style="color:var(--t)">2022</b> 后成主流，2024 年 AI 驱动自动生成出现，效率提升 <b style="color:var(--t)">85%</b>。</div>
+      <svg viewBox="0 0 270 80" style="width:100%;height:80px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+        <line x1="8" y1="35" x2="265" y2="35" stroke="#4c1d95" stroke-width="1.5"/>
+        <!-- 节点1 -->
+        <circle cx="30" cy="35" r="6" fill="#8b5cf6"/>
+        <line x1="30" y1="29" x2="30" y2="18" stroke="#8b5cf6" stroke-width=".8"/>
+        <text x="30" y="14" text-anchor="middle" font-size="8" fill="#8b5cf6" font-weight="700">2018</text>
+        <text x="30" y="50" text-anchor="middle" font-size="7.5" fill="#7c3aed">传统PPT</text>
+        <text x="30" y="60" text-anchor="middle" font-size="7" fill="#4c1d95">手动设计</text>
+        <!-- 节点2 -->
+        <circle cx="85" cy="35" r="6" fill="#8b5cf6"/>
+        <line x1="85" y1="41" x2="85" y2="52" stroke="#8b5cf6" stroke-width=".8"/>
+        <text x="85" y="57" text-anchor="middle" font-size="8" fill="#8b5cf6" font-weight="700">2020</text>
+        <text x="85" y="14" text-anchor="middle" font-size="7.5" fill="#c4b5fd">模板库</text>
+        <text x="85" y="23" text-anchor="middle" font-size="7" fill="#7c3aed">标准化</text>
+        <!-- 节点3 -->
+        <circle cx="155" cy="35" r="7" fill="#3b82f6"/>
+        <line x1="155" y1="28" x2="155" y2="17" stroke="#3b82f6" stroke-width=".8"/>
+        <text x="155" y="13" text-anchor="middle" font-size="8" fill="#93c5fd" font-weight="700">2022</text>
+        <text x="155" y="50" text-anchor="middle" font-size="7.5" fill="#c4b5fd">HTML/CSS</text>
+        <text x="155" y="60" text-anchor="middle" font-size="7" fill="#7c3aed">像素精准</text>
+        <!-- 节点4 -->
+        <circle cx="218" cy="35" r="7" fill="#f472b6"/>
+        <line x1="218" y1="41" x2="218" y2="52" stroke="#f472b6" stroke-width=".8"/>
+        <text x="218" y="57" text-anchor="middle" font-size="8" fill="#f472b6" font-weight="700">2024</text>
+        <text x="218" y="15" text-anchor="middle" font-size="7.5" fill="#f9a8d4">AI驱动</text>
+        <text x="218" y="24" text-anchor="middle" font-size="7" fill="#7c3aed">自动生成</text>
+        <!-- 箭头末端 -->
+        <polygon points="262,32 268,35 262,38" fill="#4c1d95"/>
+        <text x="265" y="27" font-size="7" fill="#f472b6" text-anchor="end">+85%</text>
+        <text x="265" y="35" font-size="7" fill="#4c1d95" text-anchor="end">效率</text>
+      </svg>
+      <div style="display:flex;gap:5px;flex-shrink:0">
+        <div style="flex:1;background:var(--pm);border:1px solid var(--bd);border-radius:3px;padding:3px 6px;text-align:center"><div style="font-size:12px;font-weight:800;color:#8b5cf6;line-height:1">7年</div><div style="font-size:8px;color:var(--dt)">演进跨度</div></div>
+        <div style="flex:1;background:var(--pm);border:1px solid var(--bd);border-radius:3px;padding:3px 6px;text-align:center"><div style="font-size:12px;font-weight:800;color:#3b82f6;line-height:1">4代</div><div style="font-size:8px;color:var(--dt)">技术迭代</div></div>
+        <div style="flex:1;background:var(--pm);border:1px solid var(--bd);border-radius:3px;padding:3px 6px;text-align:center"><div style="font-size:12px;font-weight:800;color:#f472b6;line-height:1">85%</div><div style="font-size:8px;color:var(--dt)">效率提升</div></div>
+      </div>
+    </div>
+
+    <!-- ⑤ 多列进度仪表 -->
+    <div class="card">
+      <div class="ch">多维仪表盘 · 多指标对比</div>
+      <div class="cb">6 项核心指标综合评分，<b style="color:var(--t)">视觉密度</b>达标 <b style="color:var(--t)">91%</b>，<b style="color:var(--t)">图表多样性</b>达 <b style="color:var(--t)">87%</b>，整体质量均超过 <b style="color:var(--t)">75%</b> 基准线。</div>
+      <!-- 环形仪表 + 指标列表 -->
+      <div style="display:flex;gap:8px;flex-shrink:0;margin-top:3px">
+        <svg viewBox="0 0 80 80" style="width:78px;height:78px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+          <!-- 大圆弧 91% -->
+          <circle cx="40" cy="40" r="30" fill="none" stroke="rgba(139,92,246,.1)" stroke-width="8"/>
+          <circle cx="40" cy="40" r="30" fill="none" stroke="#8b5cf6" stroke-width="8" stroke-dasharray="171 188" stroke-dashoffset="47" transform="rotate(-90 40 40)"/>
+          <text x="40" y="38" text-anchor="middle" font-size="13" font-weight="800" fill="#f5f3ff">91%</text>
+          <text x="40" y="50" text-anchor="middle" font-size="7.5" fill="#7c3aed">综合评分</text>
+        </svg>
+        <div style="flex:1;display:flex;flex-direction:column;gap:4px;padding-top:2px">
+          <div style="display:flex;align-items:center;gap:5px;font-size:9.5px"><span style="width:52px;color:#c4b5fd">视觉密度</span><div style="flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden"><div style="width:91%;height:100%;background:#8b5cf6;border-radius:3px"></div></div><b style="color:#c4b5fd;width:24px;text-align:right">91%</b></div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:9.5px"><span style="width:52px;color:#c4b5fd">图表多样</span><div style="flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden"><div style="width:87%;height:100%;background:#3b82f6;border-radius:3px"></div></div><b style="color:#93c5fd;width:24px;text-align:right">87%</b></div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:9.5px"><span style="width:52px;color:#c4b5fd">配色协调</span><div style="flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden"><div style="width:94%;height:100%;background:#10b981;border-radius:3px"></div></div><b style="color:#6ee7b7;width:24px;text-align:right">94%</b></div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:9.5px"><span style="width:52px;color:#c4b5fd">内容丰富</span><div style="flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden"><div style="width:88%;height:100%;background:#f59e0b;border-radius:3px"></div></div><b style="color:#fcd34d;width:24px;text-align:right">88%</b></div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:9.5px"><span style="width:52px;color:#c4b5fd">布局多样</span><div style="flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden"><div style="width:80%;height:100%;background:#f472b6;border-radius:3px"></div></div><b style="color:#f9a8d4;width:24px;text-align:right">80%</b></div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:9.5px"><span style="width:52px;color:#c4b5fd">溢出检测</span><div style="flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden"><div style="width:100%;height:100%;background:#3fb950;border-radius:3px"></div></div><b style="color:#6ee7b7;width:24px;text-align:right">100%</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑥ 瀑布图/差值图 -->
+    <div class="card">
+      <div class="ch">瀑布图 · 增减分析</div>
+      <div class="cb">报告质量得分构成分析，基准分 <b style="color:var(--t)">60</b> 分，图表丰富度 <b style="color:var(--t)">+18</b>，内容密度 <b style="color:var(--t)">+12</b>，最终综合得分 <b style="color:var(--t)">96</b> 分。</div>
+      <svg viewBox="0 0 270 108" style="width:100%;height:108px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+        <line x1="18" y1="8" x2="18" y2="75" stroke="#4c1d95" stroke-width="1"/>
+        <line x1="18" y1="75" x2="268" y2="75" stroke="#4c1d95" stroke-width="1"/>
+        <!-- 基准柱 60 -->
+        <rect x="22" y="35" width="28" height="40" rx="2" fill="#4c1d95" opacity=".8"/>
+        <text x="36" y="31" font-size="8.5" fill="#c4b5fd" text-anchor="middle">60</text>
+        <text x="36" y="86" font-size="8" fill="#7c3aed" text-anchor="middle">基准</text>
+        <!-- 连接线 -->
+        <line x1="50" y1="35" x2="58" y2="35" stroke="#4c1d95" stroke-width=".8" stroke-dasharray="2,2"/>
+        <!-- +18图表 -->
+        <rect x="58" y="23" width="28" height="12" rx="2" fill="#10b981" opacity=".85"/>
+        <text x="72" y="32" font-size="8.5" fill="white" text-anchor="middle">+18</text>
+        <text x="72" y="86" font-size="8" fill="#7c3aed" text-anchor="middle">图表</text>
+        <line x1="86" y1="23" x2="94" y2="23" stroke="#4c1d95" stroke-width=".8" stroke-dasharray="2,2"/>
+        <!-- +12内容 -->
+        <rect x="94" y="13" width="28" height="10" rx="2" fill="#10b981" opacity=".85"/>
+        <text x="108" y="21" font-size="8.5" fill="white" text-anchor="middle">+12</text>
+        <text x="108" y="86" font-size="8" fill="#7c3aed" text-anchor="middle">内容</text>
+        <line x1="122" y1="13" x2="130" y2="13" stroke="#4c1d95" stroke-width=".8" stroke-dasharray="2,2"/>
+        <!-- +8配色 -->
+        <rect x="130" y="7" width="28" height="6" rx="2" fill="#10b981" opacity=".85"/>
+        <text x="144" y="14" font-size="8.5" fill="white" text-anchor="middle">+8</text>
+        <text x="144" y="86" font-size="8" fill="#7c3aed" text-anchor="middle">配色</text>
+        <line x1="158" y1="7" x2="166" y2="7" stroke="#4c1d95" stroke-width=".8" stroke-dasharray="2,2"/>
+        <!-- -2缺陷 -->
+        <rect x="166" y="7" width="28" height="4" rx="2" fill="#ef4444" opacity=".75"/>
+        <text x="180" y="14" font-size="8" fill="white" text-anchor="middle">-2</text>
+        <text x="180" y="86" font-size="8" fill="#7c3aed" text-anchor="middle">扣分</text>
+        <line x1="194" y1="11" x2="202" y2="11" stroke="#4c1d95" stroke-width=".8" stroke-dasharray="2,2"/>
+        <!-- 合计 96 -->
+        <rect x="202" y="11" width="28" height="64" rx="2" fill="#8b5cf6" opacity=".85"/>
+        <text x="216" y="7" font-size="8.5" fill="#f5f3ff" text-anchor="middle" font-weight="700">96</text>
+        <text x="216" y="86" font-size="8" fill="#c4b5fd" text-anchor="middle">综合</text>
+        <!-- Y轴 -->
+        <text x="14" y="75" font-size="7.5" fill="#4c1d95" text-anchor="end">0</text>
+        <text x="14" y="35" font-size="7.5" fill="#4c1d95" text-anchor="end">60</text>
+        <text x="14" y="11" font-size="7.5" fill="#8b5cf6" text-anchor="end">96</text>
+      </svg>
+    </div>
+
+  </div>
+</div>
+<!-- SUMMARY 48px -->
+<div class="sm">
+  <div style="width:3px;height:22px;background:linear-gradient(180deg,#8b5cf6,#f472b6);border-radius:2px;flex-shrink:0"></div>
+  <div style="font-size:11px;color:var(--mt)">图表库 Part 2：<b style="color:var(--t)">雷达图</b>·<b style="color:var(--t)">甘特图</b>·<b style="color:var(--t)">热力矩阵</b>·<b style="color:var(--t)">横向时间轴</b>·<b style="color:var(--t)">环形仪表</b>·<b style="color:var(--t)">瀑布图</b>，纯 SVG 实现，零依赖，截图无损，所有坐标精确计算。</div>
+</div>
+<!-- FOOTER 20px -->
+<div class="ft" style="border-top:1px solid rgba(139,92,246,.06)">
+  <span style="font-size:9px;color:#2e1065;letter-spacing:1px;text-transform:uppercase">Chart Gallery · Radar / Gantt / Heatmap / Timeline · Pure SVG</span>
+  <div style="display:flex;align-items:center;gap:6px"><div style="width:90px;height:3px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden"><div style="width:30%;height:100%;background:var(--p);border-radius:2px"></div></div><span style="font-size:9px;color:var(--dt);font-family:monospace">03/10</span></div>
+</div>
+</body>
+</html>

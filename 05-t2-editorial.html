@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1017px;height:720px;min-width:1017px;max-width:1017px;min-height:720px;max-height:720px;overflow:hidden;font-size:12px;line-height:1.45;font-family:'PingFang SC','Microsoft YaHei',sans-serif;position:relative}
+/* T2 背景 - 红/攻击主题 */
+.bg-d{position:absolute;top:0;left:0;width:1017px;height:720px;background:#130505}
+.bg-l{position:absolute;top:0;right:0;width:650px;height:720px;background:#fff9f9;clip-path:polygon(52px 0,100% 0,100% 100%,0 100%)}
+.stripe{position:absolute;top:0;left:327px;width:28px;height:720px;background:linear-gradient(180deg,#dc2626,#ef4444,#f87171)}
+.page{position:relative;z-index:10;width:1017px;height:720px;display:flex}
+.lc{width:325px;flex-shrink:0;padding:22px 18px 18px 24px;display:flex;flex-direction:column}
+.rc{flex:1;padding:16px 18px 14px 42px;display:flex;flex-direction:column;gap:7px;overflow:hidden}
+.bt{font-size:46px;font-weight:900;line-height:.92;letter-spacing:-2px;color:#fff1f1}
+.ba{color:#f87171;text-shadow:0 2px 20px rgba(239,68,68,.3)}
+.ls-i{border-left:2px solid #ef4444;padding:3px 0 3px 11px;margin-bottom:6px}
+.ls-n{font-size:24px;font-weight:900;line-height:1;letter-spacing:-1px;color:#fef2f2}
+.ls-l{font-size:8.5px;color:#fca5a5;margin-top:1px}
+.eb{font-size:8.5px;letter-spacing:2.5px;text-transform:uppercase;color:#ef4444;margin-bottom:12px;display:flex;align-items:center;gap:7px}
+/* 右栏卡片 */
+.cl{background:#fff;border-radius:5px;box-shadow:0 1px 3px rgba(0,0,0,.07),0 0 0 1px rgba(0,0,0,.04);padding:9px 11px}
+.cd{background:#1e0a0a;border-radius:5px;padding:9px 11px;border:1px solid rgba(239,68,68,.15)}
+.ca{background:linear-gradient(135deg,#dc2626,#ef4444);border-radius:5px;padding:9px 11px}
+.hl{font-size:11.5px;font-weight:700;color:#111827;margin-bottom:3px}
+.hd{font-size:11.5px;font-weight:700;color:#fef2f2;margin-bottom:3px}
+.ha{font-size:11.5px;font-weight:700;color:#fff;margin-bottom:3px}
+.bl{font-size:10.5px;line-height:1.4;color:#374151}
+.bd2{font-size:10.5px;line-height:1.4;color:#fca5a5}
+.ba2{font-size:10.5px;line-height:1.4;color:#fce7e7}
+.tg{display:inline-block;padding:1px 6px;border-radius:2px;font-size:8.5px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="bg-d"></div>
+<div class="bg-l"></div>
+<div class="stripe"></div>
+<div class="page">
+  <!-- 左栏 -->
+  <div class="lc">
+    <div class="eb"><div style="width:5px;height:5px;border-radius:50%;background:#ef4444;box-shadow:0 0 6px rgba(239,68,68,.9)"></div>T2 EDITORIAL SPLIT · 05/10</div>
+    <div class="bt">T2<br><span class="ba">编辑</span><br>分割</div>
+    <div style="height:1px;background:linear-gradient(90deg,rgba(239,68,68,.5),transparent);margin:12px 0"></div>
+    <div style="font-size:10px;color:#fca5a5;line-height:1.5;margin-bottom:12px">强叙事 · 视觉冲击<br><span style="color:#b91c1c">左暗右亮 clip-path 三层</span></div>
+    <div class="ls-i"><div class="ls-n">330<span style="font-size:14px">px</span></div><div class="ls-l">左栏暗色宽度</div></div>
+    <div class="ls-i"><div class="ls-n" style="color:#f87171">28<span style="font-size:14px">px</span></div><div class="ls-l">渐变色条宽度</div></div>
+    <div class="ls-i"><div class="ls-n" style="color:#fca5a5">clip</div><div class="ls-l">斜切分割技术</div></div>
+    <div class="ls-i"><div class="ls-n" style="color:#fcd34d">3类</div><div class="ls-l">卡片：白/深/彩</div></div>
+    <div style="flex:1"></div>
+    <div style="font-size:8.5px;color:#7f1d1d;letter-spacing:1px">Editorial Split · Attack/Risk Theme</div>
+  </div>
+  <!-- 右栏 -->
+  <div class="rc">
+    <!-- 顶部标题 -->
+    <div style="display:flex;align-items:baseline;justify-content:space-between;flex-shrink:0;margin-bottom:2px">
+      <div>
+        <div style="font-size:14px;font-weight:900;color:#111827;letter-spacing:-.5px">T2 模板 · 商业竞争分析报告 示范页</div>
+        <div style="font-size:9.5px;color:#9ca3af;margin-top:1px">适用：案例分析 · 方案对比 · 竞品研究 · 风险评估</div>
+      </div>
+      <span class="tg" style="background:#ef4444;color:#fff">T2</span>
+    </div>
+
+    <!-- 行1: 2格 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;flex-shrink:0">
+      <div class="cl">
+        <div class="hl">市场竞争格局 · 2025</div>
+        <div class="bl">头部 <b>3</b> 家占据 <b>67%</b> 市场份额，新兴玩家凭借 AI 驱动方案快速蚕食，传统工具市场份额年均下滑 <b>8.4%</b>，转型窗口期仅剩 <b>18</b> 个月。</div>
+        <svg viewBox="0 0 230 34" style="width:100%;height:34px;margin-top:4px" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="10" font-size="8" fill="#9ca3af">领头者</text>
+          <rect x="44" y="2" width="150" height="9" rx="2" fill="#ef4444" opacity=".8"/>
+          <text x="198" y="10" font-size="8" fill="#ef4444">67%</text>
+          <text x="0" y="24" font-size="8" fill="#9ca3af">新兴</text>
+          <rect x="44" y="16" width="63" height="9" rx="2" fill="#3b82f6" opacity=".8"/>
+          <text x="111" y="25" font-size="8" fill="#3b82f6">28%</text>
+          <text x="0" y="38" font-size="8" fill="#9ca3af">其他</text>
+          <rect x="44" y="30" width="11" height="9" rx="2" fill="#9ca3af" opacity=".7"/>
+          <text x="59" y="39" font-size="8" fill="#9ca3af">5%</text>
+        </svg>
+      </div>
+      <div class="cd">
+        <div class="hd">关键威胁矩阵</div>
+        <div class="bd2">识别出 <b style="color:#fef2f2">4</b> 类高优先级威胁：<b style="color:#fef2f2">AI替代</b>（概率85%）、<b style="color:#fef2f2">价格战</b>（概率72%）、<b style="color:#fef2f2">人才流失</b>（概率60%）、<b style="color:#fef2f2">技术过时</b>（概率55%）。</div>
+        <div style="display:flex;gap:4px;margin-top:4px">
+          <div style="flex:1;padding:3px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);border-radius:3px;text-align:center;font-size:8.5px;color:#f87171">AI替代<br><b>85%</b></div>
+          <div style="flex:1;padding:3px;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);border-radius:3px;text-align:center;font-size:8.5px;color:#fcd34d">价格战<br><b>72%</b></div>
+          <div style="flex:1;padding:3px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:3px;text-align:center;font-size:8.5px;color:#fcd34d">人才<br><b>60%</b></div>
+          <div style="flex:1;padding:3px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:3px;text-align:center;font-size:8.5px;color:#fca5a5">技术<br><b>55%</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 行2: 3格 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;flex-shrink:0">
+      <div class="cl">
+        <div class="hl">SWOT 优势</div>
+        <div class="bl" style="font-size:10px">品牌认知度 <b>82分</b>，技术储备领先竞品 <b>14个月</b>，用户留存率 <b>91%</b> 行业最高。</div>
+        <div style="margin-top:4px;display:flex;gap:3px">
+          <span class="tg" style="background:rgba(16,185,129,.15);color:#059669;border:1px solid rgba(16,185,129,.3)">品牌</span>
+          <span class="tg" style="background:rgba(16,185,129,.15);color:#059669;border:1px solid rgba(16,185,129,.3)">技术</span>
+          <span class="tg" style="background:rgba(16,185,129,.15);color:#059669;border:1px solid rgba(16,185,129,.3)">用户</span>
+        </div>
+      </div>
+      <div class="ca">
+        <div class="ha">战略重点</div>
+        <div class="ba2" style="font-size:10px">加速 AI 化转型，<b style="color:#fff">Q2</b> 完成核心功能替换，目标新增用户 <b style="color:#fff">+40%</b>，降本 <b style="color:#fff">-25%</b>。</div>
+      </div>
+      <div class="cl">
+        <div class="hl">执行路线</div>
+        <div class="bl" style="font-size:10px">月1：调研评估。月2–3：MVP开发。月4：灰度发布。月5–6：全量上线，目标 <b>NPS≥70</b>。</div>
+        <div style="margin-top:4px;height:4px;background:#e5e7eb;border-radius:2px;overflow:hidden"><div style="width:35%;height:100%;background:#ef4444;border-radius:2px"></div></div>
+        <div style="font-size:8px;color:#9ca3af;margin-top:1px">进度 35% · M2/6</div>
+      </div>
+    </div>
+
+    <!-- 行3 大宽卡 -->
+    <div class="cl" style="flex:1;display:flex;flex-direction:column">
+      <div class="hl" style="margin-bottom:4px">季度 KPI 追踪 · 6 项核心指标</div>
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px;flex:1;align-items:center">
+        <div style="text-align:center;padding:5px;border:1px solid #fee2e2;border-radius:4px;border-top:3px solid #ef4444"><div style="font-size:18px;font-weight:800;color:#ef4444;line-height:1">2.4M</div><div style="font-size:8px;color:#9ca3af;margin-top:1px">月活用户</div><div style="font-size:8.5px;color:#10b981;margin-top:1px">▲+18%</div></div>
+        <div style="text-align:center;padding:5px;border:1px solid #fecaca;border-radius:4px;border-top:3px solid #f97316"><div style="font-size:18px;font-weight:800;color:#f97316;line-height:1">¥8.6M</div><div style="font-size:8px;color:#9ca3af;margin-top:1px">季度营收</div><div style="font-size:8.5px;color:#10b981;margin-top:1px">▲+32%</div></div>
+        <div style="text-align:center;padding:5px;border:1px solid #fee2e2;border-radius:4px;border-top:3px solid #3b82f6"><div style="font-size:18px;font-weight:800;color:#3b82f6;line-height:1">91%</div><div style="font-size:8px;color:#9ca3af;margin-top:1px">留存率</div><div style="font-size:8.5px;color:#10b981;margin-top:1px">▲+3pp</div></div>
+        <div style="text-align:center;padding:5px;border:1px solid #fee2e2;border-radius:4px;border-top:3px solid #10b981"><div style="font-size:18px;font-weight:800;color:#10b981;line-height:1">4.8★</div><div style="font-size:8px;color:#9ca3af;margin-top:1px">用户评分</div><div style="font-size:8.5px;color:#10b981;margin-top:1px">▲+0.3</div></div>
+        <div style="text-align:center;padding:5px;border:1px solid #fecaca;border-radius:4px;border-top:3px solid #8b5cf6"><div style="font-size:18px;font-weight:800;color:#8b5cf6;line-height:1">68%</div><div style="font-size:8px;color:#9ca3af;margin-top:1px">AI占比</div><div style="font-size:8.5px;color:#10b981;margin-top:1px">▲+28pp</div></div>
+        <div style="text-align:center;padding:5px;border:1px solid #fee2e2;border-radius:4px;border-top:3px solid #ef4444"><div style="font-size:18px;font-weight:800;color:#ef4444;line-height:1">14</div><div style="font-size:8px;color:#9ca3af;margin-top:1px">竞品超越</div><div style="font-size:8.5px;color:#ef4444;margin-top:1px">▼-2项</div></div>
+      </div>
+    </div>
+
+    <!-- 底部摘要 -->
+    <div style="height:38px;display:flex;align-items:center;gap:8px;border-top:1px solid #fee2e2;padding-top:5px;margin-top:-3px;flex-shrink:0">
+      <div style="width:3px;height:20px;background:linear-gradient(180deg,#dc2626,#ef4444);border-radius:2px;flex-shrink:0"></div>
+      <div style="font-size:10.5px;color:#374151"><b style="color:#111827">T2 编辑分割</b>：左栏暗色 <b>#130505</b> + 右栏亮色 <b>#fff9f9</b> + 28px 红色渐变色条，搭配白/深/彩三类卡片混排 + KPI 卡片 + 小图表，适合<b style="color:#dc2626">竞争分析、案例对比、风险评估</b>等强对比叙事页面。</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

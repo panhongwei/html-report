@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1017px;height:720px;min-width:1017px;max-width:1017px;min-height:720px;max-height:720px;overflow:hidden;font-size:12px;line-height:1.45;background:#05080f;font-family:'DM Sans','PingFang SC',sans-serif;color:#e2e8f0;display:flex;flex-direction:column}
+:root{--p:#3b82f6;--pm:rgba(59,130,246,.13);--bd:rgba(59,130,246,.22);--t:#e2e8f0;--mt:#94a3b8;--dt:#64748b}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:100;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E")}
+.g1{position:fixed;width:700px;height:500px;top:-150px;left:-100px;border-radius:50%;pointer-events:none;background:radial-gradient(ellipse,rgba(59,130,246,.07) 0%,transparent 65%)}
+.g2{position:fixed;width:450px;height:350px;bottom:-80px;right:-60px;border-radius:50%;pointer-events:none;background:radial-gradient(ellipse,rgba(139,92,246,.05) 0%,transparent 65%)}
+.hd{height:72px;padding:0 25px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:1px solid rgba(59,130,246,.1)}
+.ct{height:580px;padding:0 22px;overflow:hidden;flex-shrink:0}
+.sm{height:48px;padding:0 25px;display:flex;align-items:center;gap:8px;flex-shrink:0;border-top:1px solid rgba(255,255,255,.05)}
+.ft{height:20px;padding:0 25px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.card{background:rgba(13,17,30,.88);border:1px solid var(--bd);backdrop-filter:blur(6px);border-radius:7px;padding:9px 11px;display:flex;flex-direction:column;gap:4px;position:relative;overflow:hidden}
+.card::before{content:'';display:block;height:1px;flex-shrink:0;background:linear-gradient(90deg,transparent,rgba(59,130,246,.4),transparent);margin:-9px -11px 7px}
+.ch{font-size:11.5px;font-weight:700;color:var(--t);flex-shrink:0;margin-bottom:2px}
+.cb{font-size:10px;line-height:1.42;color:var(--mt);overflow:hidden}
+/* 小色块标签 */
+.tag{display:inline-block;padding:1px 6px;border-radius:2px;font-size:8px;font-weight:700;margin-right:3px;margin-bottom:2px}
+</style>
+</head>
+<body>
+<div class="g1"></div><div class="g2"></div>
+<!-- HEADER 72px -->
+<div class="hd">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div style="width:5px;height:5px;border-radius:50%;background:#3b82f6;box-shadow:0 0 8px rgba(59,130,246,.9)"></div>
+    <span style="font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:#1e3a5f;font-family:monospace">DESIGN PATTERNS · COMPLETE GUIDE</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:14px">
+    <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,#e2e8f0 30%,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">设计模式大全 · 组件速查</div>
+    <span style="font-family:monospace;font-size:11px;color:#1e3a5f">10 / 10</span>
+  </div>
+</div>
+<!-- CONTENT 580px — C布局 3×2 -->
+<div class="ct">
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:8px;height:100%;padding-top:8px">
+
+    <!-- ① 徽章&标签系统 -->
+    <div class="card">
+      <div class="ch">徽章 · 标签 · 状态指示</div>
+      <div class="cb">标签系统覆盖 <b style="color:var(--t)">6</b> 种语义状态：成功/警告/危险/信息/中性/强调，<b style="color:var(--t)">3</b> 种尺寸变体。</div>
+      <!-- 状态徽章 -->
+      <div style="flex-shrink:0">
+        <div style="font-size:8.5px;color:var(--dt);margin-bottom:4px;letter-spacing:1px;text-transform:uppercase">状态标签</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px">
+          <span class="tag" style="background:rgba(16,185,129,.2);color:#10b981;border:1px solid rgba(16,185,129,.4)">● SUCCESS</span>
+          <span class="tag" style="background:rgba(245,158,11,.2);color:#f59e0b;border:1px solid rgba(245,158,11,.4)">⚠ WARNING</span>
+          <span class="tag" style="background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.4)">✕ ERROR</span>
+          <span class="tag" style="background:rgba(59,130,246,.2);color:#3b82f6;border:1px solid rgba(59,130,246,.4)">ℹ INFO</span>
+          <span class="tag" style="background:rgba(100,116,139,.2);color:#94a3b8;border:1px solid rgba(100,116,139,.4)">— NEUTRAL</span>
+          <span class="tag" style="background:rgba(139,92,246,.2);color:#8b5cf6;border:1px solid rgba(139,92,246,.4)">★ PREMIUM</span>
+        </div>
+        <div style="font-size:8.5px;color:var(--dt);margin-bottom:4px;letter-spacing:1px;text-transform:uppercase">徽章数字</div>
+        <div style="display:flex;gap:4px;align-items:center">
+          <div style="background:#ef4444;color:white;font-size:9px;font-weight:800;padding:1px 6px;border-radius:10px;min-width:18px;text-align:center">99+</div>
+          <div style="background:#3b82f6;color:white;font-size:9px;font-weight:800;padding:1px 6px;border-radius:10px">NEW</div>
+          <div style="background:rgba(59,130,246,.15);color:#3b82f6;font-size:9px;font-weight:700;padding:1px 8px;border-radius:10px;border:1px solid rgba(59,130,246,.3)">PRO</div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 5px rgba(16,185,129,.6)"></div>
+          <div style="font-size:8.5px;color:#10b981">在线</div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#ef4444;box-shadow:0 0 5px rgba(239,68,68,.6)"></div>
+          <div style="font-size:8.5px;color:#ef4444">离线</div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#f59e0b;box-shadow:0 0 5px rgba(245,158,11,.6)"></div>
+          <div style="font-size:8.5px;color:#f59e0b">忙碌</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 进度条变体 -->
+    <div class="card">
+      <div class="ch">进度条 · 多形态变体</div>
+      <div class="cb">进度条 <b style="color:var(--t)">5</b> 种形态，支持渐变/分段/条纹/圆形，适配所有数据场景。</div>
+      <div style="display:flex;flex-direction:column;gap:5px;flex:1;justify-content:center">
+        <!-- 基础 -->
+        <div><div style="font-size:8px;color:var(--dt);margin-bottom:2px">基础 72%</div><div style="height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden"><div style="width:72%;height:100%;background:#3b82f6;border-radius:3px"></div></div></div>
+        <!-- 渐变 -->
+        <div><div style="font-size:8px;color:var(--dt);margin-bottom:2px">渐变 88%</div><div style="height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden"><div style="width:88%;height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);border-radius:3px"></div></div></div>
+        <!-- 多色分段 -->
+        <div><div style="font-size:8px;color:var(--dt);margin-bottom:2px">分段 100%</div><div style="height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;display:flex"><div style="width:45%;background:#3b82f6"></div><div style="width:1px;background:rgba(0,0,0,.3)"></div><div style="width:30%;background:#10b981"></div><div style="width:1px;background:rgba(0,0,0,.3)"></div><div style="width:25%;background:#f59e0b"></div></div></div>
+        <!-- 条纹 -->
+        <div><div style="font-size:8px;color:var(--dt);margin-bottom:2px">加载中...</div><div style="height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden"><div style="width:60%;height:100%;background:repeating-linear-gradient(45deg,#3b82f6,#3b82f6 4px,rgba(59,130,246,.5) 4px,rgba(59,130,246,.5) 8px);border-radius:3px"></div></div></div>
+        <!-- 细+粗 -->
+        <div style="display:flex;gap:6px;align-items:center">
+          <div style="flex:1"><div style="font-size:8px;color:var(--dt);margin-bottom:2px">细型 55%</div><div style="height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden"><div style="width:55%;height:100%;background:#8b5cf6;border-radius:2px"></div></div></div>
+          <div style="flex:1"><div style="font-size:8px;color:var(--dt);margin-bottom:2px">粗型 90%</div><div style="height:10px;background:rgba(255,255,255,.06);border-radius:5px;overflow:hidden"><div style="width:90%;height:100%;background:linear-gradient(90deg,#10b981,#06b6d4);border-radius:5px;display:flex;align-items:center;padding-left:6px"><span style="font-size:8px;color:white;font-weight:700">90%</span></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 卡片类型 -->
+    <div class="card">
+      <div class="ch">卡片类型 · 6种变体</div>
+      <div class="cb">卡片是核心容器单元，<b style="color:var(--t)">6</b> 种样式对应不同信息层级和场景。</div>
+      <div style="display:flex;flex-direction:column;gap:4px;flex:1;justify-content:center">
+        <!-- 标准卡 -->
+        <div style="padding:5px 8px;background:rgba(13,17,30,.88);border:1px solid rgba(59,130,246,.22);border-radius:5px;font-size:9.5px;color:#94a3b8">标准卡 · 毛玻璃 + 顶部渐变线</div>
+        <!-- 强调卡 -->
+        <div style="padding:5px 8px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.4);border-radius:5px;font-size:9.5px;color:#93c5fd">强调卡 · 高透明度 + 鲜明边框</div>
+        <!-- KPI卡 -->
+        <div style="padding:5px 8px;background:#fff;border:1px solid #e5e7eb;border-top:3px solid #3b82f6;border-radius:0 0 5px 5px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:9.5px;color:#374151">KPI卡 · 白底彩色顶边</span>
+          <span style="font-size:14px;font-weight:800;color:#3b82f6;line-height:1">96%</span>
+        </div>
+        <!-- 深色卡 -->
+        <div style="padding:5px 8px;background:#1e0a0a;border:1px solid rgba(239,68,68,.2);border-radius:5px;font-size:9.5px;color:#fca5a5">深色卡 · 主题深色背景 + 对应边框</div>
+        <!-- 渐变卡 -->
+        <div style="padding:5px 8px;background:linear-gradient(135deg,#1e3a5f,#0a1628);border:1px solid rgba(59,130,246,.3);border-radius:5px;font-size:9.5px;color:#93c5fd">渐变卡 · 45°暗色渐变背景</div>
+      </div>
+    </div>
+
+    <!-- ④ 图标 & mini图表 -->
+    <div class="card">
+      <div class="ch">Mini图表 · 内嵌组件</div>
+      <div class="cb">迷你图表嵌入卡片底部，4种类型：折线/柱状/热力/环形，宽度自适应。</div>
+      <div style="display:flex;flex-direction:column;gap:6px;flex:1;justify-content:center">
+        <!-- mini折线 -->
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:9px;color:var(--dt);width:40px">折线</span>
+          <svg viewBox="0 0 120 28" style="flex:1;height:28px" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6" stop-opacity=".3"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/></linearGradient></defs>
+            <polygon points="0,22 15,18 30,12 45,14 60,8 75,4 90,6 105,2 120,5 120,28 0,28" fill="url(#mg1)"/>
+            <polyline points="0,22 15,18 30,12 45,14 60,8 75,4 90,6 105,2 120,5" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+          </svg>
+          <span style="font-size:10px;font-weight:700;color:#3b82f6;width:28px;text-align:right">▲18%</span>
+        </div>
+        <!-- mini柱状 -->
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:9px;color:var(--dt);width:40px">柱状</span>
+          <svg viewBox="0 0 120 28" style="flex:1;height:28px" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="16" width="14" height="12" rx="1" fill="#10b981" opacity=".8"/>
+            <rect x="20" y="10" width="14" height="18" rx="1" fill="#10b981" opacity=".85"/>
+            <rect x="38" y="14" width="14" height="14" rx="1" fill="#10b981" opacity=".8"/>
+            <rect x="56" y="6" width="14" height="22" rx="1" fill="#10b981" opacity=".9"/>
+            <rect x="74" y="8" width="14" height="20" rx="1" fill="#10b981" opacity=".85"/>
+            <rect x="92" y="4" width="14" height="24" rx="1" fill="#3b82f6" opacity=".9"/>
+            <rect x="110" y="2" width="14" height="26" rx="1" fill="#3b82f6" opacity=".95"/>
+          </svg>
+          <span style="font-size:10px;font-weight:700;color:#10b981;width:28px;text-align:right">▲32%</span>
+        </div>
+        <!-- mini热力 -->
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:9px;color:var(--dt);width:40px">热力</span>
+          <svg viewBox="0 0 120 20" style="flex:1;height:20px" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="16" height="10" rx="1" fill="#3b82f6" opacity=".3"/>
+            <rect x="18" y="0" width="16" height="10" rx="1" fill="#3b82f6" opacity=".5"/>
+            <rect x="36" y="0" width="16" height="10" rx="1" fill="#8b5cf6" opacity=".6"/>
+            <rect x="54" y="0" width="16" height="10" rx="1" fill="#8b5cf6" opacity=".8"/>
+            <rect x="72" y="0" width="16" height="10" rx="1" fill="#ef4444" opacity=".7"/>
+            <rect x="90" y="0" width="16" height="10" rx="1" fill="#ef4444" opacity=".9"/>
+            <rect x="0" y="12" width="16" height="8" rx="1" fill="#10b981" opacity=".4"/>
+            <rect x="18" y="12" width="16" height="8" rx="1" fill="#10b981" opacity=".7"/>
+            <rect x="36" y="12" width="16" height="8" rx="1" fill="#3b82f6" opacity=".6"/>
+            <rect x="54" y="12" width="16" height="8" rx="1" fill="#3b82f6" opacity=".9"/>
+            <rect x="72" y="12" width="16" height="8" rx="1" fill="#f59e0b" opacity=".7"/>
+            <rect x="90" y="12" width="16" height="8" rx="1" fill="#f59e0b" opacity=".5"/>
+          </svg>
+          <span style="font-size:10px;font-weight:700;color:#94a3b8;width:28px;text-align:right">矩阵</span>
+        </div>
+        <!-- mini环形 -->
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:9px;color:var(--dt);width:40px">环形</span>
+          <svg viewBox="0 0 28 28" style="height:28px;width:28px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="11" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="5"/>
+            <circle cx="14" cy="14" r="11" fill="none" stroke="#3b82f6" stroke-width="5" stroke-dasharray="55 14" stroke-dashoffset="14" transform="rotate(-90 14 14)"/>
+            <text x="14" y="18" text-anchor="middle" font-size="7" fill="#e2e8f0" font-weight="700">80%</text>
+          </svg>
+          <svg viewBox="0 0 28 28" style="height:28px;width:28px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="11" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="5"/>
+            <circle cx="14" cy="14" r="11" fill="none" stroke="#10b981" stroke-width="5" stroke-dasharray="62 7" stroke-dashoffset="14" transform="rotate(-90 14 14)"/>
+            <text x="14" y="18" text-anchor="middle" font-size="7" fill="#e2e8f0" font-weight="700">91%</text>
+          </svg>
+          <svg viewBox="0 0 28 28" style="height:28px;width:28px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="11" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="5"/>
+            <circle cx="14" cy="14" r="11" fill="none" stroke="#8b5cf6" stroke-width="5" stroke-dasharray="46 23" stroke-dashoffset="14" transform="rotate(-90 14 14)"/>
+            <text x="14" y="18" text-anchor="middle" font-size="7" fill="#e2e8f0" font-weight="700">67%</text>
+          </svg>
+          <span style="font-size:10px;color:#94a3b8">多环对比</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑤ 排版系统 -->
+    <div class="card">
+      <div class="ch">排版系统 · 字体层级</div>
+      <div class="cb">报告排版 <b style="color:var(--t)">6</b> 个层级，从标题 <b style="color:var(--t)">46px</b> 到注释 <b style="color:var(--t)">8px</b>，覆盖所有信息密度。</div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:3px">
+        <div style="display:flex;align-items:baseline;gap:8px;border-bottom:1px solid rgba(255,255,255,.04);padding-bottom:3px"><span style="font-size:24px;font-weight:900;color:#e2e8f0;line-height:1;font-family:'Syne',sans-serif">超大标题</span><span style="font-size:8.5px;color:#64748b">Syne 900 · 24–46px</span></div>
+        <div style="display:flex;align-items:baseline;gap:8px;border-bottom:1px solid rgba(255,255,255,.04);padding-bottom:3px"><span style="font-size:16px;font-weight:700;color:#e2e8f0;line-height:1">段落标题</span><span style="font-size:8.5px;color:#64748b">DM Sans 700 · 14–16px</span></div>
+        <div style="display:flex;align-items:baseline;gap:8px;border-bottom:1px solid rgba(255,255,255,.04);padding-bottom:3px"><span style="font-size:12px;font-weight:700;color:#e2e8f0;line-height:1">卡片标题</span><span style="font-size:8.5px;color:#64748b">DM Sans 700 · 11.5–12px</span></div>
+        <div style="display:flex;align-items:baseline;gap:8px;border-bottom:1px solid rgba(255,255,255,.04);padding-bottom:3px"><span style="font-size:10.5px;color:#94a3b8;line-height:1">正文内容，含关键数字强调</span><span style="font-size:8.5px;color:#64748b">400 · 10–11px</span></div>
+        <div style="display:flex;align-items:baseline;gap:8px;border-bottom:1px solid rgba(255,255,255,.04);padding-bottom:3px"><span style="font-size:9px;color:#64748b;line-height:1;letter-spacing:1px;text-transform:uppercase">LABEL UPPERCASE</span><span style="font-size:8.5px;color:#64748b">uppercase · 8.5–9px</span></div>
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:8px;color:#374151;line-height:1">图表注释 / 坐标轴标签 / 辅助说明</span><span style="font-size:8.5px;color:#64748b">7.5–8.5px</span></div>
+      </div>
+    </div>
+
+    <!-- ⑥ 使用指南速查 -->
+    <div class="card">
+      <div class="ch">使用速查 · 触发词 & 选模板逻辑</div>
+      <div class="cb">一句话触发，AI自动选模板+配色+布局，<b style="color:var(--t)">10页</b>报告全自动生成。</div>
+      <div style="display:flex;flex-direction:column;gap:4px;flex:1;justify-content:center">
+        <!-- 触发词 -->
+        <div style="display:flex;gap:3px;flex-wrap:wrap;flex-shrink:0">
+          <span style="padding:2px 7px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:3px;font-size:9px;color:#93c5fd">生成报告</span>
+          <span style="padding:2px 7px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:3px;font-size:9px;color:#93c5fd">做成HTML</span>
+          <span style="padding:2px 7px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:3px;font-size:9px;color:#93c5fd">内容可视化</span>
+          <span style="padding:2px 7px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:3px;font-size:9px;color:#93c5fd">分析页面</span>
+        </div>
+        <!-- 选模板快速逻辑 -->
+        <div style="height:1px;background:rgba(59,130,246,.1)"></div>
+        <div style="display:flex;flex-direction:column;gap:3px;font-size:9.5px">
+          <div style="display:flex;gap:6px;align-items:center"><span style="color:#64748b;width:52px">科技/AI</span><span style="color:#3b82f6">→</span><span style="color:#93c5fd">T1 暗色精品 + 蓝/紫配色</span></div>
+          <div style="display:flex;gap:6px;align-items:center"><span style="color:#64748b;width:52px">竞争/对比</span><span style="color:#ef4444">→</span><span style="color:#fca5a5">T2 编辑分割 + 红配色</span></div>
+          <div style="display:flex;gap:6px;align-items:center"><span style="color:#64748b;width:52px">技术/代码</span><span style="color:#3fb950">→</span><span style="color:#6ee7b7">T3 终端代码 + 绿配色</span></div>
+          <div style="display:flex;gap:6px;align-items:center"><span style="color:#64748b;width:52px">数据/运营</span><span style="color:#3b82f6">→</span><span style="color:#93c5fd">T4 仪表盘 + 青/蓝配色</span></div>
+          <div style="display:flex;gap:6px;align-items:center"><span style="color:#64748b;width:52px">品牌/高端</span><span style="color:#f97316">→</span><span style="color:#fcd34d">T5 极简 + 橙/黑配色</span></div>
+          <div style="display:flex;gap:6px;align-items:center"><span style="color:#64748b;width:52px">安全/极客</span><span style="color:#ff2d78">→</span><span style="color:#f9a8d4">T6 赛博 + 粉/青配色</span></div>
+        </div>
+        <div style="height:1px;background:rgba(59,130,246,.1)"></div>
+        <!-- 最终总结小字 -->
+        <div style="font-size:9px;color:#374151;line-height:1.5">6模板 × 7配色 × 4布局 = <b style="color:#3b82f6">168</b>种组合 · 12+图表类型 · 纯SVG零依赖 · 1017×720px PPT画布</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- SUMMARY 48px -->
+<div class="sm">
+  <div style="width:3px;height:22px;background:linear-gradient(180deg,#3b82f6,#8b5cf6);border-radius:2px;flex-shrink:0"></div>
+  <div style="font-size:11px;color:var(--mt)">设计模式大全：<b style="color:var(--t)">徽章/标签系统</b> · <b style="color:var(--t)">进度条5变体</b> · <b style="color:var(--t)">卡片6类型</b> · <b style="color:var(--t)">4种Mini图表</b> · <b style="color:var(--t)">6级排版系统</b> · 触发词速查——这份报告即是 html-report skill 完整演示。</div>
+</div>
+<!-- FOOTER 20px -->
+<div class="ft">
+  <span style="font-size:9px;color:#1e3a5f;letter-spacing:1px;text-transform:uppercase">Design Patterns · Components · T1–T6 Complete Demo · 10/10</span>
+  <div style="display:flex;align-items:center;gap:6px"><div style="width:90px;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden"><div style="width:100%;height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);border-radius:2px"></div></div><span style="font-size:9px;color:var(--dt);font-family:monospace">10/10</span></div>
+</div>
+</body>
+</html>
