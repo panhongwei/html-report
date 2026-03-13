@@ -1,195 +1,197 @@
-[![中文](https://img.shields.io/badge/语言-中文-red)](README.md) [![English](https://img.shields.io/badge/Language-English-blue)](README_EN.md)
+[![English](https://img.shields.io/badge/Language-English-blue)](README.md) [![中文](https://img.shields.io/badge/语言-中文-red)](README_ZH.md)
 
-# 🎨 html-report Skill · PPT 视觉报告生成器
+# 🎨 html-report Skill · PPT Visual Report Generator
 
-> **不知道怎么设计 PPT？一句话触发，自动生成精美的 PPT 风格 HTML 页面。**
-> 截图即可粘贴为幻灯片，零手动排版，零设计经验要求。
-
----
-
-## ✨ 是什么
-
-`html-report` 是一个 AI 智能体 Skill，将任意文字内容自动转化为**可截图的 PPT 风格 HTML 页面**。
-
-支持 Claude Code、豆包、Cursor、Windsurf 等主流 AI 编程助手。每页严格锁定 **1017×720px**（对齐 PPT 画布 10.59"×7.499" @96dpi），截图后可直接粘贴为幻灯片，无需任何 PPT 软件操作。
-
-当你：
-- 🤔 **不知道 PPT 该怎么排版** → 说出主题，自动生成
-- 📊 **需要图表可视化** → 12+ 种纯 SVG 图表，零依赖
-- 🎨 **想要精美设计感** → 6 种视觉模板 × 7 套配色 = 168 种组合
-- ⚡ **赶时间** → 4 秒生成一页，10 页报告约 1 分钟完成
+> **No idea how to design a PPT? Say one sentence, get a beautiful PPT-style HTML page — automatically.**
+> Screenshot it, paste it into any slide deck. Zero manual layout. Zero design experience required.
 
 ---
 
-## 🚀 快速使用
+## ✨ What Is It
 
-在任意 AI 智能体（Claude Code / 豆包 / Cursor 等）中，直接说：
+`html-report` is an AI agent Skill that transforms any text content into **screenshot-ready PPT-style HTML pages**.
 
-```
-生成报告：分析我们公司 2025 年的 AI 战略
-```
+Compatible with Claude Code, Doubao (豆包), Cursor, Windsurf, and other major AI coding assistants. Every page is strictly locked to **1017×720px** (aligned to PPT canvas 10.59"×7.499" @96dpi). After screenshotting with Chrome or Puppeteer, the result can be pasted directly as a slide — no PowerPoint software needed.
 
-```
-把这份竞争分析做成 HTML 报告页面
-```
-
-```
-内容可视化：量子计算技术趋势
-```
-
-AI 会自动完成：主题拆解 → 选模板 → 选配色 → 选布局 → 填内容 → 输出 HTML
+When you:
+- 🤔 **Have no idea how to lay out a PPT** → Describe the topic, get a generated page
+- 📊 **Need chart visualization** → 12+ pure SVG chart types, zero dependencies
+- 🎨 **Want a polished look** → 6 visual templates × 7 color schemes = 168 combinations
+- ⚡ **Are short on time** → ~4 seconds per page, a 10-page report in about 1 minute
 
 ---
 
-## 🐟 HTML → PPT 一比一转换
+## 🚀 Quick Start
 
-> **生成 HTML 后，可直接发给豆包、Claude 等 AI，提示一句话即可转成 PPT！**
-
-将生成的 HTML 文件内容复制，发给任意支持文件或长文本的 AI 智能体，附上以下提示词：
+In any AI agent (Claude Code / Doubao / Cursor etc.), just say:
 
 ```
-请按照这个 HTML 页面的布局、配色、图表和内容，一比一还原为 PPT 幻灯片（PPTX 格式）。
-画布尺寸为 1017×720px，严格保持所有视觉元素的位置、大小、颜色不变。
+Generate a report: analyze our company's 2025 AI strategy
 ```
 
-**操作流程：**
+```
+Turn this competitive analysis into an HTML report page
+```
 
 ```
-① AI 智能体生成 HTML 文件
+Visualize content: quantum computing technology trends
+```
+
+The AI will automatically handle: topic breakdown → template selection → color scheme → layout → content → HTML output
+
+---
+
+## 🐟 HTML → PPT One-to-One Conversion
+
+> **After generating the HTML, send it to Doubao, Claude, or any AI — one prompt converts it to a real PPT!**
+
+Copy the generated HTML content and send it to any AI assistant that supports file or long-text input, with this prompt:
+
+```
+Please convert this HTML page into a PowerPoint slide (PPTX format),
+reproducing the layout, colors, charts, and content exactly 1:1.
+Canvas size is 1017×720px. Keep all visual elements at their exact
+position, size, and color.
+```
+
+**Workflow:**
+
+```
+① AI agent generates HTML files
         ↓
-② 将 HTML 内容/文件发给豆包或 Claude
+② Send the HTML content/file to Doubao or Claude
         ↓
-③ 粘贴提示词："按页面布局一比一转化为 PPT"
+③ Paste the prompt: "Convert to PPT 1:1 based on page layout"
         ↓
-④ 下载 PPTX，直接用于演示 ✓
+④ Download PPTX, ready to present ✓
 ```
 
 ---
 
-## 🖼️ 样式展示
+## 🖼️ Style Showcase
 
-以下是本 Skill 能生成的各种风格示例，展示 AI 能根据主题自由创造的视觉语言：
-
----
-
-### Theme 1 · 诡秘入侵 · 黑客终端风
-
-> 适用：网络安全报告、威胁情报、CTF 展示、渗透测试分析
-
-![Theme 1 诡秘入侵](demo/theme1-mystery-intrusion.PNG)
-
-**特征：** 纯黑背景 + 矩阵绿 `#00ff41` · Share Tech Mono 等宽字体 · 扫描线动画纹理 · 终端命令行风格 · 氛围辉光叠层
+The examples below demonstrate the visual styles this Skill can generate — showing how AI freely creates visual languages tailored to each topic:
 
 ---
 
-### Theme 2 · 我的世界 · 像素方块风
+### Theme 1 · Mystery Intrusion · Hacker Terminal Style
 
-> 适用：游戏报告、创意展示、青少年教育、极客趣味演示
+> Best for: cybersecurity reports, threat intelligence, CTF presentations, penetration testing analysis
 
-![Theme 2 我的世界](demo/theme2-minecraft.PNG)
+![Theme 1 Mystery Intrusion](demo/theme1-mystery-intrusion.PNG)
 
-**特征：** 像素化渲染风格 · Minecraft 色调（泥土/草地/天空） · 方块边框 · 像素字体模拟 · 游戏 UI 元素
-
----
-
-### Theme 3 · 荒独断万古 · 中式古典史诗风
-
-> 适用：国学报告、历史分析、文化传承、古典文学主题
-
-![Theme 3 荒独断万古](demo/theme3-ancient-epic.PNG)
-
-**特征：** 极深褐黑背景 `#0a0502` · 金色主色调 `#d4a853` · Noto Serif SC 宋体 · 古卷纸纹理 · 水墨流光效果
+**Characteristics:** Pure black background + matrix green `#00ff41` · Share Tech Mono monospace · Scanline animation texture · Terminal command-line style · Ambient glow overlay
 
 ---
 
-### Theme 4 · 向老板汇报 · 商务专业风
+### Theme 2 · Minecraft · Pixel Block Style
 
-> 适用：工作汇报、季度总结、业务分析、管理层演示
+> Best for: game reports, creative showcases, youth education, geek/fun presentations
 
-![Theme 4 向老板汇报](demo/theme4-boss-report.PNG)
+![Theme 2 Minecraft](demo/theme2-minecraft.PNG)
 
-**特征：** 亮色高可读背景 `#f5f7fa` · 深蓝专业配色 `#0f3460` · 系统默认字体栈 · KPI 数字卡 · 专业图表混排
-
----
-
-### Theme 5 · 架构师画架构 · 蓝图工程风
-
-> 适用：系统设计、技术方案、微服务架构、基础设施规划
-
-![Theme 5 架构师画架构](demo/theme5-architecture.PNG)
-
-**特征：** 深海蓝背景 `#0d1b2a` · 蓝图网格叠加（双精度网格线） · JetBrains Mono 等宽字体 · 工程制图风格标注 · 连接线与节点
+**Characteristics:** Pixelated rendering style · Minecraft color palette (dirt / grass / sky) · Block borders · Pixel font simulation · In-game UI elements
 
 ---
 
-### Theme 6 · 新的AI产品 · 深空科技风
+### Theme 3 · Ancient Epic · Chinese Classical Style
 
-> 适用：AI 产品发布、科技公司融资、产品路线图、未来感演示
+> Best for: sinology reports, historical analysis, cultural heritage, classical literature topics
 
-![Theme 6 新的AI产品](demo/theme6-ai-product.PNG)
+![Theme 3 Ancient Epic](demo/theme3-ancient-epic.PNG)
 
-**特征：** 极深紫黑背景 `#06040f` · 星点粒子效果 · 紫蓝渐变辉光 · Inter 现代字体 · 玻璃态卡片 · 科技感数据可视化
+**Characteristics:** Deep brown-black background `#0a0502` · Gold primary color `#d4a853` · Noto Serif SC · Ancient scroll paper texture · Ink flowing light effect
 
 ---
 
-## 🧩 组合矩阵
+### Theme 4 · Boss Report · Professional Business Style
+
+> Best for: work summaries, quarterly reviews, business analysis, executive presentations
+
+![Theme 4 Boss Report](demo/theme4-boss-report.PNG)
+
+**Characteristics:** High-readability light background `#f5f7fa` · Deep blue professional palette `#0f3460` · System font stack · KPI number cards · Professional chart mix
+
+---
+
+### Theme 5 · Architecture Blueprint · Engineering Blueprint Style
+
+> Best for: system design, technical proposals, microservice architecture, infrastructure planning
+
+![Theme 5 Architecture](demo/theme5-architecture.PNG)
+
+**Characteristics:** Deep sea blue background `#0d1b2a` · Blueprint grid overlay (dual-precision grid lines) · JetBrains Mono monospace · Engineering drawing annotation style · Connection lines and nodes
+
+---
+
+### Theme 6 · New AI Product · Deep Space Tech Style
+
+> Best for: AI product launches, tech startup fundraising, product roadmaps, futuristic demos
+
+![Theme 6 AI Product](demo/theme6-ai-product.PNG)
+
+**Characteristics:** Ultra-deep purple-black background `#06040f` · Star particle effect · Purple-blue gradient glow · Inter modern font · Glassmorphism cards · Tech data visualization
+
+---
+
+## 🧩 Combination Matrix
 
 ```
-6 视觉模板  ×  7 配色方案  ×  4 布局结构  =  168 种组合
+6 Templates  ×  7 Color Schemes  ×  4 Layout Structures  =  168 Combinations
 ```
 
-### 6 种视觉模板
+### 6 Visual Templates
 
-| 代号 | 名称 | 背景 | 适用场景 |
-|------|------|------|----------|
-| **T1** | 暗色精品 | `#05080f` 深黑 | 科技·AI·高端商业 |
-| **T2** | 编辑分割 | 暗左亮右 clip-path | 竞争·对比·强叙事 |
-| **T3** | 终端代码 | `#0d1117` GitHub Dark | 技术·代码·安全审计 |
-| **T4** | 数据仪表盘 | `#f0f4f8` 亮色 | 数据·运营·月报 |
-| **T5** | 极简文字 | `#fafaf8` 暖白 | 品牌·年报·学术 |
-| **T6** | 霓虹赛博 | `#080010` 极深 | 安全·极客·创意 |
+| Code | Name | Background | Best For |
+|------|------|------------|----------|
+| **T1** | Dark Luxury | `#05080f` deep black | Tech · AI · Premium business |
+| **T2** | Editorial Split | Dark left + light right clip-path | Competition · Contrast · Strong narrative |
+| **T3** | Terminal Code | `#0d1117` GitHub Dark | Tech · Code · Security audit |
+| **T4** | Data Dashboard | `#f0f4f8` light | Data · Operations · Monthly reports |
+| **T5** | Editorial Minimal | `#fafaf8` warm white | Brand · Annual reports · Academic |
+| **T6** | Neon Cyberpunk | `#080010` ultra-dark | Security · Geek · Creative |
 
-### 7 套配色方案
+### 7 Color Schemes
 
-| 配色 | 主色 | 最佳搭配模板 | 场景语义 |
-|------|------|-------------|----------|
-| 🔵 蓝色 | `#3b82f6` | T1 / T4 | 科技·信任·数据 |
-| 🔴 红色 | `#ef4444` | T2 | 竞争·风险·紧迫 |
-| 🟠 橙色 | `#f59e0b` | T5 | 商业·活力·增长 |
-| 🟢 绿色 | `#10b981` | T3 | 健康·成功·环保 |
-| 🟣 紫色 | `#8b5cf6` | T1 / T6 | 创意·AI·高端 |
-| 🩵 青色 | `#06b6d4` | T1 / T4 | 清爽·效率·数字 |
-| 🩷 粉色 | `#f472b6` | T6 | 极客·霓虹·创新 |
+| Color | Primary | Best Templates | Semantic |
+|-------|---------|---------------|---------|
+| 🔵 Blue | `#3b82f6` | T1 / T4 | Tech · Trust · Data |
+| 🔴 Red | `#ef4444` | T2 | Competition · Risk · Urgency |
+| 🟠 Orange | `#f59e0b` | T5 | Business · Energy · Growth |
+| 🟢 Green | `#10b981` | T3 | Health · Success · Sustainability |
+| 🟣 Purple | `#8b5cf6` | T1 / T6 | Creative · AI · Premium |
+| 🩵 Cyan | `#06b6d4` | T1 / T4 | Fresh · Efficiency · Digital |
+| 🩷 Pink | `#f472b6` | T6 | Geek · Neon · Innovation |
 
-### 4 种布局结构
+### 4 Layout Structures
 
-| 布局 | 结构 | 最适合 |
-|------|------|--------|
-| **A** | 左大图 + 右三行卡片 | 架构图·流程图·单图主导 |
-| **B** | 4×2 网格（上下两排） | 步骤流程·四象限·对比 |
-| **C** | 3×2 六格矩阵 | 图表库·多维数据·全面展示 |
-| **D** | 2×2 + 右侧通栏 | 综合仪表·混排·封面 |
+| Layout | Structure | Best For |
+|--------|-----------|----------|
+| **A** | Large left + right 3-row cards | Architecture · Flowcharts · Single-chart focus |
+| **B** | 4×2 grid (two rows) | Step-by-step · Four quadrants · Comparison |
+| **C** | 3×2 six-cell matrix | Chart library · Multi-dimensional data · Full coverage |
+| **D** | 2×2 + right full-height | Mixed dashboard · Hybrid layout · Cover |
 
 ---
 
-## 📐 技术规格
+## 📐 Technical Specs
 
 ```
-画布尺寸：  1017 × 720 px（=PPT 10.59" × 7.499" @96dpi）
-四区结构：  Header 72px + Content 580px + Summary 48px + Footer 20px = 720px
-内容宽度：  1017 - 25×2 = 967px（可用区域）
-图表实现：  纯 SVG，零外部依赖
-截图工具：  Chrome / Puppeteer（精确 1:1 还原）
-字体：      Syne 800（标题）+ DM Sans（正文）+ monospace（代码）
+Canvas size:    1017 × 720 px  (= PPT 10.59" × 7.499" @96dpi)
+4-zone layout:  Header 72px + Content 580px + Summary 48px + Footer 20px = 720px
+Content width:  1017 - 25×2 = 967px (usable area)
+Charts:         Pure SVG, zero external dependencies
+Screenshot:     Chrome / Puppeteer (pixel-perfect 1:1)
+Fonts:          Syne 800 (headings) + DM Sans (body) + monospace (code)
 ```
 
 ---
 
-## ⚙️ 三条铁律
+## ⚙️ Three Iron Rules
 
-> 违反任意一条 → 该页推翻重做，无例外。
+> Violating any one of these → the page is scrapped and rebuilt. No exceptions.
 
-**① 画布锁死 1017×720px**
+**① Canvas locked to 1017×720px**
 ```css
 html, body {
   width: 1017px; height: 720px;
@@ -199,88 +201,88 @@ html, body {
 }
 ```
 
-**② 四区高度精确求和 720px**
+**② Four-zone heights must sum exactly to 720px**
 ```
-Header   72px  ←  页眉
-Content 580px  ←  主内容
-Summary  48px  ←  摘要栏
-Footer   20px  ←  页脚
+Header   72px  ←  page header
+Content 580px  ←  main content
+Summary  48px  ←  summary bar
+Footer   20px  ←  page footer
 ──────────────
-         720px  ✓
+Total   720px  ✓
 ```
 
-**③ 每格内容密度 ≥ 75%**
-- 3 层内容结构：标题行 + 正文（≥40字含≥2数字）+ 底部增强组件
-- 底部增强：SVG 图表 / Mini 数字卡 / 进度条，三选一
+**③ Content density ≥ 75% per cell**
+- 3-layer content structure: title row + body text (≥ 40 chars, ≥ 2 numbers) + bottom enhancement component
+- Bottom enhancement: SVG chart / mini number cards / progress bars — pick one
 
 ---
 
-## 🗂️ Skill 文件结构
+## 🗂️ Skill File Structure
 
 ```
 html-report/
-├── SKILL.md              ← Skill 主入口（AI 读取）
-├── demo/                 ← 示例页面 & 截图预览
-│   ├── theme1-mystery-intrusion.html / .PNG  ← 诡秘入侵 · 黑客终端风
-│   ├── theme2-minecraft.html / .PNG          ← 我的世界 · 像素方块风
-│   ├── theme3-ancient-epic.html / .PNG       ← 荒独断万古 · 中式古典史诗风
-│   ├── theme4-boss-report.html / .PNG        ← 向老板汇报 · 商务专业风
-│   ├── theme5-architecture.html / .PNG       ← 架构师画架构 · 蓝图工程风
-│   └── theme6-ai-product.html / .PNG         ← 新的AI产品 · 深空科技风
+├── SKILL.md              ← Skill entry point (read by AI agent)
+├── demo/                 ← Example pages & screenshot previews
+│   ├── theme1-mystery-intrusion.html / .PNG  ← Mystery Intrusion · Hacker Terminal Style
+│   ├── theme2-minecraft.html / .PNG          ← Minecraft · Pixel Block Style
+│   ├── theme3-ancient-epic.html / .PNG       ← Ancient Epic · Chinese Classical Style
+│   ├── theme4-boss-report.html / .PNG        ← Boss Report · Professional Business Style
+│   ├── theme5-architecture.html / .PNG       ← Architecture · Engineering Blueprint Style
+│   └── theme6-ai-product.html / .PNG         ← New AI Product · Deep Space Tech Style
 └── references/
-    ├── 01-canvas.md      ← 画布尺寸、四区结构、溢出规则
-    ├── 02-design-system.md ← 6种视觉模板（T1–T6）CSS片段
-    ├── 03-layout.md      ← 4种布局精确 CSS + 空间计算
-    ├── 04-color-font.md  ← 7套配色、字体规则、语义色
-    ├── 05-content.md     ← 反偷懒规则、内容密度、SVG图表库
-    └── 06-workflow.md    ← 规划流程、渲染验证、质量清单
+    ├── 01-canvas.md        ← Canvas size, 4-zone structure, overflow rules
+    ├── 02-design-system.md ← 6 visual templates (T1–T6) CSS snippets
+    ├── 03-layout.md        ← 4 layout CSS + space calculations
+    ├── 04-color-font.md    ← 7 color schemes, font rules, semantic colors
+    ├── 05-content.md       ← Anti-laziness rules, content density, SVG chart library
+    └── 06-workflow.md      ← Planning workflow, render verification, quality checklist
 ```
 
 ---
 
-## 📋 触发关键词
+## 📋 Trigger Keywords
 
-在对话中包含以下任意词汇即可触发：
+Include any of the following in your conversation to activate the skill:
 
-- `生成报告` / `做成报告`
-- `做成HTML` / `生成HTML页面`
-- `内容可视化` / `可视化报告`
-- `分析页面` / `PPT页面`
-
----
-
-## 🔄 生成流程
-
-```
-用户输入主题
-     ↓
-AI 读取 Skill 规范（6个参考文件）
-     ↓
-主题拆解 → 10个子维度规划
-     ↓
-每页：选模板(T1-T6) → 选配色 → 选布局 → 写内容 → 质检
-     ↓
-输出 01.html ... 10.html
-     ↓
-方式①：Chrome/Puppeteer 截图 → 1017×720px PNG → 粘贴为 PPT 幻灯片
-方式②：将 HTML 发给豆包/Claude → 提示"一比一转化为 PPT" → 下载 PPTX ✓
-```
+- `generate report` / `make a report`
+- `make HTML` / `generate HTML page`
+- `visualize content` / `visual report`
+- `analysis page` / `PPT page`
 
 ---
 
-## 💡 使用建议
+## 🔄 Generation Flow
 
-| 场景 | 推荐组合 | 说明 |
-|------|----------|------|
-| 商业计划书 | T1蓝 + T4蓝 + T5橙 | 专业感强，数据可信 |
-| 技术方案 | T1蓝 + T3绿 + T4青 | 科技感，代码展示 |
-| 竞品分析 | T2红 + T4蓝 | 对比鲜明，数据驱动 |
-| 安全报告 | T6粉 + T3绿 + T1紫 | 威胁感知，技术专业 |
-| 年度总结 | T5橙 + T1蓝 + T4蓝 | 高端大气，数据丰富 |
-| 产品发布 | T6粉 + T1紫 + T2红 | 视觉冲击，记忆深刻 |
+```
+User inputs topic
+      ↓
+AI reads Skill spec (6 reference files)
+      ↓
+Topic breakdown → plan 10 sub-dimensions
+      ↓
+Per page: select template (T1–T6) → color scheme → layout → write content → QA
+      ↓
+Output 01.html ... 10.html
+      ↓
+Option ①: Chrome/Puppeteer screenshot → 1017×720px PNG → paste into PPT slides
+Option ②: Send HTML to Doubao/Claude → "Convert to PPT 1:1" → download PPTX ✓
+```
+
+---
+
+## 💡 Usage Suggestions
+
+| Scenario | Recommended Combo | Notes |
+|----------|-------------------|-------|
+| Business plan | T1 Blue + T4 Blue + T5 Orange | Professional, data-credible |
+| Technical proposal | T1 Blue + T3 Green + T4 Cyan | Tech feel, code showcase |
+| Competitive analysis | T2 Red + T4 Blue | High contrast, data-driven |
+| Security report | T6 Pink + T3 Green + T1 Purple | Threat awareness, technical authority |
+| Annual summary | T5 Orange + T1 Blue + T4 Blue | Premium, data-rich |
+| Product launch | T6 Pink + T1 Purple + T2 Red | Visual impact, memorable |
 
 ---
 
 ## 📄 License
 
-MIT · 可自由用于商业和个人项目
+MIT · Free for commercial and personal use
