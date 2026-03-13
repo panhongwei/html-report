@@ -88,71 +88,6 @@ P10   趋势展望   C     方案 7 粉     T5        对比色（未来感）
 
 ## 第三阶段：渲染验证
 
-### screenshot_batch.js（标准截图脚本）
-
-```javascript
-// 用法：node screenshot_batch.js <html 目录或单文件> [输出目录]
-const puppeteer = require('/home/claude/.npm-global/lib/node_modules/@mermaid-js/mermaid-cli/node_modules/puppeteer');
-const fs = require('fs'), path = require('path');
-const CHROME = '/opt/google/chrome/chrome';
-
-async function shot(browser, htmlFile, outFile) {
-  const page = await browser.newPage();
-  await page.setViewport({ width: 1017, height: 720, deviceScaleFactor: 1 });
-  await page.goto('file://' + path.resolve(htmlFile), { waitUntil: 'networkidle0', timeout: 15000 });
-  const ov = await page.evaluate(() => ({
-    w: document.body.scrollWidth,
-    h: document.body.scrollHeight
-  }));
-  if (ov.w > 1017 || ov.h > 720)
-    console.warn(`  ⚠ 溢出：${ov.w}×${ov.h} → ${path.basename(htmlFile)}`);
-  await page.screenshot({ path: outFile, clip: { x:0, y:0, width:1017, height:720 } });
-  await page.close();
-}
-
-async function main() {
-  const input  = process.argv[2];
-  const outDir = process.argv[3] || path.dirname(path.resolve(input));
-  const files  = fs.statSync(input).isDirectory()
-    ? fs.readdirSync(input).filter(f => f.endsWith('.html')).sort().map(f => path.join(input, f))
-    : [input];
-  const browser = await puppeteer.launch({
-    executablePath: CHROME,
-    args: ['--no-sandbox','--disable-setuid-sandbox','--disable-dev-shm-usage','--disable-gpu']
-  });
-  for (const f of files) {
-    const out = path.join(outDir, path.basename(f, '.html') + '.jpg');
-    process.stdout.write(`  ${path.basename(f)} → `);
-    await shot(browser, f, out);
-    console.log('✓');
-  }
-  await browser.close();
-  console.log(`\n完成 ${files.length} 页，检查有无 ⚠ 溢出提示`);
-}
-main().catch(e => { console.error(e); process.exit(1); });
-```
-
-### 运行方式
-
-```bash
-# 批量截图整个目录
-node screenshot_batch.js /mnt/user-data/outputs/[报告名]/
-
-# 单页截图
-node screenshot_batch.js /mnt/user-data/outputs/[报告名]/p01.html
-```
-
-### 溢出修复参考
-
-| 警告内容 | 原因 | 修复 |
-|---------|------|------|
-| `scrollHeight > 720` | `.ct` 有 padding-top/bottom | 删除 `.ct` 的 top/bottom padding |
-| `scrollWidth > 1017` | 卡片 min-width 过宽 | 给卡片加 `overflow:hidden` |
-| 高度 721–740px | 布局容器的 gap 过大 | gap 从 12px 改为 8px |
-| 高度 > 750px | 字号超限导致文字撑高 | 降低字号，减少 line-height |
-
----
-
 ## 第四阶段：质量核查清单
 
 ### 🔴 必须通过（否则重做）
@@ -177,15 +112,6 @@ node screenshot_batch.js /mnt/user-data/outputs/[报告名]/p01.html
 - [ ] 背景类型统一（全暗/全亮/章节分明）
 - [ ] 覆盖 ≥ 3 种视觉模板
 - [ ] 没有连续 3 页使用同一模板
-
-### 🟢 一致性检查（新增）
-
-- [ ] 整份报告有明确的主基调（在规划阶段已确定）
-- [ ] 主基调配色占比 60-80%
-- [ ] 对比色页面位于逻辑转折点（如风险页、总结页）
-- [ ] 背景色没有无规律的明暗跳跃
-- [ ] 页眉结构有统一的设计语言（字体/间距/元素）
-- [ ] 没有为了多样性而强行变化视觉模板
 
 ### 🟡 应当通过（否则优化）
 

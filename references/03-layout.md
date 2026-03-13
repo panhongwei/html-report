@@ -1,6 +1,36 @@
 # 03 · 布局系统
 
-> 4 种布局对应不同的信息结构。每页选一种，同一份报告 10 页需使用 ≥ 4 种不同布局。
+> **核心原则：** 先分析本页内容结构，自创专属布局 Lc；A/B/C/D 是基因库，不是选项菜单。
+
+---
+
+## 🤖 第零步：自创本页专属布局（每页生成必须执行）
+
+> ⚠ **强制要求**：每页开始前，AI 必须先完成此步骤。禁止直接套用 A/B/C/D。
+
+### 执行流程
+
+```
+输入：本页要表达的内容结构 + Tc 视觉模板特征
+  ↓
+Step A · 分析本页内容骨架
+  - 有几个平行维度？（2/3/4/5/6…）
+  - 有没有一个"主视觉"需要突出？（大图/大数字/大标题）
+  - 信息有没有层级关系？（总-分 / 步骤流 / 并列对比）
+  - 内容密度偏高还是偏低？（字多 vs 图多）
+  ↓
+Step B · 从 A/B/C/D 提取基因（组合/变形/新建）
+  - 匹配 1–2 个最接近的基础布局作为"父布局"
+  - 确定列数、行数、主区比例、是否需要跨行/跨列
+  - 计算各区精确像素，确保总高度 ≤ 580px（ct 区）
+  ↓
+Step C · 声明本页专属布局 Lc
+  - 画出 ASCII 结构图
+  - 写出精确的 grid-template-columns / rows
+  - 计算每格可用高度和文字容量
+  ↓
+输出：Lc 定义 → 本页以 Lc 为唯一布局生成
+```
 
 ---
 
@@ -39,7 +69,14 @@
 
 ---
 
-## 布局 A · 左大图 + 右三行
+## 📚 A/B/C/D 基础布局参考库
+
+> **定位：** 这是 AI 创建 Lc 时的"基因库"，提供可复用的 grid 结构和空间计算方法。
+> 每次生成不是从这里"选一个用"，而是"提取基因重组"。
+
+---
+
+### 布局 A · 左大图 + 右三行
 
 **适用：** 技术原理、流程图解、攻击链
 
@@ -53,7 +90,7 @@
 └──────────────┴──────────────────────────┘
 ```
 
-### 空间计算
+#### 空间计算
 
 ```
 左图宽   = 366px
@@ -63,7 +100,7 @@ gap      = 12px
 正文可用 ≈ 181 - 标题 24px - padding 16px = 141px → 约 70–100 字
 ```
 
-### CSS
+#### CSS
 
 ```css
 .layout-a {
@@ -80,44 +117,9 @@ gap      = 12px
 }
 ```
 
-### HTML 结构
-
-```html
-<div class="ct">
-  <div class="layout-a">
-
-    <!-- 左侧大图 366px -->
-    <div class="card">
-      <div class="ch">核心可视化标题</div>
-      <svg viewBox="0 0 340 490" style="width:100%;flex:1;">
-        <!-- 必须有真实坐标轴和数据标签 -->
-      </svg>
-    </div>
-
-    <!-- 右侧三行 -->
-    <div class="la-right">
-      <div class="card">
-        <div class="ch">① 子维度</div>
-        <div class="cb">
-          <!-- 70-100 字，含 ≥2 个具体数字 -->
-          <div class="mini-row">
-            <div class="mini"><div class="mh">指标A</div><div class="ml">数值</div></div>
-            <div class="mini"><div class="mh">指标B</div><div class="ml">数值</div></div>
-            <div class="mini"><div class="mh">指标C</div><div class="ml">数值</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="card"><div class="ch">② 子维度</div><div class="cb"><!-- 同上 --></div></div>
-      <div class="card"><div class="ch">③ 子维度</div><div class="cb"><!-- 同上 --></div></div>
-    </div>
-
-  </div>
-</div>
-```
-
 ---
 
-## 布局 B · 上下四行（每行双栏）
+### 布局 B · 上下四行（每行双栏）
 
 **适用：** 步骤流程、方法对比、四阶段分析
 
@@ -133,7 +135,7 @@ gap      = 12px
 └───────────────────────────────────┘
 ```
 
-### 空间计算
+#### 空间计算
 
 ```
 padding-top  = 10px
@@ -145,7 +147,7 @@ padding-top  = 10px
 
 > ⚠ 每行必须是左文 + 右图双栏，**禁止纯文字行**
 
-### CSS
+#### CSS
 
 ```css
 .layout-b {
@@ -162,28 +164,9 @@ padding-top  = 10px
 }
 ```
 
-### HTML 结构
-
-```html
-<div class="ct">
-  <div class="layout-b">
-    <div class="lb-row">
-      <div class="card">
-        <div class="ch">步骤①</div>
-        <div class="cb"><!-- 45-55 字，含数字 --></div>
-      </div>
-      <div class="card" style="padding:6px;">
-        <svg viewBox="0 0 380 100" style="width:100%;height:100%;"><!-- 横向条形图 --></svg>
-      </div>
-    </div>
-    <!-- 重复 × 3 -->
-  </div>
-</div>
-```
-
 ---
 
-## 布局 C · 3×2 六格网格
+### 布局 C · 3×2 六格网格
 
 **适用：** 分类对比、六维度分析、案例矩阵
 
@@ -195,7 +178,7 @@ padding-top  = 10px
 └──────────┴──────────┴──────────┘
 ```
 
-### 空间计算
+#### 空间计算
 
 ```
 padding-top = 10px
@@ -204,7 +187,7 @@ padding-top = 10px
 正文可用    ≈ 281 - 标题 22px - mini 40px - padding 16px = 203px → 约 70–90 字
 ```
 
-### CSS
+#### CSS
 
 ```css
 .layout-c {
@@ -217,29 +200,9 @@ padding-top = 10px
 }
 ```
 
-### HTML 结构
-
-```html
-<div class="ct">
-  <div class="layout-c">
-    <div class="card">
-      <div class="ch">① 维度标题</div>
-      <div class="cb">
-        <!-- 70-90 字，含 ≥2 数字 -->
-        <svg viewBox="0 0 290 55" style="width:100%;height:55px;flex-shrink:0;margin-top:5px;">
-          <!-- 内嵌小图表 -->
-        </svg>
-      </div>
-      <div class="mini-row"><!-- 2-3 个 mini 数据卡 --></div>
-    </div>
-    <!-- 重复 × 5 -->
-  </div>
-</div>
-```
-
 ---
 
-## 布局 D · 2×2 四格 + 右侧大图
+### 布局 D · 2×2 四格 + 右侧大图
 
 **适用：** 执行摘要、综合展示、矩阵分析
 
@@ -251,7 +214,7 @@ padding-top = 10px
 └──────────┴──────────┴──────────────┘
 ```
 
-### 空间计算
+#### 空间计算
 
 ```
 左侧总宽    = 967 - 8×2 - 286 = 665px
@@ -261,7 +224,7 @@ padding-top = 10px
 正文可用    ≈ 281 - 标题 22px - padding 16px = 243px → 约 65–90 字
 ```
 
-### CSS
+#### CSS
 
 ```css
 .layout-d {
@@ -278,45 +241,47 @@ padding-top = 10px
 }
 ```
 
-### HTML 结构
+---
 
-```html
-<div class="ct">
-  <div class="layout-d">
-    <div class="card"><div class="ch">① 格</div><div class="cb"><!-- 65-90 字 --></div></div>
-    <div class="card"><div class="ch">② 格</div><div class="cb"><!-- 同上 --></div></div>
-    <div class="card"><div class="ch">③ 格</div><div class="cb"><!-- 同上 --></div></div>
-    <div class="card"><div class="ch">④ 格</div><div class="cb"><!-- 同上 --></div></div>
+## 🤖 Lc 自创空间计算规则
 
-    <div class="card ld-right" style="padding:10px;">
-      <div class="ch">核心图表</div>
-      <svg viewBox="0 0 260 520" style="width:100%;flex:1;">
-        <!-- 大型可视化 -->
-      </svg>
-    </div>
-  </div>
-</div>
+> 无论 Lc 如何变形，必须满足以下约束：
+
+```
+总宽：967px（1017 - 左右 padding 25×2）
+总高：580px（ct 区固定高度，padding-top 在布局容器上设，≤12px）
+
+列宽计算：sum(所有列宽) + gap × (列数-1) ≤ 967px
+行高计算：sum(所有行高) + gap × (行数-1) + padding-top ≤ 580px
+
+每格最小可用高度（含 padding）：
+  格高 - padding上下(≤16px) - 标题行(≤22px) - mini行(≤40px) ≥ 60px
+  → 低于 60px 的格不能放正文，只能放纯数字/图标
+
+gap 硬上限：
+  主布局 gap ≤ 12px
+  卡片内 gap ≤ 5px
 ```
 
 ---
 
-## 布局选择指南
+## 布局与视觉模板协同规则
 
-| 内容特征 | 推荐布局 | 原因 |
-|---------|---------|------|
-| 需要展示大型流程图/架构图 | A | 左侧有足够空间 |
-| 4 个步骤/阶段，每步有图 | B | 行结构天然对应步骤 |
-| 6 个平行维度横向对比 | C | 等权网格无主次 |
-| 执行摘要 / 综合仪表 | D | 右侧图支撑全局视野 |
-| T2 编辑分割模板 | — | 左右分割，不用上述布局，自定义列 |
-| T3 终端代码模板 | — | 左侧边栏+右主区，不用上述布局 |
+| Tc 视觉模板特征 | Lc 对应约束 |
+|---------------|------------|
+| T2 编辑分割（左暗右亮双区） | 不使用 A/B/C/D，Lc 为左栏(280-320px) + 右栏(余量)，内部自由分行 |
+| T3 终端代码（左侧边栏+右主区） | 不使用 A/B/C/D，Lc 为左边栏(160px) + 右主区，右主区内再分格 |
+| T4 数据仪表（KPI横排+下方图表） | 优先 Lc：上方 KPI 固定高度行(90-110px) + 下方图表区 |
+| T1/T5/T6/Tc 其他 | 自由选择或变形 A/B/C/D 基因 |
 
 ---
 
 ## 布局多样性检查
 
 ```
-□ 10 页报告中布局 A/B/C/D 均至少出现 1 次？
-□ 相同布局未连续出现 3 次以上？
-□ T2/T3 特殊模板未与标准布局混用（它们有自己的列结构）？
+□ 已完成第零步，Lc 有完整定义（ASCII图 + grid CSS + 空间计算）？
+□ Lc 的总行列高度精确计算，不超 580px？
+□ 相同 Lc 结构未在报告内连续出现 3 次以上？
+□ T2/T3 特殊模板使用了自定义列结构，未套用 A/B/C/D？
+□ 10 页报告中使用了 ≥ 4 种不同结构的 Lc（包括变形）？
 ```

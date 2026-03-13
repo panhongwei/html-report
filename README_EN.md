@@ -54,15 +54,6 @@ Canvas size is 1017×720px. Keep all visual elements at their exact
 position, size, and color.
 ```
 
-**Recommended AI Tools:**
-
-| Tool | Strengths | Best For |
-|------|-----------|----------|
-| 🦞 **Doubao** (ByteDance) | File upload, one-click PPTX output | Quick conversion, daily use |
-| 🤖 **Claude** (Anthropic) | Understands complex layouts, high fidelity | Precise reproduction, complex charts |
-| ✨ **Qwen** (Alibaba) | Optimized for Chinese content, smooth PPT generation | Chinese-language reports |
-| 💡 **Kimi** (Moonshot) | Long context window, handles full HTML input | Multi-page batch processing |
-
 **Workflow:**
 
 ```
@@ -79,150 +70,67 @@ position, size, and color.
 
 ## 🖼️ Style Showcase
 
-The examples below demonstrate all the styles this Skill can generate. Each template targets a different use case.
+The examples below demonstrate the visual styles this Skill can generate — showing how AI freely creates visual languages tailored to each topic:
 
 ---
 
-### P01 · Overview · T1 Dark Luxury · Blue
+### Theme 1 · Mystery Intrusion · Hacker Terminal Style
 
-> Best for: cover pages, capability introductions, system overviews
+> Best for: cybersecurity reports, threat intelligence, CTF presentations, penetration testing analysis
 
-![P01 Overview](demo/01-skill-intro.PNG)
+![Theme 1 Mystery Intrusion](demo/theme1-mystery-intrusion.PNG)
 
-**Characteristics:** Noise-texture background · Syne display font · Frosted-glass cards · Blue neon glow
-
----
-
-### P02 · Chart Library ① · Bar / Line / Area / Column / Scatter / Donut
-
-> Best for: data reports, trend analysis, multi-dimensional comparisons
-
-![P02 Chart Library](demo/02-charts-line-bar.PNG)
-
-**Chart types:**
-- Horizontal bar chart (capability comparison)
-- Line + area chart (trend evolution)
-- Dual-color grouped column chart (QoQ comparison)
-- Stacked area chart (multi-dimension composition)
-- Scatter / bubble chart (complexity distribution)
-- Donut chart + progress bars (share breakdown)
+**Characteristics:** Pure black background + matrix green `#00ff41` · Share Tech Mono monospace · Scanline animation texture · Terminal command-line style · Ambient glow overlay
 
 ---
 
-### P03 · Chart Library ② · Radar / Gantt / Heatmap / Timeline / Gauge / Waterfall
+### Theme 2 · Minecraft · Pixel Block Style
 
-> Best for: project management, capability assessment, progress tracking
+> Best for: game reports, creative showcases, youth education, geek/fun presentations
 
-![P03 Chart Library](demo/03-charts-radar-gantt.PNG)
+![Theme 2 Minecraft](demo/theme2-minecraft.PNG)
 
-**Chart types:**
-- Radar chart (dual-dataset comparison)
-- Gantt chart (project schedule planning)
-- Heatmap matrix (7×6 compatibility matrix)
-- Horizontal timeline (technology evolution history)
-- Ring gauge + multi-metric indicators (composite score)
-- Waterfall chart (increase/decrease analysis)
+**Characteristics:** Pixelated rendering style · Minecraft color palette (dirt / grass / sky) · Block borders · Pixel font simulation · In-game UI elements
 
 ---
 
-### P04 · Architecture Diagram · Flowchart · Decision Tree (pure SVG)
+### Theme 3 · Ancient Epic · Chinese Classical Style
 
-> Best for: system design, solution presentation, process mapping
+> Best for: sinology reports, historical analysis, cultural heritage, classical literature topics
 
-![P04 Architecture](demo/04-architecture.PNG)
+![Theme 3 Ancient Epic](demo/theme3-ancient-epic.PNG)
 
-**Diagram types:**
-- Layered architecture diagram (5-tier system structure with marker arrows)
-- Linear flowchart (5-step sequence with back arrows)
-- Decision tree (5 branches, auto-routed)
-- 3-layer content structure visualization
+**Characteristics:** Deep brown-black background `#0a0502` · Gold primary color `#d4a853` · Noto Serif SC · Ancient scroll paper texture · Ink flowing light effect
 
 ---
 
-### P05 · T2 Editorial Split · Business Competitive Analysis · Red
+### Theme 4 · Boss Report · Professional Business Style
 
-> Best for: competitive analysis, case comparison, risk assessment
+> Best for: work summaries, quarterly reviews, business analysis, executive presentations
 
-![P05 Editorial Split](demo/05-t2-editorial.PNG)
+![Theme 4 Boss Report](demo/theme4-boss-report.PNG)
 
-**Characteristics:**
-- Three-layer background: dark left + light right via clip-path diagonal split
-- Left column: 46px weight-900 oversized title
-- Right column: mixed white / dark / accent card types
-- 6 KPI metric cards + horizontal bar chart
+**Characteristics:** High-readability light background `#f5f7fa` · Deep blue professional palette `#0f3460` · System font stack · KPI number cards · Professional chart mix
 
 ---
 
-### P06 · T3 Terminal Code · Code Audit · Syntax Highlighting
+### Theme 5 · Architecture Blueprint · Engineering Blueprint Style
 
-> Best for: technical audits, code display, system logs, security reports
+> Best for: system design, technical proposals, microservice architecture, infrastructure planning
 
-![P06 Terminal Code](demo/06-t3-terminal.PNG)
+![Theme 5 Architecture](demo/theme5-architecture.PNG)
 
-**Characteristics:**
-- GitHub Dark `#0d1117` background
-- Scanline texture + 40px grid overlay
-- 6-color syntax highlight system (keywords / functions / strings / numbers / output / comments)
-- Terminal prompt style + file tree structure
+**Characteristics:** Deep sea blue background `#0d1b2a` · Blueprint grid overlay (dual-precision grid lines) · JetBrains Mono monospace · Engineering drawing annotation style · Connection lines and nodes
 
 ---
 
-### P07 · T4 Data Dashboard · KPI Cards · Blue
+### Theme 6 · New AI Product · Deep Space Tech Style
 
-> Best for: data reports, operations analysis, product monthly reports, performance display
+> Best for: AI product launches, tech startup fundraising, product roadmaps, futuristic demos
 
-![P07 Dashboard](demo/07-t4-dashboard.PNG)
+![Theme 6 AI Product](demo/theme6-ai-product.PNG)
 
-**Characteristics:**
-- Light background `#f0f4f8`, high readability
-- KPI cards with colored top border (3px `border-top`)
-- Mixed line chart + column chart + scatter plot + donut chart
-- Color scheme quick-reference grid by use case
-
----
-
-### P08 · T5 Editorial Minimal · Whitespace Rhythm · Orange
-
-> Best for: premium brand reports, annual summaries, academic papers, prospectuses
-
-![P08 Minimal](demo/08-t5-minimal.PNG)
-
-**Characteristics:**
-- Warm white background `#fafaf8`
-- 900-weight oversized title (52px)
-- Single accent color (orange `#f97316` is optimal)
-- 1px thin dividers + generous whitespace
-- Pull-quote / blockquote style
-
----
-
-### P09 · T6 Neon Cyberpunk · Threat Intelligence · Pink / Cyan / Purple
-
-> Best for: security reports, threat posture dashboards, geek demos, CTF presentations
-
-![P09 Cyberpunk](demo/09-t6-cyberpunk.PNG)
-
-**Characteristics:**
-- Deep-black background `#080010`
-- Three-color neon glow (pink `#ff2d78` / cyan `#00ffe7` / purple `#d2a8ff`)
-- Scanline texture + radial gradient ambient light
-- Outer-glow card borders + cursor blink animation
-- Threat radar chart / CVE heatmap matrix / Kill Chain timeline
-
----
-
-### P10 · Design Patterns · Component Quick Reference
-
-> Best for: final pages, design system explanations, component library showcases
-
-![P10 Design Patterns](demo/10-design-patterns.PNG)
-
-**Characteristics:**
-- 6 status badge types + numeric badges
-- 5 progress bar variants (basic / gradient / segmented / striped / thick)
-- 6 card types (standard / accent / KPI / dark / gradient / light)
-- 4 mini embedded chart types (line / column / heatmap / donut)
-- 6-level typography system (46px → 8px)
+**Characteristics:** Ultra-deep purple-black background `#06040f` · Star particle effect · Purple-blue gradient glow · Inter modern font · Glassmorphism cards · Tech data visualization
 
 ---
 
@@ -315,16 +223,12 @@ Total   720px  ✓
 html-report/
 ├── SKILL.md              ← Skill entry point (read by AI agent)
 ├── demo/                 ← Example pages & screenshot previews
-│   ├── 01-skill-intro.html / .PNG     ← T1 Dark Luxury · Overview
-│   ├── 02-charts-line-bar.html / .PNG ← Chart Library ① (bar/line/column/scatter/donut)
-│   ├── 03-charts-radar-gantt.html / .PNG ← Chart Library ② (radar/gantt/heatmap/waterfall)
-│   ├── 04-architecture.html / .PNG    ← Architecture · Flowchart · Decision Tree
-│   ├── 05-t2-editorial.html / .PNG    ← T2 Editorial Split · Competitive Analysis
-│   ├── 06-t3-terminal.html / .PNG     ← T3 Terminal Code · Syntax Highlight
-│   ├── 07-t4-dashboard.html / .PNG    ← T4 Data Dashboard · KPI Cards
-│   ├── 08-t5-minimal.html / .PNG      ← T5 Editorial Minimal · Whitespace
-│   ├── 09-t6-cyberpunk.html / .PNG    ← T6 Neon Cyberpunk · Threat Intel
-│   └── 10-design-patterns.html / .PNG ← Design Patterns · Component Reference
+│   ├── theme1-mystery-intrusion.html / .PNG  ← Mystery Intrusion · Hacker Terminal Style
+│   ├── theme2-minecraft.html / .PNG          ← Minecraft · Pixel Block Style
+│   ├── theme3-ancient-epic.html / .PNG       ← Ancient Epic · Chinese Classical Style
+│   ├── theme4-boss-report.html / .PNG        ← Boss Report · Professional Business Style
+│   ├── theme5-architecture.html / .PNG       ← Architecture · Engineering Blueprint Style
+│   └── theme6-ai-product.html / .PNG         ← New AI Product · Deep Space Tech Style
 └── references/
     ├── 01-canvas.md        ← Canvas size, 4-zone structure, overflow rules
     ├── 02-design-system.md ← 6 visual templates (T1–T6) CSS snippets

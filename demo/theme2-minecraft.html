@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>我的世界</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1017px; height: 720px;
+    min-width: 1017px; max-width: 1017px;
+    min-height: 720px; max-height: 720px;
+    overflow: hidden;
+    background: #1a0a00;
+    font-family: 'Courier New', monospace;
+    image-rendering: pixelated;
+  }
+
+  /* 像素化字体模拟 */
+  .pixel-font {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    letter-spacing: 1px;
+    image-rendering: pixelated;
+  }
+
+  /* ── Header 72px ── */
+  .header {
+    width: 1017px; height: 72px;
+    background: #1a1a2e;
+    border-bottom: 4px solid #5a5a5a;
+    display: flex; align-items: center;
+    padding: 0 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  /* 天空渐变 */
+  .header::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, #1a6b9c 0%, #4db8d6 40%, #87ceeb 100%);
+  }
+  /* 像素云朵 */
+  .cloud {
+    position: absolute;
+    background: white;
+    image-rendering: pixelated;
+  }
+
+  .header-content { position: relative; z-index: 2; display: flex; align-items: center; width: 100%; }
+  .mc-logo {
+    width: 48px; height: 48px; margin-right: 16px;
+    image-rendering: pixelated; flex-shrink: 0;
+  }
+  .header-title {
+    font-size: 28px; font-weight: bold;
+    color: #fff;
+    text-shadow: 2px 2px 0 #3d3d3d, -1px -1px 0 #3d3d3d, 4px 4px 0 #222;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 3px;
+  }
+  .header-sub {
+    margin-left: 16px;
+    font-size: 11px; color: #cceeff;
+    font-family: 'Courier New', monospace;
+    text-shadow: 1px 1px 0 #2244aa;
+  }
+  .mc-hearts {
+    margin-left: auto;
+    display: flex; gap: 2px; align-items: center;
+  }
+
+  /* ── Content 580px ── */
+  .content {
+    width: 1017px; height: 580px;
+    background: linear-gradient(180deg, #87ceeb 0%, #87ceeb 40%, #7ec850 40%, #7ec850 43%, #4a7c3f 43%);
+    padding: 0;
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    grid-template-rows: 1fr;
+    gap: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* 像素地形背景 */
+  .terrain-bg {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 260px;
+    background: #5c8a3c;
+  }
+  .terrain-stone {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 180px;
+    background: #888;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 16px, rgba(0,0,0,0.1) 16px, rgba(0,0,0,0.1) 17px),
+      repeating-linear-gradient(90deg, transparent, transparent 16px, rgba(0,0,0,0.1) 16px, rgba(0,0,0,0.1) 17px);
+  }
+
+  /* 左侧：世界地图/场景 */
+  .scene-panel {
+    height: 580px;
+    position: relative;
+    padding: 16px;
+    z-index: 2;
+  }
+
+  .mc-card {
+    background: rgba(0,0,0,0.65);
+    border: 3px solid #5a5a5a;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    image-rendering: pixelated;
+    position: relative;
+  }
+  .mc-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 1px solid rgba(255,255,255,0.1);
+    pointer-events: none;
+  }
+  .mc-card-title {
+    font-size: 12px; color: #ffff55; font-weight: bold;
+    font-family: 'Courier New', monospace;
+    text-shadow: 1px 1px 0 #555500;
+    margin-bottom: 8px; letter-spacing: 1px;
+  }
+
+  /* 合成格 */
+  .craft-grid {
+    display: grid; grid-template-columns: repeat(3, 40px); gap: 2px;
+    margin: 8px 0;
+  }
+  .craft-slot {
+    width: 40px; height: 40px;
+    background: #8b8b8b;
+    border: 2px solid #373737;
+    border-bottom-color: #fff;
+    border-right-color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    image-rendering: pixelated;
+    position: relative;
+  }
+  .craft-slot.result {
+    width: 40px; height: 40px;
+    border-color: #373737;
+    background: #6b6b6b;
+  }
+  .craft-arrow { font-size: 20px; color: #aaa; margin: 0 8px; }
+
+  /* 物品栏 */
+  .hotbar {
+    display: flex; gap: 3px;
+  }
+  .hotbar-slot {
+    width: 36px; height: 36px;
+    background: #8b8b8b;
+    border: 2px solid #373737;
+    border-bottom-color: #fff;
+    border-right-color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    position: relative;
+  }
+  .hotbar-slot.active {
+    border-color: #fff;
+    background: #9b9b9b;
+    box-shadow: 0 0 0 2px #fff;
+  }
+  .hotbar-count {
+    position: absolute; bottom: 0; right: 2px;
+    font-size: 8px; color: #fff; font-weight: bold;
+    text-shadow: 1px 1px 0 #000;
+  }
+
+  /* 右侧：统计和内容 */
+  .stats-panel {
+    height: 580px;
+    padding: 16px 16px 16px 8px;
+    z-index: 2;
+    position: relative;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  /* 经验条 */
+  .xp-bar-wrap { position: relative; }
+  .xp-bar-track {
+    height: 10px;
+    background: #000;
+    border: 2px solid #373737;
+    position: relative;
+    overflow: hidden;
+  }
+  .xp-bar-fill {
+    height: 100%;
+    background: #55ff55;
+    image-rendering: pixelated;
+  }
+  .xp-label {
+    position: absolute;
+    width: 100%; text-align: center;
+    font-size: 8px; color: #fff;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #000;
+    top: 0; line-height: 10px;
+  }
+  .xp-level {
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    top: -20px;
+    font-size: 14px; color: #55ff55; font-weight: bold;
+    font-family: 'Courier New', monospace;
+    text-shadow: 1px 1px 0 #224422;
+  }
+
+  /* 成就 */
+  .achievement {
+    background: #222; border: 2px solid #5a5a5a;
+    padding: 8px 10px;
+    display: flex; align-items: center; gap: 10px;
+    position: relative;
+  }
+  .achievement::before {
+    content: '🏆 成就解锁！';
+    position: absolute; top: -1px; left: 8px;
+    font-size: 9px; color: #ffaa00;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    background: #222; padding: 0 4px;
+  }
+  .achievement-icon { font-size: 28px; flex-shrink: 0; }
+  .achievement-text { }
+  .achievement-name { font-size: 11px; color: #ffff55; font-weight: bold; font-family: 'Courier New', monospace; }
+  .achievement-desc { font-size: 9px; color: #aaa; font-family: 'Courier New', monospace; margin-top: 2px; }
+
+  /* 统计表 */
+  .stat-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .stat-key { font-size: 10px; color: #aaaaaa; font-family: 'Courier New', monospace; }
+  .stat-val { font-size: 10px; color: #55ffff; font-weight: bold; font-family: 'Courier New', monospace; }
+
+  /* 像素进度条 */
+  .pixel-bar-track {
+    height: 8px; background: #333;
+    border: 1px solid #555;
+    margin-top: 2px;
+  }
+  .pixel-bar-fill {
+    height: 100%;
+    image-rendering: pixelated;
+  }
+
+  /* 生物群系徽章 */
+  .biome-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .biome-badge {
+    background: #333; border: 2px solid #555;
+    padding: 3px 8px;
+    font-size: 9px; color: #55ff55; font-weight: bold;
+    font-family: 'Courier New', monospace;
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  /* Minecraft风格地图 */
+  .mc-map {
+    display: grid; grid-template-columns: repeat(20, 1fr); gap: 0;
+    border: 3px solid #5a5a5a;
+    width: 100%;
+    aspect-ratio: 1;
+    image-rendering: pixelated;
+    max-height: 180px;
+    overflow: hidden;
+  }
+
+  /* ── Summary 48px ── */
+  .summary {
+    width: 1017px; height: 48px;
+    background: #333333;
+    border-top: 4px solid #5a5a5a;
+    border-bottom: 2px solid #222;
+    display: flex; align-items: center;
+    padding: 0 24px; gap: 0;
+    position: relative;
+  }
+  /* 物品栏风格底栏 */
+  .summary-hotbar { display: flex; gap: 3px; align-items: center; }
+  .sum-slot {
+    width: 40px; height: 40px;
+    background: #8b8b8b;
+    border: 2px solid #373737;
+    border-bottom-color: #fff;
+    border-right-color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    position: relative;
+  }
+  .sum-slot.active { border-color: #fff; box-shadow: 0 0 0 2px #fff; background:#9b9b9b; }
+  .sum-slot-count {
+    position: absolute; bottom: 0; right: 2px;
+    font-size: 8px; color: #fff; font-weight: bold;
+    font-family: 'Courier New', monospace;
+    text-shadow: 1px 1px 0 #000;
+  }
+  .sum-info {
+    margin-left: 16px;
+    font-size: 10px; color: #55ff55; font-weight: bold;
+    font-family: 'Courier New', monospace;
+    text-shadow: 1px 1px 0 #224422;
+  }
+  .sum-coord {
+    margin-left: auto;
+    font-size: 10px; color: #aaa;
+    font-family: 'Courier New', monospace;
+  }
+
+  /* ── Footer 20px ── */
+  .footer {
+    width: 1017px; height: 20px;
+    background: #1a1a1a;
+    border-top: 2px solid #373737;
+    display: flex; align-items: center;
+    padding: 0 24px; justify-content: space-between;
+  }
+  .footer-left { font-size: 8px; color: #555; font-family: 'Courier New', monospace; }
+  .footer-right { font-size: 8px; color: #555; font-family: 'Courier New', monospace; }
+</style>
+</head>
+<body>
+
+<!-- Header 72px -->
+<div class="header">
+  <!-- 像素云朵 -->
+  <div class="cloud" style="top:8px;left:120px;width:48px;height:16px;box-shadow:16px 0 0 white,-16px 0 0 white,0 -8px 0 white,16px -8px 0 white;"></div>
+  <div class="cloud" style="top:12px;left:400px;width:32px;height:16px;box-shadow:16px 0 0 white,-16px 0 0 white,0 -8px 0 white;opacity:0.8;"></div>
+  <div class="cloud" style="top:6px;left:700px;width:40px;height:16px;box-shadow:16px 0 0 white,-16px 0 0 white,0 -8px 0 white,16px -8px 0 white;opacity:0.9;"></div>
+
+  <div class="header-content">
+    <!-- Creeper像素图标 -->
+    <svg class="mc-logo" viewBox="0 0 16 16" width="48" height="48" style="image-rendering:pixelated;border:2px solid #373737;">
+      <rect width="16" height="16" fill="#4a7c3f"/>
+      <rect x="4" y="2" width="8" height="8" fill="#5ba050"/>
+      <rect x="4" y="2" width="8" height="8" fill="#5ba050"/>
+      <!-- creeper face -->
+      <rect x="4" y="4" width="3" height="3" fill="#1a1a1a"/>
+      <rect x="9" y="4" width="3" height="3" fill="#1a1a1a"/>
+      <rect x="6" y="7" width="4" height="1" fill="#1a1a1a"/>
+      <rect x="5" y="8" width="2" height="2" fill="#1a1a1a"/>
+      <rect x="9" y="8" width="2" height="2" fill="#1a1a1a"/>
+      <rect x="6" y="10" width="4" height="1" fill="#1a1a1a"/>
+      <!-- body -->
+      <rect x="5" y="10" width="6" height="4" fill="#4a7c3f"/>
+      <rect x="3" y="12" width="3" height="4" fill="#4a7c3f"/>
+      <rect x="10" y="12" width="3" height="4" fill="#4a7c3f"/>
+    </svg>
+
+    <div>
+      <div class="header-title">我的世界  MINECRAFT</div>
+      <div class="header-sub">▶ 生存模式 · 硬核难度 · 第 1247 天</div>
+    </div>
+
+    <!-- 血量心形 -->
+    <div class="mc-hearts">
+      <svg width="180" height="20" style="image-rendering:pixelated;">
+        <!-- 10颗心，每颗8px -->
+        <defs>
+          <pattern id="heart" x="0" y="0" width="18" height="20" patternUnits="userSpaceOnUse">
+            <rect x="1" y="3" width="5" height="5" fill="#ff0000"/>
+            <rect x="7" y="3" width="5" height="5" fill="#ff0000"/>
+            <rect x="0" y="4" width="13" height="5" fill="#ff0000"/>
+            <rect x="1" y="9" width="11" height="4" fill="#ff0000"/>
+            <rect x="2" y="13" width="9" height="3" fill="#ff0000"/>
+            <rect x="4" y="16" width="5" height="2" fill="#ff0000"/>
+            <rect x="5" y="18" width="3" height="1" fill="#ff0000"/>
+          </pattern>
+        </defs>
+        <!-- 简化心形 -->
+        <text y="16" font-size="16" fill="#ff4444">❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️</text>
+      </svg>
+      <span style="font-size:10px;color:#ff5555;font-family:'Courier New',monospace;font-weight:bold;margin-left:4px;">10/10</span>
+    </div>
+  </div>
+</div>
+
+<!-- Content 580px -->
+<div class="content">
+
+  <!-- 像素地形装饰 -->
+  <svg style="position:absolute;bottom:48px;left:0;width:1017px;height:200px;z-index:1;pointer-events:none;" viewBox="0 0 1017 200" preserveAspectRatio="none">
+    <!-- 天空 -->
+    <rect width="1017" height="120" fill="#87ceeb"/>
+    <!-- 草地层 -->
+    <rect y="100" width="1017" height="20" fill="#7ec850"/>
+    <!-- 泥土层 -->
+    <rect y="120" width="1017" height="30" fill="#8b5e3c"/>
+    <!-- 石头层 -->
+    <rect y="150" width="1017" height="50" fill="#888"/>
+    <!-- 树 1 -->
+    <rect x="60" y="60" width="16" height="40" fill="#5c3d1e"/>
+    <rect x="44" y="36" width="48" height="32" fill="#4a7c3f"/>
+    <rect x="52" y="28" width="32" height="16" fill="#5ba050"/>
+    <!-- 树 2 -->
+    <rect x="200" y="68" width="16" height="32" fill="#5c3d1e"/>
+    <rect x="186" y="44" width="44" height="28" fill="#4a7c3f"/>
+    <rect x="194" y="36" width="28" height="16" fill="#5ba050"/>
+    <!-- 山 -->
+    <polygon points="750,100 830,20 910,100" fill="#888"/>
+    <polygon points="750,100 830,20 910,100" fill="#aaa" clip-path="polygon(0 0,100% 0,100% 30%,0 30%)"/>
+    <!-- 太阳 -->
+    <rect x="870" y="10" width="32" height="32" fill="#ffff55"/>
+    <rect x="874" y="6" width="24" height="4" fill="#ffff55"/>
+    <rect x="874" y="42" width="24" height="4" fill="#ffff55"/>
+    <rect x="866" y="14" width="4" height="24" fill="#ffff55"/>
+    <rect x="902" y="14" width="4" height="24" fill="#ffff55"/>
+    <!-- 网格线模拟像素 -->
+    <rect width="1017" height="200" fill="none" stroke="rgba(0,0,0,0.05)"
+      stroke-width="0.5"
+      style="background-image:repeating-linear-gradient(0deg,rgba(0,0,0,0.03) 0,rgba(0,0,0,0.03) 1px,transparent 1px,transparent 16px),repeating-linear-gradient(90deg,rgba(0,0,0,0.03) 0,rgba(0,0,0,0.03) 1px,transparent 1px,transparent 16px);"/>
+  </svg>
+
+  <!-- 左侧面板 -->
+  <div class="scene-panel">
+    <!-- 合成台 -->
+    <div class="mc-card">
+      <div class="mc-card-title">⚒ 合成配方 · 钻石镐</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="craft-grid">
+          <div class="craft-slot">💎</div>
+          <div class="craft-slot">💎</div>
+          <div class="craft-slot">💎</div>
+          <div class="craft-slot"></div>
+          <div class="craft-slot">🪵</div>
+          <div class="craft-slot"></div>
+          <div class="craft-slot"></div>
+          <div class="craft-slot">🪵</div>
+          <div class="craft-slot"></div>
+        </div>
+        <div class="craft-arrow">▶</div>
+        <div class="craft-slot result" style="width:50px;height:50px;font-size:26px;">⛏️</div>
+      </div>
+      <div style="margin-top:6px;font-size:9px;color:#aaa;font-family:'Courier New',monospace;">耐久度: 1561 &nbsp;|&nbsp; 附魔: 精准采集 III · 效率 V</div>
+    </div>
+
+    <!-- 物品栏 -->
+    <div class="mc-card">
+      <div class="mc-card-title">🎒 当前背包</div>
+      <div class="hotbar">
+        <div class="hotbar-slot active">⛏️<div class="hotbar-count">1</div></div>
+        <div class="hotbar-slot">🗡️<div class="hotbar-count">1</div></div>
+        <div class="hotbar-slot">🧱<div class="hotbar-count">64</div></div>
+        <div class="hotbar-slot">🍖<div class="hotbar-count">32</div></div>
+        <div class="hotbar-slot">💣<div class="hotbar-count">16</div></div>
+        <div class="hotbar-slot">🪣<div class="hotbar-count">3</div></div>
+        <div class="hotbar-slot">🏹<div class="hotbar-count">1</div></div>
+        <div class="hotbar-slot">🔦<div class="hotbar-count">48</div></div>
+        <div class="hotbar-slot">💎<div class="hotbar-count">7</div></div>
+      </div>
+    </div>
+
+    <!-- 成就 -->
+    <div class="achievement" style="margin-top:0;">
+      <div class="achievement-icon">🐉</div>
+      <div class="achievement-text">
+        <div class="achievement-name">末影龙已被击败</div>
+        <div class="achievement-desc">在末地击败末影龙 · 获得 70 点经验 · 解锁新纪元</div>
+      </div>
+    </div>
+    <div class="achievement" style="margin-top:8px;">
+      <div class="achievement-icon">🌋</div>
+      <div class="achievement-text">
+        <div class="achievement-name">下界要塞探险者</div>
+        <div class="achievement-desc">发现并清理了下界要塞 · 采集凋零头颅 3/3</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右侧面板 -->
+  <div class="stats-panel">
+    <!-- 经验条 -->
+    <div class="mc-card" style="padding-top:20px;">
+      <div class="mc-card-title">⭐ 经验值</div>
+      <div style="position:relative;margin-top:16px;">
+        <div class="xp-level">Lv.47</div>
+        <div class="xp-bar-track">
+          <div class="xp-bar-fill" style="width:73%;"></div>
+          <div class="xp-label">6,847 / 9,380 XP</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 世界统计 -->
+    <div class="mc-card">
+      <div class="mc-card-title">📊 世界统计</div>
+      <div class="stat-row"><span class="stat-key">游戏时间</span><span class="stat-val">1,247天 06:32:17</span></div>
+      <div class="stat-row"><span class="stat-key">已走距离</span><span class="stat-val">142,830 格</span></div>
+      <div class="stat-row"><span class="stat-key">已挖方块</span><span class="stat-val">86,421 个</span></div>
+      <div class="stat-row"><span class="stat-key">已击杀怪物</span><span class="stat-val">4,218 只</span></div>
+      <div class="stat-row"><span class="stat-key">死亡次数</span><span class="stat-val" style="color:#ff5555;">3 次</span></div>
+      <div class="stat-row"><span class="stat-key">钻石总计</span><span class="stat-val">127 颗</span></div>
+
+      <!-- 资源进度条 -->
+      <div style="margin-top:8px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+          <span style="font-size:9px;color:#aaa;font-family:'Courier New',monospace;">🌾 食物</span>
+          <span style="font-size:9px;color:#55ff55;font-family:'Courier New',monospace;">满载</span>
+        </div>
+        <div class="pixel-bar-track"><div class="pixel-bar-fill" style="width:95%;background:#55aa00;"></div></div>
+
+        <div style="display:flex;justify-content:space-between;margin-top:4px;margin-bottom:2px;">
+          <span style="font-size:9px;color:#aaa;font-family:'Courier New',monospace;">💎 钻石</span>
+          <span style="font-size:9px;color:#55ffff;font-family:'Courier New',monospace;">127/∞</span>
+        </div>
+        <div class="pixel-bar-track"><div class="pixel-bar-fill" style="width:64%;background:#0ddbdb;"></div></div>
+
+        <div style="display:flex;justify-content:space-between;margin-top:4px;margin-bottom:2px;">
+          <span style="font-size:9px;color:#aaa;font-family:'Courier New',monospace;">🔮 附魔</span>
+          <span style="font-size:9px;color:#aa55ff;font-family:'Courier New',monospace;">等级30</span>
+        </div>
+        <div class="pixel-bar-track"><div class="pixel-bar-fill" style="width:100%;background:#7733cc;"></div></div>
+      </div>
+    </div>
+
+    <!-- 已探索生物群系 -->
+    <div class="mc-card">
+      <div class="mc-card-title">🗺 已探索生物群系</div>
+      <div class="biome-badges">
+        <div class="biome-badge">🌿 森林</div>
+        <div class="biome-badge">🏜 沙漠</div>
+        <div class="biome-badge">❄️ 冻原</div>
+        <div class="biome-badge">🌊 海洋</div>
+        <div class="biome-badge">🍄 菌岛</div>
+        <div class="biome-badge" style="color:#ff5555;">🌋 下界</div>
+        <div class="biome-badge" style="color:#aa55ff;">🌌 末地</div>
+        <div class="biome-badge">🏔 山地</div>
+        <div class="biome-badge">🎋 竹林</div>
+        <div class="biome-badge">🌸 繁花林</div>
+      </div>
+      <div style="margin-top:8px;font-size:9px;color:#aaa;font-family:'Courier New',monospace;">
+        已探索: 10/43 种生物群系 &nbsp;·&nbsp; 探索进度: 23%
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Summary 48px -->
+<div class="summary">
+  <div class="summary-hotbar">
+    <div class="sum-slot active">❤️<div class="sum-slot-count">10</div></div>
+    <div class="sum-slot">🛡️<div class="sum-slot-count">20</div></div>
+    <div class="sum-slot">⭐<div class="sum-slot-count">47</div></div>
+    <div class="sum-slot">💎<div class="sum-slot-count">127</div></div>
+    <div class="sum-slot">🏆<div class="sum-slot-count">68</div></div>
+  </div>
+  <div class="sum-info">
+    &nbsp;·&nbsp; 当前存档: "极限生存" · 硬核模式 · 种子: 3748291056
+  </div>
+  <div class="sum-coord">
+    X: 428 &nbsp; Y: 64 &nbsp; Z: -1247 &nbsp;|&nbsp; 难度: 困难 &nbsp;|&nbsp; 光照: 15
+  </div>
+</div>
+
+<!-- Footer 20px -->
+<div class="footer">
+  <div class="footer-left">MINECRAFT DEMO · 我的世界 · Java Edition 1.21.4</div>
+  <div class="footer-right">PAGE 02 / 06 · THEME: MINECRAFT</div>
+</div>
+
+</body>
+</html>

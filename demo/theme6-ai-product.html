@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>新的AI产品</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  html, body {
+    width: 1017px; height: 720px;
+    min-width: 1017px; max-width: 1017px;
+    min-height: 720px; max-height: 720px;
+    overflow: hidden;
+    background: #06040f;
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: #e8e0ff;
+  }
+
+  /* 深空渐变背景 */
+  body::before {
+    content: '';
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% -20%, rgba(120,40,240,0.25) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 110%, rgba(40,100,255,0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(10,5,30,0.98) 0%, transparent 100%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* 星点效果 */
+  body::after {
+    content: '';
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      radial-gradient(1px 1px at 100px 150px, rgba(200,180,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 300px 80px, rgba(180,200,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 600px 200px, rgba(200,180,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 800px 100px, rgba(180,160,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 950px 300px, rgba(200,180,255,0.3) 0%, transparent 100%),
+      radial-gradient(2px 2px at 200px 400px, rgba(160,140,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 750px 500px, rgba(180,200,255,0.25) 0%, transparent 100%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── Header 72px ── */
+  .header {
+    width: 1017px; height: 72px;
+    background: rgba(6,4,15,0.9);
+    border-bottom: 1px solid rgba(120,80,255,0.2);
+    display: flex; align-items: center;
+    padding: 0 32px;
+    position: relative; z-index: 10;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+  .header::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(120,80,255,0.6) 20%, rgba(80,160,255,0.8) 50%, rgba(120,80,255,0.6) 80%, transparent 100%);
+  }
+
+  /* 光晕装饰 */
+  .header-glow {
+    position: absolute; top: -30px; left: 50%;
+    transform: translateX(-50%);
+    width: 400px; height: 80px;
+    background: radial-gradient(ellipse, rgba(120,60,255,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .logo-wrap { display: flex; align-items: center; gap: 12px; margin-right: 28px; }
+  .logo-mark {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, #7c3aed, #4f46e5, #0ea5e9);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(124,58,237,0.4);
+  }
+  .logo-mark::before {
+    content: '';
+    position: absolute; inset: -1px;
+    border-radius: 11px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    pointer-events: none;
+  }
+  .logo-text { }
+  .logo-name { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: white; }
+  .logo-name span { background: linear-gradient(135deg, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .logo-tagline { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 1px; letter-spacing: 0.5px; }
+
+  .header-badge {
+    background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(79,70,229,0.3));
+    border: 1px solid rgba(124,58,237,0.4);
+    padding: 4px 12px; border-radius: 20px;
+    font-size: 10px; color: #c4b5fd; font-weight: 600;
+    letter-spacing: 1px; margin-right: 12px;
+  }
+
+  .header-nav { display: flex; gap: 24px; }
+  .nav-item { font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 500; cursor: pointer; }
+  .nav-item.active { color: white; position: relative; }
+  .nav-item.active::after {
+    content: '';
+    position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%);
+    width: 4px; height: 4px; border-radius: 50%;
+    background: #a78bfa;
+    box-shadow: 0 0 6px #a78bfa;
+  }
+
+  .header-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+  .launch-btn {
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    color: white; border: none;
+    padding: 8px 20px; border-radius: 8px;
+    font-size: 12px; font-weight: 700; cursor: pointer;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 20px rgba(124,58,237,0.4);
+    position: relative; overflow: hidden;
+  }
+  .launch-btn::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: rgba(255,255,255,0.3);
+  }
+  .header-date { font-size: 10px; color: rgba(255,255,255,0.2); }
+
+  /* ── Content 580px ── */
+  .content {
+    width: 1017px; height: 580px;
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  /* 左侧：产品主视觉 */
+  .left-panel {
+    padding: 24px 20px 20px 28px;
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+
+  .product-eyebrow {
+    font-size: 10px; color: #a78bfa; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 14px;
+  }
+  .product-eyebrow::before {
+    content: '';
+    width: 24px; height: 1px; background: #a78bfa;
+    box-shadow: 0 0 4px #a78bfa;
+  }
+
+  .product-name {
+    font-size: 40px; font-weight: 900;
+    line-height: 1.05; letter-spacing: -1.5px;
+    margin-bottom: 16px;
+    color: white;
+  }
+  .product-name .gradient {
+    background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 50%, #34d399 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .product-desc {
+    font-size: 13px; color: rgba(255,255,255,0.5);
+    line-height: 1.7; max-width: 360px;
+    margin-bottom: 20px; font-weight: 400;
+  }
+
+  /* 特性标签 */
+  .feature-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .feature-tag {
+    font-size: 10px; font-weight: 600;
+    padding: 4px 10px; border-radius: 6px;
+    border: 1px solid; letter-spacing: 0.5px;
+  }
+  .feature-tag.purple { color: #c4b5fd; border-color: rgba(196,181,253,0.25); background: rgba(124,58,237,0.12); }
+  .feature-tag.blue { color: #93c5fd; border-color: rgba(147,197,253,0.25); background: rgba(59,130,246,0.12); }
+  .feature-tag.green { color: #6ee7b7; border-color: rgba(110,231,183,0.25); background: rgba(16,185,129,0.12); }
+  .feature-tag.pink { color: #f9a8d4; border-color: rgba(249,168,212,0.25); background: rgba(236,72,153,0.12); }
+
+  /* 指标数据 */
+  .metrics-row { display: flex; gap: 0; margin-bottom: 20px; }
+  .metric-item {
+    flex: 1; padding: 12px 0;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    text-align: center;
+  }
+  .metric-item:first-child { text-align: left; }
+  .metric-item:last-child { border-right: none; }
+  .metric-num { font-size: 26px; font-weight: 800; color: white; letter-spacing: -1px; line-height: 1; }
+  .metric-unit { font-size: 12px; color: rgba(255,255,255,0.3); font-weight: 400; margin-left: 2px; }
+  .metric-label { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 3px; }
+
+  /* CTA按钮组 */
+  .cta-group { display: flex; gap: 10px; margin-bottom: 16px; }
+  .btn-primary {
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    color: white; border: none; padding: 12px 24px;
+    border-radius: 10px; font-size: 13px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 8px 24px rgba(124,58,237,0.3);
+    position: relative; overflow: hidden;
+  }
+  .btn-primary::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: rgba(255,255,255,0.2);
+  }
+  .btn-secondary {
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.1);
+    padding: 12px 20px; border-radius: 10px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* 信任徽章 */
+  .trust-line { display: flex; align-items: center; gap: 12px; }
+  .trust-text { font-size: 10px; color: rgba(255,255,255,0.2); }
+  .trust-logos { display: flex; gap: 12px; }
+  .trust-logo { font-size: 10px; color: rgba(255,255,255,0.15); font-weight: 600; letter-spacing: 1px; }
+
+  /* 右侧：功能展示 */
+  .right-panel {
+    padding: 20px 28px 20px 16px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+
+  /* 产品截图卡 */
+  .product-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+  .product-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(167,139,250,0.3), transparent);
+  }
+
+  .card-header-bar {
+    background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 8px 12px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28ca41; }
+  .card-title-bar { margin-left: 8px; font-size: 10px; color: rgba(255,255,255,0.3); }
+
+  .chat-area { padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+  .chat-msg { display: flex; gap: 8px; align-items: flex-start; }
+  .chat-msg.user { flex-direction: row-reverse; }
+  .avatar {
+    width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+  }
+  .avatar.ai { background: linear-gradient(135deg, #7c3aed, #4f46e5); }
+  .avatar.user { background: linear-gradient(135deg, #0ea5e9, #06b6d4); }
+  .bubble {
+    max-width: 75%; padding: 8px 12px; border-radius: 10px;
+    font-size: 11px; line-height: 1.5;
+  }
+  .bubble.ai {
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(124,58,237,0.2);
+    color: rgba(255,255,255,0.8);
+  }
+  .bubble.user {
+    background: rgba(14,165,233,0.15);
+    border: 1px solid rgba(14,165,233,0.2);
+    color: rgba(255,255,255,0.7);
+  }
+  .bubble.typing {
+    background: rgba(124,58,237,0.1);
+    border: 1px solid rgba(124,58,237,0.15);
+    color: rgba(255,255,255,0.4);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .typing-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(167,139,250,0.5);
+  }
+
+  /* 功能网格 -->*/
+  .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .feature-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px; padding: 12px 14px;
+    position: relative; overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 60%, rgba(167,139,250,0.03) 100%);
+  }
+  .feature-icon { font-size: 18px; margin-bottom: 6px; }
+  .feature-name { font-size: 12px; color: white; font-weight: 600; margin-bottom: 3px; }
+  .feature-desc { font-size: 10px; color: rgba(255,255,255,0.35); line-height: 1.5; }
+
+  /* 模型选择器 */
+  .model-selector {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px; padding: 12px 14px;
+  }
+  .model-title { font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
+  .model-list { display: flex; gap: 6px; }
+  .model-chip {
+    padding: 4px 10px; border-radius: 6px;
+    font-size: 10px; font-weight: 600; cursor: pointer;
+    border: 1px solid;
+  }
+  .model-chip.active {
+    background: rgba(124,58,237,0.25);
+    border-color: rgba(167,139,250,0.5);
+    color: #c4b5fd;
+  }
+  .model-chip.inactive {
+    background: transparent;
+    border-color: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* ── Summary 48px ── */
+  .summary {
+    width: 1017px; height: 48px;
+    background: rgba(6,4,15,0.9);
+    border-top: 1px solid rgba(120,80,255,0.15);
+    display: flex; align-items: center;
+    padding: 0 32px; gap: 0;
+    position: relative; z-index: 10;
+    backdrop-filter: blur(10px);
+  }
+  .summary::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(120,80,255,0.4), rgba(80,160,255,0.4), rgba(120,80,255,0.4), transparent);
+  }
+  .sum-stats { display: flex; align-items: center; gap: 0; flex: 1; }
+  .sum-item { display: flex; align-items: center; gap: 8px; padding: 0 20px; }
+  .sum-item:first-child { padding-left: 0; }
+  .sum-sep { width: 1px; height: 20px; background: rgba(255,255,255,0.06); }
+  .sum-icon { font-size: 14px; }
+  .sum-text { }
+  .sum-label { font-size: 8px; color: rgba(255,255,255,0.25); letter-spacing: 0.5px; }
+  .sum-val { font-size: 14px; font-weight: 700; color: white; }
+  .sum-val.purple { background: linear-gradient(135deg, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+  .sum-right { display: flex; align-items: center; gap: 10px; }
+  .sum-status {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 10px; color: rgba(255,255,255,0.3);
+  }
+  .status-live {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #34d399; box-shadow: 0 0 6px #34d399;
+  }
+
+  /* ── Footer 20px ── */
+  .footer {
+    width: 1017px; height: 20px;
+    background: rgba(4,3,10,0.98);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    display: flex; align-items: center;
+    padding: 0 32px; justify-content: space-between;
+    position: relative; z-index: 10;
+  }
+  .footer-left { font-size: 8px; color: rgba(255,255,255,0.12); letter-spacing: 0.5px; }
+  .footer-right { font-size: 8px; color: rgba(255,255,255,0.12); }
+</style>
+</head>
+<body>
+
+<!-- Header 72px -->
+<div class="header">
+  <div class="header-glow"></div>
+  <div class="logo-wrap">
+    <div class="logo-mark">✦</div>
+    <div class="logo-text">
+      <div class="logo-name">Aurora<span>AI</span></div>
+      <div class="logo-tagline">Next-gen Intelligence Platform</div>
+    </div>
+  </div>
+
+  <div class="header-badge">🚀 PUBLIC BETA</div>
+
+  <div class="header-nav">
+    <div class="nav-item active">产品</div>
+    <div class="nav-item">功能</div>
+    <div class="nav-item">定价</div>
+    <div class="nav-item">API</div>
+    <div class="nav-item">企业版</div>
+  </div>
+
+  <div class="header-right">
+    <div class="header-date">2026-03-13</div>
+    <button class="launch-btn">⚡ 立即体验</button>
+  </div>
+</div>
+
+<!-- Content 580px -->
+<div class="content">
+
+  <!-- 左侧 -->
+  <div class="left-panel">
+    <div class="product-eyebrow">New AI Product · 2026</div>
+
+    <div class="product-name">
+      下一代<br>
+      <span class="gradient">智能协作</span><br>
+      AI平台
+    </div>
+
+    <div class="product-desc">
+      专为企业打造的全栈AI工作流平台——集多模态理解、代码生成、
+      知识库问答于一体，本地部署 + 云端混合，一个平台解决全部 AI 需求。
+    </div>
+
+    <div class="feature-tags">
+      <div class="feature-tag purple">🧠 多模态大模型</div>
+      <div class="feature-tag blue">⚡ 本地部署</div>
+      <div class="feature-tag green">🔒 数据不出域</div>
+      <div class="feature-tag pink">🎨 无代码配置</div>
+      <div class="feature-tag purple">🔗 RAG知识库</div>
+      <div class="feature-tag blue">🤖 Agent工作流</div>
+    </div>
+
+    <div class="metrics-row">
+      <div class="metric-item">
+        <div class="metric-num">120K<span class="metric-unit">+</span></div>
+        <div class="metric-label">企业用户</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-num">4.8<span class="metric-unit">/5</span></div>
+        <div class="metric-label">平均评分</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-num">99.9<span class="metric-unit">%</span></div>
+        <div class="metric-label">正常运行时间</div>
+      </div>
+    </div>
+
+    <div class="cta-group">
+      <button class="btn-primary">⚡ 免费开始 &nbsp;→</button>
+      <button class="btn-secondary">▶ 观看演示</button>
+    </div>
+
+    <div class="trust-line">
+      <div class="trust-text">已被信任于</div>
+      <div class="trust-logos">
+        <div class="trust-logo">ALIBABA</div>
+        <div class="trust-logo">TENCENT</div>
+        <div class="trust-logo">BYTEDANCE</div>
+        <div class="trust-logo">HUAWEI</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右侧 -->
+  <div class="right-panel">
+
+    <!-- AI对话展示 -->
+    <div class="product-card">
+      <div class="card-header-bar">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+        <div class="card-title-bar">Aurora Chat · 智能对话助手</div>
+        <div style="margin-left:auto;font-size:9px;color:rgba(255,255,255,0.2);">模型: Aurora-Ultra-72B</div>
+      </div>
+      <div class="chat-area">
+        <div class="chat-msg user">
+          <div class="avatar user">U</div>
+          <div class="bubble user">帮我分析这份季度财报数据，找出关键趋势并生成可视化报告</div>
+        </div>
+        <div class="chat-msg">
+          <div class="avatar ai">✦</div>
+          <div class="bubble ai">
+            <strong style="color:#c4b5fd;">已接收财报文件 Q1-2026.xlsx</strong><br>
+            🔍 正在分析 247 行数据 · 识别 12 个核心指标...<br>
+            <span style="color:rgba(255,255,255,0.5);">营收同比增长 <strong style="color:#34d399;">+18.4%</strong>，净利润率提升至 22.8%，
+            AI业务超额完成 <strong style="color:#a78bfa;">+14%</strong>。</span>
+          </div>
+        </div>
+        <div class="chat-msg">
+          <div class="avatar ai">✦</div>
+          <div class="bubble typing">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <span style="margin-left:4px;">正在生成可视化图表...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 模型选择器 -->
+      <div style="padding:8px 14px 12px;border-top:1px solid rgba(255,255,255,0.05);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <div class="model-title" style="margin-bottom:0;">切换模型</div>
+          <div class="model-list">
+            <div class="model-chip active">Aurora-Ultra</div>
+            <div class="model-chip inactive">Aurora-Pro</div>
+            <div class="model-chip inactive">Aurora-Mini</div>
+            <div class="model-chip inactive" style="border-color:rgba(255,140,0,0.3);color:rgba(255,180,80,0.4);">Code-Spec</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:6px 12px;">
+          <div style="font-size:11px;color:rgba(255,255,255,0.2);flex:1;">给 Aurora 发送消息...</div>
+          <div style="font-size:18px;opacity:0.3;">📎</div>
+          <div style="width:28px;height:28px;background:linear-gradient(135deg,#7c3aed,#4f46e5);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;">↑</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 功能网格 -->
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <div class="feature-name">多模态理解</div>
+        <div class="feature-desc">图文视频音频全模态输入，深度语义理解，支持 100+ 文件格式</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📚</div>
+        <div class="feature-name">企业知识库 RAG</div>
+        <div class="feature-desc">向量检索 + 知识图谱，100ms 召回，文档秒级更新</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-name">AI Agent 工作流</div>
+        <div class="feature-desc">可视化编排 Agent，自动规划 + 工具调用，无代码配置</div>
+      </div>
+      <div class="feature-card" style="border-color:rgba(167,139,250,0.15);background:rgba(124,58,237,0.06);">
+        <div class="feature-icon">🔐</div>
+        <div class="feature-name">私有化部署</div>
+        <div class="feature-desc">数据不出域，本地 GPU 推理，满足等保三级合规要求</div>
+      </div>
+    </div>
+
+    <!-- 定价简介 -->
+    <div style="display:flex;gap:8px;">
+      <div style="flex:1;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px 14px;">
+        <div style="font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:1px;margin-bottom:4px;text-transform:uppercase;">免费版</div>
+        <div style="font-size:20px;color:white;font-weight:800;">¥0<span style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:400;">/月</span></div>
+        <div style="font-size:9px;color:rgba(255,255,255,0.3);margin-top:4px;">100万 token/月 · 3个知识库</div>
+      </div>
+      <div style="flex:1;background:rgba(124,58,237,0.12);border:1px solid rgba(167,139,250,0.25);border-radius:10px;padding:12px 14px;position:relative;">
+        <div style="position:absolute;top:-1px;right:10px;background:linear-gradient(135deg,#7c3aed,#4f46e5);font-size:8px;color:white;padding:2px 8px;border-radius:0 0 6px 6px;font-weight:700;">HOT 🔥</div>
+        <div style="font-size:9px;color:#c4b5fd;letter-spacing:1px;margin-bottom:4px;text-transform:uppercase;">专业版</div>
+        <div style="font-size:20px;font-weight:800;background:linear-gradient(135deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">¥299<span style="font-size:11px;font-weight:400;-webkit-text-fill-color:rgba(255,255,255,0.3);">/月</span></div>
+        <div style="font-size:9px;color:rgba(255,255,255,0.3);margin-top:4px;">无限 token · 私有知识库 · API</div>
+      </div>
+      <div style="flex:1;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px 14px;">
+        <div style="font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:1px;margin-bottom:4px;text-transform:uppercase;">企业版</div>
+        <div style="font-size:20px;color:white;font-weight:800;">定制<span style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:400;"></span></div>
+        <div style="font-size:9px;color:rgba(255,255,255,0.3);margin-top:4px;">私有化 · SLA 99.9% · 专属支持</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Summary 48px -->
+<div class="summary">
+  <div class="sum-stats">
+    <div class="sum-item">
+      <div class="sum-icon">⚡</div>
+      <div class="sum-text">
+        <div class="sum-label">响应速度</div>
+        <div class="sum-val purple">&lt; 200ms</div>
+      </div>
+    </div>
+    <div class="sum-sep"></div>
+    <div class="sum-item">
+      <div class="sum-icon">🧠</div>
+      <div class="sum-text">
+        <div class="sum-label">上下文窗口</div>
+        <div class="sum-val">200K token</div>
+      </div>
+    </div>
+    <div class="sum-sep"></div>
+    <div class="sum-item">
+      <div class="sum-icon">📈</div>
+      <div class="sum-text">
+        <div class="sum-label">本月新增用户</div>
+        <div class="sum-val purple">+28,400</div>
+      </div>
+    </div>
+    <div class="sum-sep"></div>
+    <div class="sum-item">
+      <div class="sum-icon">🌍</div>
+      <div class="sum-text">
+        <div class="sum-label">支持语言</div>
+        <div class="sum-val">56种</div>
+      </div>
+    </div>
+    <div class="sum-sep"></div>
+    <div class="sum-item">
+      <div class="sum-icon">🔗</div>
+      <div class="sum-text">
+        <div class="sum-label">集成工具</div>
+        <div class="sum-val">200+</div>
+      </div>
+    </div>
+  </div>
+  <div class="sum-right">
+    <div class="sum-status">
+      <div class="status-live"></div>
+      All Systems Operational
+    </div>
+  </div>
+</div>
+
+<!-- Footer 20px -->
+<div class="footer">
+  <div class="footer-left">AuroraAI · Next-gen Intelligence Platform · © 2026 · Privacy Policy · Terms of Service</div>
+  <div class="footer-right">PAGE 06 / 06 · AI PRODUCT LAUNCH · 2026-03-13</div>
+</div>
+
+</body>
+</html>

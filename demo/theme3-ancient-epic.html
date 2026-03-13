@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>荒独断万古</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1017px; height: 720px;
+    min-width: 1017px; max-width: 1017px;
+    min-height: 720px; max-height: 720px;
+    overflow: hidden;
+    background: #0a0502;
+    font-family: 'Noto Serif SC', 'SimSun', serif;
+    color: #d4a853;
+  }
+
+  /* 古卷纸纹理背景 */
+  body::before {
+    content: '';
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(180,80,0,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 0% 50%, rgba(120,40,0,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 100% 50%, rgba(180,100,0,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(80,20,0,0.15) 0%, transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* 流动光晕 */
+  body::after {
+    content: '';
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent 0px,
+      transparent 80px,
+      rgba(180,120,0,0.02) 80px,
+      rgba(180,120,0,0.02) 82px
+    );
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── Header 72px ── */
+  .header {
+    width: 1017px; height: 72px;
+    background: linear-gradient(180deg, #1a0800 0%, #0d0400 100%);
+    border-bottom: 2px solid #6b3800;
+    position: relative;
+    display: flex; align-items: center;
+    padding: 0 48px;
+    z-index: 2;
+    overflow: hidden;
+  }
+  /* 顶部装饰纹 */
+  .header::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #b8732a 20%, #ffd700 50%, #b8732a 80%, transparent 100%);
+    box-shadow: 0 0 16px #b8732a, 0 0 32px rgba(184,115,42,0.4);
+  }
+  .header::after {
+    content: '❖ ✦ ❖ ✦ ❖ ✦ ❖ ✦ ❖ ✦ ❖ ✦ ❖ ✦ ❖ ✦ ❖ ✦ ❖';
+    position: absolute; top: 4px; left: 0; right: 0;
+    text-align: center;
+    font-size: 9px; color: rgba(212,168,83,0.25);
+    letter-spacing: 8px;
+  }
+
+  .header-seal {
+    width: 52px; height: 52px; margin-right: 20px; flex-shrink: 0;
+    border: 2px solid #b8732a;
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    background: rgba(100,30,0,0.4);
+    box-shadow: 0 0 12px rgba(184,115,42,0.4), inset 0 0 8px rgba(0,0,0,0.5);
+    color: #ff4422;
+  }
+  .header-center { flex: 1; text-align: center; }
+  .header-title {
+    font-size: 30px; font-weight: 900; letter-spacing: 12px;
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255,215,0,0.6), 0 0 40px rgba(255,140,0,0.3), 2px 2px 0 #4a1a00;
+    font-family: 'Noto Serif SC', serif;
+  }
+  .header-sub {
+    font-size: 11px; color: #8b6030; letter-spacing: 4px; margin-top: 4px;
+    font-family: 'Noto Serif SC', serif;
+  }
+  .header-right { text-align: right; }
+  .realm-tag {
+    font-size: 10px; color: #b8732a; letter-spacing: 2px;
+    background: rgba(60,20,0,0.6);
+    border: 1px solid #6b3800;
+    padding: 3px 10px; margin-bottom: 4px;
+    display: inline-block;
+  }
+  .realm-level { font-size: 18px; color: #ff6600; font-weight: bold; text-shadow: 0 0 8px #ff6600; }
+
+  /* ── Content 580px ── */
+  .content {
+    width: 1017px; height: 580px;
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-columns: 300px 1fr 240px;
+    gap: 0;
+    padding: 0;
+    background: transparent;
+  }
+
+  /* 水墨山水背景 */
+  .ink-bg {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* 古卷面板 */
+  .scroll-panel {
+    background: linear-gradient(180deg, rgba(30,10,2,0.92) 0%, rgba(18,6,1,0.95) 100%);
+    border-right: 1px solid #4a2800;
+    padding: 20px 16px;
+    position: relative; z-index: 2;
+    height: 580px;
+    overflow: hidden;
+  }
+  .scroll-panel::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+    background: linear-gradient(180deg, transparent, #b8732a 30%, #ffd700 50%, #b8732a 70%, transparent);
+    box-shadow: 0 0 8px rgba(184,115,42,0.5);
+  }
+
+  .panel-header {
+    text-align: center; margin-bottom: 14px; padding-bottom: 10px;
+    border-bottom: 1px solid rgba(107,56,0,0.5);
+    position: relative;
+  }
+  .panel-header::after {
+    content: '◆';
+    position: absolute; bottom: -6px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px; color: #b8732a;
+    background: rgba(18,6,1,1); padding: 0 4px;
+  }
+  .panel-title {
+    font-size: 14px; color: #ffd700; font-weight: bold;
+    letter-spacing: 3px; text-shadow: 0 0 8px rgba(255,215,0,0.4);
+  }
+
+  /* 境界阶梯 */
+  .realm-ladder { display: flex; flex-direction: column; gap: 6px; }
+  .realm-step {
+    position: relative; padding: 8px 12px;
+    border: 1px solid rgba(107,56,0,0.4);
+    background: rgba(40,15,0,0.6);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .realm-step.current {
+    border-color: #ffd700;
+    background: rgba(80,30,0,0.8);
+    box-shadow: 0 0 12px rgba(255,215,0,0.2), inset 0 0 8px rgba(255,140,0,0.1);
+  }
+  .realm-step.current::before {
+    content: '▶';
+    position: absolute; left: -16px;
+    color: #ffd700; font-size: 10px;
+    text-shadow: 0 0 6px #ffd700;
+  }
+  .realm-num {
+    font-size: 11px; color: #6b3800; font-weight: bold;
+    width: 24px; text-align: center; flex-shrink: 0;
+  }
+  .realm-name { font-size: 13px; font-weight: bold; flex: 1; }
+  .realm-qi { font-size: 9px; color: #8b6030; text-align: right; }
+
+  /* 中间主面板 */
+  .main-panel {
+    position: relative; z-index: 2; padding: 16px 20px;
+    height: 580px; overflow: hidden;
+  }
+
+  /* 功法卡 */
+  .technique-card {
+    background: linear-gradient(135deg, rgba(30,10,2,0.9) 0%, rgba(50,20,5,0.85) 100%);
+    border: 1px solid #6b3800;
+    padding: 14px 16px; margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .technique-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, #ffd700, transparent);
+  }
+  .technique-card::after {
+    content: '道';
+    position: absolute; right: 12px; top: 50%;
+    transform: translateY(-50%) rotate(15deg);
+    font-size: 60px; color: rgba(107,56,0,0.08);
+    font-weight: bold;
+  }
+  .tech-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .tech-icon { font-size: 28px; flex-shrink: 0; }
+  .tech-name { font-size: 18px; color: #ffd700; font-weight: bold; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255,215,0,0.4); }
+  .tech-grade { font-size: 10px; color: #ff6600; border: 1px solid #ff6600; padding: 2px 6px; margin-left: 8px; }
+  .tech-desc { font-size: 11px; color: #a07040; line-height: 1.8; letter-spacing: 1px; }
+
+  /* 气劲条 */
+  .qi-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 5px; }
+  .qi-row { display: flex; align-items: center; gap: 8px; }
+  .qi-label { font-size: 10px; color: #8b6030; width: 48px; flex-shrink: 0; letter-spacing: 1px; }
+  .qi-track {
+    flex: 1; height: 8px;
+    background: rgba(30,10,0,0.8);
+    border: 1px solid #4a2800;
+    position: relative;
+    overflow: visible;
+  }
+  .qi-fill { height: 100%; position: relative; }
+  .qi-track::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(90deg, transparent, transparent 12px, rgba(0,0,0,0.3) 12px, rgba(0,0,0,0.3) 13px);
+  }
+  .qi-val { font-size: 10px; color: #b8732a; width: 40px; text-align: right; flex-shrink: 0; }
+
+  /* 战绩 SVG 图表 */
+  .battle-chart-wrap { margin-top: 10px; }
+  .battle-chart-title { font-size: 11px; color: #8b6030; letter-spacing: 2px; margin-bottom: 6px; text-align: center; }
+
+  /* 右侧面板 */
+  .right-panel {
+    background: linear-gradient(180deg, rgba(20,8,1,0.92) 0%, rgba(12,4,0,0.96) 100%);
+    border-left: 1px solid #4a2800;
+    padding: 16px 14px;
+    position: relative; z-index: 2;
+    height: 580px;
+    overflow: hidden;
+  }
+  .right-panel::before {
+    content: '';
+    position: absolute; top: 0; right: 0; bottom: 0; width: 3px;
+    background: linear-gradient(180deg, transparent, #b8732a 30%, #ffd700 50%, #b8732a 70%, transparent);
+    box-shadow: 0 0 8px rgba(184,115,42,0.5);
+  }
+
+  /* 敌人名单 */
+  .enemy-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 0; border-bottom: 1px solid rgba(50,20,0,0.5);
+  }
+  .enemy-icon { font-size: 18px; flex-shrink: 0; }
+  .enemy-name { font-size: 11px; color: #cc8833; font-weight: bold; flex: 1; }
+  .enemy-status { font-size: 9px; padding: 2px 6px; }
+  .enemy-status.dead { color: #888; background: rgba(30,30,30,0.6); border: 1px solid #333; }
+  .enemy-status.alive { color: #ff4422; background: rgba(60,10,0,0.6); border: 1px solid #ff4422; }
+
+  /* 宝物 */
+  .treasure-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 10px; margin-bottom: 6px;
+    background: rgba(40,15,0,0.6);
+    border: 1px solid rgba(107,56,0,0.3);
+  }
+  .treasure-icon { font-size: 20px; flex-shrink: 0; }
+  .treasure-name { font-size: 11px; color: #ffd700; font-weight: bold; flex: 1; }
+  .treasure-grade { font-size: 9px; color: #ff6600; }
+
+  /* ── Summary 48px ── */
+  .summary {
+    width: 1017px; height: 48px;
+    background: linear-gradient(180deg, #0d0400 0%, #080200 100%);
+    border-top: 2px solid #6b3800;
+    border-top-color: #b8732a;
+    position: relative; z-index: 2;
+    display: flex; align-items: center;
+    padding: 0 40px; gap: 0;
+  }
+  .summary::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #b8732a 20%, #ffd700 50%, #b8732a 80%, transparent 100%);
+    box-shadow: 0 0 10px #b8732a;
+  }
+  .sum-divider { width: 1px; height: 24px; background: rgba(107,56,0,0.5); margin: 0 28px; }
+  .sum-item { text-align: center; }
+  .sum-label { font-size: 8px; color: #6b3800; letter-spacing: 2px; }
+  .sum-val { font-size: 15px; font-weight: bold; color: #ffd700; text-shadow: 0 0 8px rgba(255,215,0,0.5); }
+  .sum-val.red { color: #ff4422; text-shadow: 0 0 8px rgba(255,68,34,0.6); }
+
+  .sum-quote {
+    margin-left: auto; font-size: 11px; color: #6b3800;
+    letter-spacing: 2px; font-style: italic;
+    text-align: right;
+  }
+
+  /* ── Footer 20px ── */
+  .footer {
+    width: 1017px; height: 20px;
+    background: #050201;
+    border-top: 1px solid #3a1a00;
+    position: relative; z-index: 2;
+    display: flex; align-items: center;
+    padding: 0 40px; justify-content: space-between;
+  }
+  .footer-left { font-size: 8px; color: #4a2800; letter-spacing: 2px; }
+  .footer-right { font-size: 8px; color: #4a2800; letter-spacing: 1px; }
+
+  /* 装饰纹样 */
+  .ornament { color: #6b3800; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<!-- Header 72px -->
+<div class="header">
+  <div class="header-seal">☯</div>
+  <div style="flex:1; text-align:center;">
+    <div class="header-title">荒 独 断 万 古</div>
+    <div class="header-sub">❖ 一人之道，逆伐苍穹，碎虚空，断轮回 ❖</div>
+  </div>
+  <div class="header-right">
+    <div class="realm-tag">当前境界</div>
+    <div class="realm-level">化神·九重</div>
+  </div>
+</div>
+
+<!-- Content 580px -->
+<div class="content">
+
+  <!-- 水墨山水背景SVG -->
+  <svg class="ink-bg" viewBox="0 0 1017 580" preserveAspectRatio="xMidYMid slice">
+    <!-- 远山 -->
+    <ellipse cx="200" cy="480" rx="300" ry="120" fill="rgba(30,10,0,0.3)"/>
+    <ellipse cx="600" cy="520" rx="400" ry="140" fill="rgba(20,8,0,0.2)"/>
+    <ellipse cx="900" cy="500" rx="250" ry="100" fill="rgba(25,10,0,0.25)"/>
+    <!-- 主山峰 -->
+    <polygon points="400,580 500,200 600,580" fill="rgba(40,15,0,0.35)"/>
+    <polygon points="480,580 550,260 620,580" fill="rgba(30,10,0,0.25)"/>
+    <!-- 云雾 -->
+    <ellipse cx="300" cy="350" rx="200" ry="30" fill="rgba(200,160,80,0.04)"/>
+    <ellipse cx="700" cy="320" rx="180" ry="25" fill="rgba(200,160,80,0.04)"/>
+    <!-- 月亮 -->
+    <circle cx="850" cy="80" r="40" fill="rgba(255,220,100,0.06)" stroke="rgba(255,200,80,0.1)" stroke-width="1"/>
+    <circle cx="840" cy="76" r="32" fill="rgba(10,4,0,0.8)"/>
+    <!-- 血红光柱 -->
+    <rect x="490" y="0" width="20" height="580" fill="url(#bloodPillar)" opacity="0.15"/>
+    <defs>
+      <linearGradient id="bloodPillar" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ff0000" stop-opacity="0.8"/>
+        <stop offset="50%" stop-color="#ff6600" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#ff0000" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <!-- 飘落的剑气线条 -->
+    <line x1="150" y1="50" x2="50" y2="200" stroke="rgba(212,168,83,0.08)" stroke-width="1"/>
+    <line x1="800" y1="30" x2="950" y2="180" stroke="rgba(212,168,83,0.06)" stroke-width="1"/>
+    <line x1="500" y1="10" x2="480" y2="200" stroke="rgba(255,100,0,0.05)" stroke-width="2"/>
+  </svg>
+
+  <!-- 左侧：境界天梯 -->
+  <div class="scroll-panel">
+    <div class="panel-header">
+      <div class="panel-title">修炼境界</div>
+    </div>
+    <div class="realm-ladder">
+      <div class="realm-step" style="opacity:0.4;">
+        <div class="realm-num">一</div>
+        <div class="realm-name" style="color:#666;font-size:11px;">炼体境</div>
+        <div class="realm-qi" style="color:#444;">已渡</div>
+      </div>
+      <div class="realm-step" style="opacity:0.4;">
+        <div class="realm-num">二</div>
+        <div class="realm-name" style="color:#666;font-size:11px;">聚气境</div>
+        <div class="realm-qi" style="color:#444;">已渡</div>
+      </div>
+      <div class="realm-step" style="opacity:0.4;">
+        <div class="realm-num">三</div>
+        <div class="realm-name" style="color:#666;font-size:11px;">筑基境</div>
+        <div class="realm-qi" style="color:#444;">已渡</div>
+      </div>
+      <div class="realm-step" style="opacity:0.4;">
+        <div class="realm-num">四</div>
+        <div class="realm-name" style="color:#666;font-size:11px;">金丹境</div>
+        <div class="realm-qi" style="color:#444;">已渡</div>
+      </div>
+      <div class="realm-step" style="opacity:0.5;">
+        <div class="realm-num">五</div>
+        <div class="realm-name" style="color:#888;font-size:11px;">元婴境</div>
+        <div class="realm-qi" style="color:#555;">已渡</div>
+      </div>
+      <div class="realm-step" style="opacity:0.6;">
+        <div class="realm-num">六</div>
+        <div class="realm-name" style="color:#aa7733;font-size:12px;">化神境</div>
+        <div class="realm-qi">一至八重</div>
+      </div>
+      <div class="realm-step current">
+        <div class="realm-num" style="color:#ffd700;">▶</div>
+        <div class="realm-name" style="color:#ffd700;font-size:14px;text-shadow:0 0 8px rgba(255,215,0,0.6);">化神·九重</div>
+        <div class="realm-qi" style="color:#ffd700;">至臻</div>
+      </div>
+      <div class="realm-step" style="border-color:rgba(255,100,0,0.3);">
+        <div class="realm-num" style="color:#aa4400;">八</div>
+        <div class="realm-name" style="color:#cc6600;font-size:12px;">渡劫境</div>
+        <div class="realm-qi" style="color:#884400;">突破中</div>
+      </div>
+      <div class="realm-step" style="opacity:0.3;">
+        <div class="realm-num" style="color:#444;">九</div>
+        <div class="realm-name" style="color:#555;font-size:11px;">大乘境</div>
+        <div class="realm-qi" style="color:#333;">未知</div>
+      </div>
+      <div class="realm-step" style="opacity:0.2;border-color:rgba(200,160,80,0.1);">
+        <div class="realm-num" style="color:#333;">◎</div>
+        <div class="realm-name" style="color:#444;font-size:11px;">飞升·仙界</div>
+        <div class="realm-qi" style="color:#222;">???</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 中间：主内容 -->
+  <div class="main-panel">
+
+    <!-- 绝世功法 -->
+    <div class="technique-card">
+      <div class="tech-header">
+        <div class="tech-icon">⚡</div>
+        <div>
+          <div style="display:flex;align-items:center;">
+            <div class="tech-name">混沌万古诀</div>
+            <div class="tech-grade">仙级至尊</div>
+          </div>
+          <div style="font-size:9px;color:#6b3800;margin-top:2px;letter-spacing:2px;">创始人: 荒古大能 · 炼就于宇宙初开之时</div>
+        </div>
+      </div>
+      <div class="tech-desc">
+        "吾以一剑破万法，逆推天地运转之机，参悟混沌本源，以荒古之力镇压万古神魔……
+        炼气化神，神入混沌，混沌生万物，万物归虚无，虚无即永恒。"
+      </div>
+      <div class="qi-bars">
+        <div class="qi-row">
+          <div class="qi-label">真元</div>
+          <div class="qi-track"><div class="qi-fill" style="width:87%;background:linear-gradient(90deg,#ff6600,#ffd700);box-shadow:0 0 6px #ff6600;"></div></div>
+          <div class="qi-val">87%</div>
+        </div>
+        <div class="qi-row">
+          <div class="qi-label">神识</div>
+          <div class="qi-track"><div class="qi-fill" style="width:95%;background:linear-gradient(90deg,#0066ff,#00ccff);box-shadow:0 0 6px #0066ff;"></div></div>
+          <div class="qi-val">95%</div>
+        </div>
+        <div class="qi-row">
+          <div class="qi-label">杀伐</div>
+          <div class="qi-track"><div class="qi-fill" style="width:100%;background:linear-gradient(90deg,#ff0000,#ff4422);box-shadow:0 0 6px #ff0000;"></div></div>
+          <div class="qi-val">满</div>
+        </div>
+        <div class="qi-row">
+          <div class="qi-label">道心</div>
+          <div class="qi-track"><div class="qi-fill" style="width:78%;background:linear-gradient(90deg,#aa00ff,#cc88ff);box-shadow:0 0 6px #aa00ff;"></div></div>
+          <div class="qi-val">78%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 战绩SVG -->
+    <div class="battle-chart-wrap">
+      <div class="battle-chart-title">◆ 斩杀记录 · 万古征程 ◆</div>
+      <svg width="557" height="140" viewBox="0 0 557 140">
+        <defs>
+          <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ffd700" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#b8732a" stop-opacity="0.3"/>
+          </linearGradient>
+          <linearGradient id="redGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ff4422" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#660000" stop-opacity="0.2"/>
+          </linearGradient>
+        </defs>
+
+        <!-- 背景网格 -->
+        <rect width="557" height="140" fill="rgba(10,4,0,0.6)" rx="2"/>
+        <line x1="50" y1="10" x2="50" y2="120" stroke="rgba(107,56,0,0.3)" stroke-width="1"/>
+        <line x1="50" y1="120" x2="540" y2="120" stroke="rgba(107,56,0,0.3)" stroke-width="1"/>
+
+        <!-- Y轴标签 -->
+        <text x="44" y="30" text-anchor="end" fill="#6b3800" font-size="8" font-family="serif">万</text>
+        <text x="44" y="65" text-anchor="end" fill="#6b3800" font-size="8" font-family="serif">千</text>
+        <text x="44" y="100" text-anchor="end" fill="#6b3800" font-size="8" font-family="serif">百</text>
+        <line x1="50" y1="28" x2="540" y2="28" stroke="rgba(107,56,0,0.15)" stroke-width="1" stroke-dasharray="3,4"/>
+        <line x1="50" y1="63" x2="540" y2="63" stroke="rgba(107,56,0,0.15)" stroke-width="1" stroke-dasharray="3,4"/>
+        <line x1="50" y1="98" x2="540" y2="98" stroke="rgba(107,56,0,0.15)" stroke-width="1" stroke-dasharray="3,4"/>
+
+        <!-- 柱状图 - 各阶段斩杀数 -->
+        <!-- 炼体期 -->
+        <rect x="60" y="110" width="36" height="10" fill="url(#goldGrad)" rx="1"/>
+        <text x="78" y="135" text-anchor="middle" fill="#6b3800" font-size="8" font-family="serif">炼体</text>
+
+        <!-- 聚气期 -->
+        <rect x="116" y="98" width="36" height="22" fill="url(#goldGrad)" rx="1"/>
+        <text x="134" y="135" text-anchor="middle" fill="#6b3800" font-size="8" font-family="serif">聚气</text>
+
+        <!-- 筑基期 -->
+        <rect x="172" y="80" width="36" height="40" fill="url(#goldGrad)" rx="1"/>
+        <text x="190" y="135" text-anchor="middle" fill="#6b3800" font-size="8" font-family="serif">筑基</text>
+
+        <!-- 金丹期 -->
+        <rect x="228" y="55" width="36" height="65" fill="url(#goldGrad)" rx="1"/>
+        <text x="246" y="135" text-anchor="middle" fill="#6b3800" font-size="8" font-family="serif">金丹</text>
+
+        <!-- 元婴期 -->
+        <rect x="284" y="40" width="36" height="80" fill="url(#goldGrad)" rx="1"/>
+        <text x="302" y="135" text-anchor="middle" fill="#6b3800" font-size="8" font-family="serif">元婴</text>
+
+        <!-- 化神期 -->
+        <rect x="340" y="18" width="36" height="102" fill="url(#redGrad)" rx="1"/>
+        <text x="358" y="135" text-anchor="middle" fill="#cc6600" font-size="8" font-family="serif">化神</text>
+
+        <!-- 当前(化神九重) - 最高，闪烁 -->
+        <rect x="396" y="12" width="36" height="108" fill="url(#redGrad)" rx="1" stroke="#ffd700" stroke-width="1" opacity="0.95"/>
+        <text x="414" y="135" text-anchor="middle" fill="#ffd700" font-size="8" font-family="serif" font-weight="bold">当前</text>
+        <!-- 顶部光晕 -->
+        <ellipse cx="414" cy="14" rx="18" ry="4" fill="rgba(255,215,0,0.3)"/>
+
+        <!-- 趋势线 -->
+        <polyline points="78,115 134,109 190,100 246,87 302,80 358,69 414,66"
+          fill="none" stroke="#ffd700" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>
+
+        <!-- 数值 -->
+        <text x="78" y="108" text-anchor="middle" fill="#8b6030" font-size="7" font-family="serif">312</text>
+        <text x="134" y="96" text-anchor="middle" fill="#8b6030" font-size="7" font-family="serif">1.8k</text>
+        <text x="190" y="78" text-anchor="middle" fill="#8b6030" font-size="7" font-family="serif">8.4k</text>
+        <text x="246" y="53" text-anchor="middle" fill="#b8732a" font-size="7" font-family="serif">3.2w</text>
+        <text x="302" y="38" text-anchor="middle" fill="#b8732a" font-size="7" font-family="serif">8.7w</text>
+        <text x="358" y="16" text-anchor="middle" fill="#ffd700" font-size="7" font-family="serif">47w</text>
+        <text x="414" y="10" text-anchor="middle" fill="#ffd700" font-size="8" font-family="serif" font-weight="bold">∞</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- 右侧面板 -->
+  <div class="right-panel">
+    <div class="panel-header">
+      <div class="panel-title">天道宿敌</div>
+    </div>
+
+    <div class="enemy-item">
+      <div class="enemy-icon">💀</div>
+      <div class="enemy-name">上古神魔·魔皇尊</div>
+      <div class="enemy-status dead">已斩</div>
+    </div>
+    <div class="enemy-item">
+      <div class="enemy-icon">👑</div>
+      <div class="enemy-name">天道意志·轮回神君</div>
+      <div class="enemy-status dead">已斩</div>
+    </div>
+    <div class="enemy-item">
+      <div class="enemy-icon">⚡</div>
+      <div class="enemy-name">雷罚天劫·九天雷尊</div>
+      <div class="enemy-status dead">已斩</div>
+    </div>
+    <div class="enemy-item">
+      <div class="enemy-icon">🌀</div>
+      <div class="enemy-name">混沌之主·无名古神</div>
+      <div class="enemy-status alive">对峙中</div>
+    </div>
+    <div class="enemy-item">
+      <div class="enemy-icon">❓</div>
+      <div class="enemy-name">???·破界者</div>
+      <div class="enemy-status alive">未知</div>
+    </div>
+
+    <div style="height:12px; border-bottom:1px solid rgba(50,20,0,0.5); margin-bottom:12px;"></div>
+    <div class="panel-title" style="margin-bottom:10px;text-align:center;font-size:14px;letter-spacing:2px;">镇压神器</div>
+
+    <div class="treasure-item">
+      <div class="treasure-icon">⚔️</div>
+      <div>
+        <div class="treasure-name">混沌剑·万古断</div>
+        <div class="treasure-grade">先天至宝 · 吞噬天地之力</div>
+      </div>
+    </div>
+    <div class="treasure-item">
+      <div class="treasure-icon">🔮</div>
+      <div>
+        <div class="treasure-name">混沌珠</div>
+        <div class="treasure-grade">鸿蒙至宝 · 镇压本命</div>
+      </div>
+    </div>
+    <div class="treasure-item">
+      <div class="treasure-icon">📜</div>
+      <div>
+        <div class="treasure-name">万古功法残卷</div>
+        <div class="treasure-grade">始祖级 · 残缺七卷/九卷</div>
+      </div>
+    </div>
+    <div class="treasure-item" style="border-color:rgba(255,215,0,0.3);">
+      <div class="treasure-icon">🌌</div>
+      <div>
+        <div class="treasure-name">虚空戒</div>
+        <div class="treasure-grade" style="color:#ffd700;">传说 · 容纳三千世界</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Summary 48px -->
+<div class="summary">
+  <div class="sum-item">
+    <div class="sum-label">斩杀强者</div>
+    <div class="sum-val red">47万+</div>
+  </div>
+  <div class="sum-divider"></div>
+  <div class="sum-item">
+    <div class="sum-label">修炼年岁</div>
+    <div class="sum-val">3,000年</div>
+  </div>
+  <div class="sum-divider"></div>
+  <div class="sum-item">
+    <div class="sum-label">神器数量</div>
+    <div class="sum-val">128件</div>
+  </div>
+  <div class="sum-divider"></div>
+  <div class="sum-item">
+    <div class="sum-label">当前境界</div>
+    <div class="sum-val">化神·九重</div>
+  </div>
+  <div class="sum-divider"></div>
+  <div class="sum-item">
+    <div class="sum-label">目标</div>
+    <div class="sum-val red">渡劫·飞升</div>
+  </div>
+  <div class="sum-quote">
+    "吾虽孤身立于天地，然万古皆在脚下。"
+  </div>
+</div>
+
+<!-- Footer 20px -->
+<div class="footer">
+  <div class="footer-left">❖ 荒独断万古 · 洪荒纪元 第三千零一年 · 天外来敌降临 ❖</div>
+  <div class="footer-right">PAGE 03 / 06 · 玄幻史诗风格</div>
+</div>
+
+</body>
+</html>

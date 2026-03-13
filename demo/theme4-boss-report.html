@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>向老板汇报</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1017px; height: 720px;
+    min-width: 1017px; max-width: 1017px;
+    min-height: 720px; max-height: 720px;
+    overflow: hidden;
+    background: #f5f7fa;
+    font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
+    color: #1a2332;
+  }
+
+  /* ── Header 72px ── */
+  .header {
+    width: 1017px; height: 72px;
+    background: linear-gradient(135deg, #0f3460 0%, #16213e 50%, #1a1a2e 100%);
+    display: flex; align-items: center;
+    padding: 0 32px;
+    position: relative; overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+  }
+  .header::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, #0066cc, #0099ff, #00ccff, #0099ff, #0066cc);
+  }
+  .company-logo {
+    display: flex; align-items: center; gap: 10px; margin-right: 24px;
+  }
+  .logo-icon {
+    width: 40px; height: 40px; background: linear-gradient(135deg, #0066cc, #0099ff);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: white; font-weight: bold; flex-shrink: 0;
+  }
+  .company-name { font-size: 15px; color: white; font-weight: 600; }
+  .company-sub { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+  .header-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.15); margin: 0 24px; }
+
+  .report-info { flex: 1; }
+  .report-title { font-size: 20px; color: white; font-weight: 700; letter-spacing: 1px; }
+  .report-meta { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; }
+
+  .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  .period-badge {
+    background: rgba(0,153,255,0.25); border: 1px solid rgba(0,153,255,0.4);
+    padding: 4px 12px; border-radius: 4px;
+    font-size: 11px; color: #66ccff; font-weight: 600; letter-spacing: 1px;
+  }
+  .presenter { font-size: 10px; color: rgba(255,255,255,0.4); }
+
+  /* ── Content 580px ── */
+  .content {
+    width: 1017px; height: 580px;
+    background: #f5f7fa;
+    display: grid;
+    grid-template-columns: 220px 1fr 220px;
+    grid-template-rows: 1fr;
+    gap: 0;
+    padding: 16px;
+    gap: 14px;
+  }
+
+  /* KPI 卡片 */
+  .kpi-panel { display: flex; flex-direction: column; gap: 10px; }
+  .kpi-card {
+    background: white;
+    border-radius: 8px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
+    position: relative; overflow: hidden;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+    border-radius: 8px 0 0 8px;
+  }
+  .kpi-card.green::before { background: #22c55e; }
+  .kpi-card.blue::before { background: #0ea5e9; }
+  .kpi-card.orange::before { background: #f97316; }
+  .kpi-card.red::before { background: #ef4444; }
+  .kpi-card.purple::before { background: #8b5cf6; }
+
+  .kpi-label { font-size: 10px; color: #94a3b8; font-weight: 500; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .kpi-value { font-size: 26px; font-weight: 800; color: #1e293b; line-height: 1; }
+  .kpi-value span { font-size: 13px; font-weight: 500; margin-left: 2px; color: #64748b; }
+  .kpi-change { display: flex; align-items: center; gap: 4px; margin-top: 6px; }
+  .kpi-arrow { font-size: 12px; }
+  .kpi-arrow.up { color: #22c55e; }
+  .kpi-arrow.down { color: #ef4444; }
+  .kpi-delta { font-size: 11px; font-weight: 600; }
+  .kpi-delta.up { color: #22c55e; }
+  .kpi-delta.down { color: #ef4444; }
+  .kpi-vs { font-size: 10px; color: #94a3b8; margin-left: 2px; }
+  .kpi-mini-chart { margin-top: 8px; }
+
+  /* 中间主内容 */
+  .main-panel { display: flex; flex-direction: column; gap: 14px; }
+
+  .card {
+    background: white;
+    border-radius: 8px;
+    padding: 16px 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
+  }
+  .card-title {
+    font-size: 13px; font-weight: 700; color: #1e293b;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  }
+  .card-title::before {
+    content: '';
+    width: 3px; height: 14px; background: #0066cc; border-radius: 2px;
+    display: inline-block;
+  }
+  .card-subtitle { font-size: 10px; color: #94a3b8; font-weight: 400; margin-left: auto; }
+
+  /* 表格 */
+  .data-table { width: 100%; border-collapse: collapse; }
+  .data-table th {
+    font-size: 10px; color: #94a3b8; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    padding: 6px 10px; border-bottom: 1px solid #e2e8f0;
+    text-align: left; background: #f8fafc;
+  }
+  .data-table td {
+    font-size: 12px; color: #1e293b;
+    padding: 8px 10px; border-bottom: 1px solid #f1f5f9;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: #f8fafc; }
+  .td-rank { font-size: 10px; color: #94a3b8; font-weight: 700; }
+  .td-badge {
+    font-size: 9px; padding: 2px 6px; border-radius: 3px; font-weight: 600;
+    display: inline-block;
+  }
+  .td-badge.hit { background: #dcfce7; color: #16a34a; }
+  .td-badge.miss { background: #fee2e2; color: #dc2626; }
+  .td-badge.watch { background: #fef3c7; color: #d97706; }
+
+  /* 右侧面板 */
+  .right-panel { display: flex; flex-direction: column; gap: 10px; }
+
+  /* 进度卡 */
+  .progress-card {
+    background: white;
+    border-radius: 8px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
+  }
+  .progress-title { font-size: 11px; font-weight: 700; color: #1e293b; margin-bottom: 10px; }
+  .progress-item { margin-bottom: 8px; }
+  .progress-header { display: flex; justify-content: space-between; margin-bottom: 3px; }
+  .progress-label { font-size: 10px; color: #64748b; }
+  .progress-val { font-size: 10px; font-weight: 700; color: #1e293b; }
+  .progress-track {
+    height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden;
+  }
+  .progress-fill { height: 100%; border-radius: 3px; }
+
+  /* 风险预警 */
+  .risk-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 8px 0; border-bottom: 1px solid #f1f5f9;
+  }
+  .risk-item:last-child { border-bottom: none; }
+  .risk-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }
+  .risk-dot.high { background: #ef4444; }
+  .risk-dot.mid { background: #f97316; }
+  .risk-dot.low { background: #22c55e; }
+  .risk-text { font-size: 10px; color: #475569; line-height: 1.5; flex: 1; }
+  .risk-text strong { color: #1e293b; font-weight: 600; }
+
+  /* ── Summary 48px ── */
+  .summary {
+    width: 1017px; height: 48px;
+    background: white;
+    border-top: 1px solid #e2e8f0;
+    border-bottom: none;
+    display: flex; align-items: center;
+    padding: 0 32px; gap: 0;
+    box-shadow: 0 -1px 0 #e2e8f0;
+  }
+  .sum-kpi { display: flex; align-items: center; gap: 16px; flex: 1; }
+  .sum-item { display: flex; align-items: center; gap: 6px; }
+  .sum-icon { font-size: 14px; }
+  .sum-label { font-size: 9px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sum-val { font-size: 15px; font-weight: 800; color: #1e293b; }
+  .sum-val.green { color: #22c55e; }
+  .sum-val.red { color: #ef4444; }
+  .sum-sep { width: 1px; height: 24px; background: #e2e8f0; margin: 0 20px; }
+
+  .sum-action {
+    background: #0066cc; color: white; border: none;
+    padding: 8px 20px; border-radius: 6px;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Footer 20px ── */
+  .footer {
+    width: 1017px; height: 20px;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    display: flex; align-items: center;
+    padding: 0 32px; justify-content: space-between;
+  }
+  .footer-left { font-size: 8px; color: #cbd5e1; letter-spacing: 0.5px; }
+  .footer-right { font-size: 8px; color: #cbd5e1; }
+</style>
+</head>
+<body>
+
+<!-- Header 72px -->
+<div class="header">
+  <div class="company-logo">
+    <div class="logo-icon">极</div>
+    <div>
+      <div class="company-name">极光科技集团</div>
+      <div class="company-sub">AuroraGroup · 企业绩效管理平台</div>
+    </div>
+  </div>
+  <div class="header-divider"></div>
+  <div class="report-info">
+    <div class="report-title">2026 Q1 经营业绩汇报</div>
+    <div class="report-meta">汇报人：王总监 &nbsp;·&nbsp; 汇报对象：董事会 / CEO &nbsp;·&nbsp; 2026-03-13 &nbsp;·&nbsp; 内部机密</div>
+  </div>
+  <div class="header-right">
+    <div class="period-badge">2026 Q1 · 1月—3月</div>
+    <div class="presenter">Strategy & Operations Review</div>
+  </div>
+</div>
+
+<!-- Content 580px -->
+<div class="content">
+
+  <!-- 左侧 KPI -->
+  <div class="kpi-panel">
+    <div class="kpi-card green">
+      <div class="kpi-label">季度营业收入</div>
+      <div class="kpi-value">4,782<span>万元</span></div>
+      <div class="kpi-change">
+        <div class="kpi-arrow up">▲</div>
+        <div class="kpi-delta up">+18.4%</div>
+        <div class="kpi-vs">vs 上季度</div>
+      </div>
+      <svg class="kpi-mini-chart" width="188" height="28" viewBox="0 0 188 28">
+        <polyline points="0,22 28,18 56,20 84,14 112,16 140,8 168,10 188,4"
+          fill="none" stroke="#22c55e" stroke-width="2"/>
+        <polyline points="0,22 28,18 56,20 84,14 112,16 140,8 168,10 188,4 188,28 0,28 Z"
+          fill="rgba(34,197,94,0.08)" stroke="none"/>
+      </svg>
+    </div>
+    <div class="kpi-card blue">
+      <div class="kpi-label">净利润</div>
+      <div class="kpi-value">1,089<span>万元</span></div>
+      <div class="kpi-change">
+        <div class="kpi-arrow up">▲</div>
+        <div class="kpi-delta up">+22.1%</div>
+        <div class="kpi-vs">vs 上季度</div>
+      </div>
+      <svg class="kpi-mini-chart" width="188" height="28" viewBox="0 0 188 28">
+        <polyline points="0,24 28,20 56,18 84,16 112,12 140,10 168,7 188,5"
+          fill="none" stroke="#0ea5e9" stroke-width="2"/>
+        <polyline points="0,24 28,20 56,18 84,16 112,12 140,10 168,7 188,5 188,28 0,28 Z"
+          fill="rgba(14,165,233,0.08)" stroke="none"/>
+      </svg>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label">新增客户数</div>
+      <div class="kpi-value">2,341<span>家</span></div>
+      <div class="kpi-change">
+        <div class="kpi-arrow up">▲</div>
+        <div class="kpi-delta up">+9.7%</div>
+        <div class="kpi-vs">vs 目标</div>
+      </div>
+    </div>
+    <div class="kpi-card purple">
+      <div class="kpi-label">客户留存率</div>
+      <div class="kpi-value">94.2<span>%</span></div>
+      <div class="kpi-change">
+        <div class="kpi-arrow up">▲</div>
+        <div class="kpi-delta up">+2.3pp</div>
+        <div class="kpi-vs">历史最高</div>
+      </div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">获客成本 CAC</div>
+      <div class="kpi-value">342<span>元/户</span></div>
+      <div class="kpi-change">
+        <div class="kpi-arrow down">▼</div>
+        <div class="kpi-delta down">-15.2%</div>
+        <div class="kpi-vs">优化明显</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 中间 -->
+  <div class="main-panel">
+
+    <!-- 收入趋势图 -->
+    <div class="card" style="flex:1;">
+      <div class="card-title">季度收入 & 利润趋势<div class="card-subtitle">单位：百万元 · 近8季度</div></div>
+      <svg width="100%" height="170" viewBox="0 0 541 170">
+        <defs>
+          <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0066cc" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#0066cc" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="profitGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#22c55e" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#22c55e" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <!-- 背景网格 -->
+        <line x1="40" y1="10" x2="40" y2="145" stroke="#e2e8f0" stroke-width="1"/>
+        <line x1="40" y1="145" x2="535" y2="145" stroke="#e2e8f0" stroke-width="1"/>
+        <line x1="40" y1="50" x2="535" y2="50" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="4,3"/>
+        <line x1="40" y1="80" x2="535" y2="80" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="4,3"/>
+        <line x1="40" y1="110" x2="535" y2="110" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="4,3"/>
+
+        <!-- Y轴 -->
+        <text x="36" y="53" text-anchor="end" fill="#cbd5e1" font-size="9">6000</text>
+        <text x="36" y="83" text-anchor="end" fill="#cbd5e1" font-size="9">4000</text>
+        <text x="36" y="113" text-anchor="end" fill="#cbd5e1" font-size="9">2000</text>
+
+        <!-- X轴标签 -->
+        <text x="95" y="158" text-anchor="middle" fill="#94a3b8" font-size="9">24Q2</text>
+        <text x="155" y="158" text-anchor="middle" fill="#94a3b8" font-size="9">24Q3</text>
+        <text x="215" y="158" text-anchor="middle" fill="#94a3b8" font-size="9">24Q4</text>
+        <text x="275" y="158" text-anchor="middle" fill="#94a3b8" font-size="9">25Q1</text>
+        <text x="335" y="158" text-anchor="middle" fill="#94a3b8" font-size="9">25Q2</text>
+        <text x="395" y="158" text-anchor="middle" fill="#94a3b8" font-size="9">25Q3</text>
+        <text x="455" y="158" text-anchor="middle" fill="#94a3b8" font-size="9">25Q4</text>
+        <text x="515" y="158" text-anchor="middle" fill="#0066cc" font-size="9" font-weight="700">26Q1▶</text>
+
+        <!-- 收入柱 -->
+        <rect x="72" y="110" width="24" height="35" fill="#bfdbfe" rx="2"/>
+        <rect x="132" y="100" width="24" height="45" fill="#bfdbfe" rx="2"/>
+        <rect x="192" y="88" width="24" height="57" fill="#bfdbfe" rx="2"/>
+        <rect x="252" y="80" width="24" height="65" fill="#93c5fd" rx="2"/>
+        <rect x="312" y="74" width="24" height="71" fill="#93c5fd" rx="2"/>
+        <rect x="372" y="64" width="24" height="81" fill="#60a5fa" rx="2"/>
+        <rect x="432" y="58" width="24" height="87" fill="#60a5fa" rx="2"/>
+        <!-- 当前Q1高亮 -->
+        <rect x="492" y="45" width="24" height="100" fill="#0066cc" rx="2"/>
+        <text x="504" y="40" text-anchor="middle" fill="#0066cc" font-size="9" font-weight="bold">4782</text>
+
+        <!-- 利润折线 -->
+        <polyline points="84,130 144,126 204,118 264,112 324,106 384,96 444,90 504,76"
+          fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="504" cy="76" r="4" fill="#22c55e"/>
+        <text x="504" y="70" text-anchor="middle" fill="#22c55e" font-size="9" font-weight="bold">1089</text>
+
+        <!-- 图例 -->
+        <rect x="360" y="12" width="10" height="10" fill="#0066cc" rx="2"/>
+        <text x="375" y="21" fill="#64748b" font-size="9">收入（万）</text>
+        <line x1="415" y1="17" x2="430" y2="17" stroke="#22c55e" stroke-width="2"/>
+        <circle cx="422" cy="17" r="3" fill="#22c55e"/>
+        <text x="436" y="21" fill="#64748b" font-size="9">净利润</text>
+      </svg>
+    </div>
+
+    <!-- 业务分部表 -->
+    <div class="card">
+      <div class="card-title">各业务线完成情况<div class="card-subtitle">与年度目标对比</div></div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:28px;">#</th>
+            <th>业务线</th>
+            <th>Q1实际</th>
+            <th>Q1目标</th>
+            <th>完成率</th>
+            <th>同比增长</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-rank">01</td>
+            <td><strong>云计算服务</strong></td>
+            <td>1,842万</td>
+            <td>1,600万</td>
+            <td><strong style="color:#16a34a;">115%</strong></td>
+            <td style="color:#22c55e;">↑ 34.2%</td>
+            <td><span class="td-badge hit">达标</span></td>
+          </tr>
+          <tr>
+            <td class="td-rank">02</td>
+            <td><strong>AI解决方案</strong></td>
+            <td>1,256万</td>
+            <td>1,100万</td>
+            <td><strong style="color:#16a34a;">114%</strong></td>
+            <td style="color:#22c55e;">↑ 58.7%</td>
+            <td><span class="td-badge hit">超额</span></td>
+          </tr>
+          <tr>
+            <td class="td-rank">03</td>
+            <td><strong>数据分析平台</strong></td>
+            <td>892万</td>
+            <td>900万</td>
+            <td><strong style="color:#d97706;">99%</strong></td>
+            <td style="color:#22c55e;">↑ 12.1%</td>
+            <td><span class="td-badge watch">微差</span></td>
+          </tr>
+          <tr>
+            <td class="td-rank">04</td>
+            <td><strong>安全服务</strong></td>
+            <td>792万</td>
+            <td>900万</td>
+            <td><strong style="color:#dc2626;">88%</strong></td>
+            <td style="color:#94a3b8;">↑ 3.2%</td>
+            <td><span class="td-badge miss">未达</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 右侧面板 -->
+  <div class="right-panel">
+
+    <!-- 年度目标进度 -->
+    <div class="progress-card">
+      <div class="progress-title">📊 年度目标进度（Q1末）</div>
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">年营收目标 2亿</span>
+          <span class="progress-val" style="color:#0066cc;">23.9%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:23.9%;background:linear-gradient(90deg,#0066cc,#0099ff);"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">净利润目标 4000万</span>
+          <span class="progress-val" style="color:#22c55e;">27.2%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:27.2%;background:linear-gradient(90deg,#16a34a,#22c55e);"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">新客目标 8000家</span>
+          <span class="progress-val" style="color:#f97316;">29.3%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:29.3%;background:linear-gradient(90deg,#ea580c,#f97316);"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">NPS目标 65分</span>
+          <span class="progress-val" style="color:#8b5cf6;">95.4%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:95.4%;background:linear-gradient(90deg,#7c3aed,#8b5cf6);"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">市场份额目标12%</span>
+          <span class="progress-val" style="color:#0ea5e9;">75%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:75%;background:linear-gradient(90deg,#0284c7,#0ea5e9);"></div></div>
+      </div>
+    </div>
+
+    <!-- 风险预警 -->
+    <div class="progress-card">
+      <div class="progress-title">⚠️ 风险预警 & 关注项</div>
+      <div class="risk-item">
+        <div class="risk-dot high"></div>
+        <div class="risk-text"><strong>安全服务线Q1差距</strong><br>较目标缺口108万，需Q2加速追赶</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-dot mid"></div>
+        <div class="risk-text"><strong>招聘进度滞后</strong><br>研发团队缺口42人，影响Q2交付</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-dot mid"></div>
+        <div class="risk-text"><strong>竞品价格战压力</strong><br>华南区域客单价下降约8%</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-dot low"></div>
+        <div class="risk-text"><strong>AI业务超预期增长</strong><br>需前置备货，防止产能瓶颈</div>
+      </div>
+    </div>
+
+    <!-- 下季度重点 -->
+    <div class="progress-card">
+      <div class="progress-title">🎯 Q2 三大重点任务</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;align-items:flex-start;gap:8px;padding:8px;background:#f8fafc;border-radius:6px;border-left:3px solid #0066cc;">
+          <div style="font-size:16px;flex-shrink:0;">🚀</div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#1e293b;">AI产品矩阵上线</div>
+            <div style="font-size:9px;color:#64748b;margin-top:2px;">4月完成3款AI应用商业化发布</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:8px;padding:8px;background:#f8fafc;border-radius:6px;border-left:3px solid #22c55e;">
+          <div style="font-size:16px;flex-shrink:0;">👥</div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#1e293b;">安全业务整合</div>
+            <div style="font-size:9px;color:#64748b;margin-top:2px;">补齐Q1缺口，5月超额完成</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:8px;padding:8px;background:#f8fafc;border-radius:6px;border-left:3px solid #f97316;">
+          <div style="font-size:16px;flex-shrink:0;">🌍</div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#1e293b;">海外市场试点</div>
+            <div style="font-size:9px;color:#64748b;margin-top:2px;">东南亚2个国家落地POC</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Summary 48px -->
+<div class="summary">
+  <div class="sum-kpi">
+    <div class="sum-item">
+      <div class="sum-icon">💰</div>
+      <div>
+        <div class="sum-label">季度营收</div>
+        <div class="sum-val green">4,782万</div>
+      </div>
+    </div>
+    <div class="sum-sep"></div>
+    <div class="sum-item">
+      <div class="sum-icon">📈</div>
+      <div>
+        <div class="sum-label">净利润率</div>
+        <div class="sum-val">22.8%</div>
+      </div>
+    </div>
+    <div class="sum-sep"></div>
+    <div class="sum-item">
+      <div class="sum-icon">👥</div>
+      <div>
+        <div class="sum-label">新增客户</div>
+        <div class="sum-val">2,341家</div>
+      </div>
+    </div>
+    <div class="sum-sep"></div>
+    <div class="sum-item">
+      <div class="sum-icon">⭐</div>
+      <div>
+        <div class="sum-label">NPS评分</div>
+        <div class="sum-val green">62分</div>
+      </div>
+    </div>
+    <div class="sum-sep"></div>
+    <div class="sum-item">
+      <div class="sum-icon">🎯</div>
+      <div>
+        <div class="sum-label">整体完成率</div>
+        <div class="sum-val green">109%</div>
+      </div>
+    </div>
+  </div>
+  <button class="sum-action">📋 查看详细附件</button>
+</div>
+
+<!-- Footer 20px -->
+<div class="footer">
+  <div class="footer-left">极光科技集团 · 2026 Q1经营业绩汇报 · 内部机密 · 未经授权请勿外传</div>
+  <div class="footer-right">PAGE 04 / 06 · 商务汇报风格 · 2026-03-13</div>
+</div>
+
+</body>
+</html>
